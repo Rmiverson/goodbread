@@ -4,7 +4,7 @@ import './scss/App.css'
 // import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import store from './store/persistStore'
-import { Routes, Route, withRouter } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import Folder from './containers/Folder'
 import Home from './containers/Home'
