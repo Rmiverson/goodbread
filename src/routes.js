@@ -14,8 +14,14 @@ const Routes = () => {
             <Switch>
                 <Route path='/login' component={Login} />
                 
-
+                <Route path='/' component={Home} />
+                <Route path='/profile' component={Profile} />
+                <Route path='/folder/:id' component={Folder} />
+                <Route path='/subfolder/:id' component={SubFolder} />
+                <Route path='/recipe/:id' component={Recipe} />
             </Switch>
         </>
     )
 }
+
+export default withRouter(Routes)
