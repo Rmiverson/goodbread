@@ -1,4 +1,5 @@
-import './App.css';
+import React from 'react'
+import './scss/App.css'
 
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
