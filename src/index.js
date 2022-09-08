@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 import { Provider } from 'react-redux'
-import { store } from './store/store'
+import store from './store/store'
 
 const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root'))
