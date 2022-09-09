@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import apiClient from '../http-common'
 
-const Recipe = (props) => {
+const Recipe = () => {
     const [result, setResult] = useState('loading...')
-
+    const [dataComponents, setDataComponents] = useState([])
     const { id } = useParams()
 
     const { isLoading: isLoadingRecipe, refetch: getRecipeById } = useQuery(
@@ -23,6 +23,7 @@ const Recipe = (props) => {
                     data: res.data
                 }
                 setResult(result)
+                setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat())
             },
             onError: (err) => {
                 setResult(err.response?.data || err)
@@ -35,18 +36,18 @@ const Recipe = (props) => {
     }, [isLoadingRecipe])
 
     useEffect(() => {
-        ferretRecipeById()
-    }, [])
-
-    function ferretRecipeById() {       
-        if (id) {
-            try {
-                getRecipeById()
-            } catch (err) {
-                setResult(err)
+        function ferretRecipeById() {       
+            if (id) {
+                try {
+                    getRecipeById()
+                } catch (err) {
+                    setResult(err)
+                }
             }
         }
-    }
+
+        ferretRecipeById()
+    }, [getRecipeById, setResult, id])
 
     console.log(result)
 
@@ -59,6 +60,11 @@ const Recipe = (props) => {
             <div className='Recipe'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
+                {dataComponents.map((dataComponent, index) => (
+                    <div key={index}>
+                        <h4>{dataComponent.title}</h4>
+                    </div>
+                ))}
             </div>
         )        
     }
