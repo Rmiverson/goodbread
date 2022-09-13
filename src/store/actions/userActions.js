@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from 'react-query'
+// import { useMutation, useQuery } from 'react-query'
 import apiClient from '../../http-common'
 
 const API = 'http://localhost:3000/'
@@ -49,27 +49,20 @@ const API = 'http://localhost:3000/'
 // )
 
 export function userSignup(user) {
-    return async dispatch => {
-         try {
-            apiClient
-               .post('/users', JSON.stringify({
-                  headers: {
-                     'Content-Type': 'application/json',
-                     Accept: 'application/json'
-                  },
-                  body: JSON.stringify({ user: user })
-                  })
-               )
-               .then((response) => {
-                  let data = response.json()
-                  console.log(data)
-               })
-         
-         // dispatch(postUser(user))
-        } catch (err) {
-            console.error(err)
-        }
-    }
+   
+   return async dispatch => {
+      try {
+         return await apiClient
+            .post('/users', JSON.stringify({ user: user }))
+            .then((response) => {
+               let data = response.json()
+               console.log(data)
+               dispatch(signupUser(data))
+            })
+      } catch (err) {
+         console.error(err)
+      }
+   }
 }
 
 export const userLogin = (user) => {
@@ -113,15 +106,9 @@ export const userPersist = () => {
     }
  }
 
- export const setLoadingStatus = (status) => {
-   return dispatch => {
-      dispatch(loadingStatus(status))
-   }
- }
-
- export const loadingStatus = (status) => ({
-   type: 'LOADING_STATUS',
-   payload: status
+ export const signupUser = (userObj) => ({
+   type: 'SIGNUP_USER',
+   payload: userObj
  })
 
  export const loginUser = (userObj) => ({

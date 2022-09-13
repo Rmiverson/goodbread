@@ -45,6 +45,12 @@ const Login = () => {
 
     const handleSignupSubmit = (e) => {
         e.preventDefault()
+        // let obj = {
+        //     username: signupUsername,
+        //     email: signupEmail,
+        //     password: signupPassword
+        // }
+        // console.log(obj)
         dispatch(userSignup({
             username: signupUsername,
             email: signupEmail,
@@ -53,7 +59,7 @@ const Login = () => {
     }
 
     if (!!user.id) {
-        return <Navigate to='/' />
+        return <Navigate to='/' replace/>
     } else {
         return (
             <div className='LoginSignup'>
