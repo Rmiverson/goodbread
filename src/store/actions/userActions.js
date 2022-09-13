@@ -55,8 +55,8 @@ export function userSignup(user) {
          return await apiClient
             .post('/users', JSON.stringify({ user: user }))
             .then((response) => {
-               let data = response.json()
-               console.log(data)
+               let data = response.data
+               localStorage.setItem('token', data.token)
                dispatch(signupUser(data))
             })
       } catch (err) {
