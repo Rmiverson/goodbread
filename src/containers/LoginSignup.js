@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { userLogin, userSignup } from '../store/actions/userActions'
 
 import LoginForm from '../components/LoginForm'
@@ -53,7 +53,7 @@ const Login = () => {
     }
 
     if (!!user.id) {
-        return <Redirect to='/' />
+        return <Navigate to='/' />
     } else {
         return (
             <div className='LoginSignup'>
