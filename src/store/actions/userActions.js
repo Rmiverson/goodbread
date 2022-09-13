@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from 'react-query'
 import apiClient from '../../http-common'
 
+const API = 'http://localhost:3000/'
+
 // original fetch for signup
 // export const userSignup = (user) => {
 //     return async dispatch => {
@@ -24,32 +26,46 @@ import apiClient from '../../http-common'
 
 
 // react query & axios (i have no idea if this will work)
-const { isLoading: isPostingUser, mutate: postUser } = useMutation(
-    async (user) => {
-        return await apiClient.post(`/users`, JSON.stringify({ user: user }))
-    },
-    {
-        onSuccess: (res) => {
-            const result = {
-                status: res.status + '-' + res.statusText,
-                headers: res.headers,
-                data: res.data
-            }
+// const { isLoading: isPostingUser, mutate: postUser } = useMutation(
+//     async (user) => {
+//         return await apiClient.post(`/users`, JSON.stringify({ user: user }))
+//     },
+//     {
+//         onSuccess: (res) => {
+//             const result = {
+//                 status: res.status + '-' + res.statusText,
+//                 headers: res.headers,
+//                 data: res.data
+//             }
 
-            localStorage.setItem(res.data.token)
+//             localStorage.setItem(res.data.token)
 
-            return result
-        },    
-        onError: (err) => {
-            return err.response?.data || err
-        }
-    }
-)
+//             return result
+//         },    
+//         onError: (err) => {
+//             return err.response?.data || err
+//         }
+//     }
+// )
 
 export function userSignup(user) {
-    return dispatch => {
-        try {
-            dispatch(postUser(user))
+    return async dispatch => {
+         try {
+            apiClient
+               .post('/users', JSON.stringify({
+                  headers: {
+                     'Content-Type': 'application/json',
+                     Accept: 'application/json'
+                  },
+                  body: JSON.stringify({ user: user })
+                  })
+               )
+               .then((response) => {
+                  let data = response.json()
+                  console.log(data)
+               })
+         
+         // dispatch(postUser(user))
         } catch (err) {
             console.error(err)
         }
@@ -96,6 +112,17 @@ export const userPersist = () => {
        }
     }
  }
+
+ export const setLoadingStatus = (status) => {
+   return dispatch => {
+      dispatch(loadingStatus(status))
+   }
+ }
+
+ export const loadingStatus = (status) => ({
+   type: 'LOADING_STATUS',
+   payload: status
+ })
 
  export const loginUser = (userObj) => ({
     type: 'LOGIN_USER',
