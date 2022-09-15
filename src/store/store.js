@@ -4,6 +4,7 @@ import reducer from './reducers'
 const saveToLocalStorage = (state) => {
     try {
         localStorage.setItem('state', JSON.stringify(state))
+        console.log(localStorage)
     } catch (error) {
         console.error(error)
     }
@@ -21,11 +22,7 @@ const loadFromLocalStorage = () => {
 
 const persistedStore = loadFromLocalStorage()
 
-const store = configureStore({
-    reducer: reducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware()
-    }, persistedStore
-)
+const store = configureStore({ reducer: reducer, middleware: (getDefaultMiddleware) => getDefaultMiddleware() }, persistedStore )
 
 store.subscribe(() => {
     saveToLocalStorage(store.getState())
