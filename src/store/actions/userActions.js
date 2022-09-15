@@ -48,8 +48,7 @@ const API = 'http://localhost:3000/'
 //     }
 // )
 
-export function userSignup(user) {
-   
+export function userSignup(user) {   
    return async dispatch => {
       try {
          return await apiClient
@@ -65,46 +64,81 @@ export function userSignup(user) {
    }
 }
 
-export const userLogin = (user) => {
-    return async dispatch => {
-        try {
-           const resp = await fetch(API + 'login', {
-              method: 'POST',
-              headers: {
-                 'Content-Type': 'application/json',
-                 Accept: 'application/json'
-              },
-              body: JSON.stringify(user)
-           })
-           const data = await resp.json()
-           localStorage.setItem('token', data.token)
-           dispatch(loginUser(data))
-        } catch (error) {
-           console.error('Error:', error)
-        }
-     }
+export function userLogin(user) {
+   return async dispatch => {
+      try {
+         return await apiClient
+            .post('/users', JSON.stringify({ user: user }))
+            .then(( response ) => {
+               let data = response.data
+               localStorage.setItem('token', data.token)
+               dispatch(loginUser)
+            })
+      } catch (err) {
+         console.error(err)
+      }
+   }
 }
 
-export const userPersist = () => {
-    return async dispatch => {
-       const token = localStorage.token
-       if (token) {
-          try {
-             const resp = await fetch(API + 'persist', {
-                method: 'GET',
-                headers: {
-                   Authorization: `Bearer ${token}`
-                },
-             })
-             const data = await resp.json()
-             dispatch(loginUser(data))
-          } catch (error) {
-             localStorage.removeItem('token')
-             console.error('Error:', error)
-          }  
-       }
-    }
- }
+// export const userLogin = (user) => {
+//     return async dispatch => {
+//         try {
+//            const resp = await fetch(API + 'login', {
+//               method: 'POST',
+//               headers: {
+//                  'Content-Type': 'application/json',
+//                  Accept: 'application/json'
+//               },
+//               body: JSON.stringify(user)
+//            })
+//            const data = await resp.json()
+//            localStorage.setItem('token', data.token)
+//            dispatch(loginUser(data))
+//         } catch (error) {
+//            console.error('Error:', error)
+//         }
+//      }
+// }
+
+export function userPersist() {
+   return async dispatch => {
+      const token = localStorage.token
+      if (token) {
+         try {
+            return await apiClient
+               .get('/persist', {headers: {Authorization: `Bearer ${token}`}})
+               .then(( response ) => {
+                  let data = response.data
+                  dispatch(loginUser(data))
+               })
+         } catch (err) {
+            localStorage.removeItem('token')
+            console.error(err)
+         }         
+      }
+   }
+}
+
+// export const userPersist = () => {
+//     return async dispatch => {
+//        const token = localStorage.token
+//        if (token) {
+//           try {
+//              const resp = await fetch(API + 'persist', {
+//                 method: 'GET',
+//                 headers: {
+//                    Authorization: `Bearer ${token}`
+//                 },
+//              })
+//              const data = await resp.json()
+//              dispatch(loginUser(data))
+//           } catch (error) {
+//              localStorage.removeItem('token')
+//              console.error('Error:', error)
+//           }  
+//        }
+//     }
+//  }
 
  export const signupUser = (userObj) => ({
    type: 'SIGNUP_USER',
