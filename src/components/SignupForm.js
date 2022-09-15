@@ -31,6 +31,7 @@ const SignupForm = (props) => {
                     type='password'
                     value={props.password}
                     onChange={props.handleChange}
+                    minLength='6'
                     required
                 />
 

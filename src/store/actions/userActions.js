@@ -1,61 +1,15 @@
 // import { useMutation, useQuery } from 'react-query'
 import apiClient from '../../http-common'
 
-const API = 'http://localhost:3000/'
-
-// original fetch for signup
-// export const userSignup = (user) => {
-//     return async dispatch => {
-//         try {
-//            const resp = await fetch(API + 'sign_up', {
-//               method: 'POST',
-//               headers: {
-//                  'Content-Type': 'application/json',
-//                  Accept: 'application/json'
-//               },
-//               body: JSON.stringify({ user: user })
-//            })
-//            const data = await resp.json()
-//            localStorage.setItem('token', data.token)
-//            dispatch(loginUser(data))
-//         } catch (error) {
-//            console.error('Error:', error)
-//         }
-//      }
-// }
-
-
-// react query & axios (i have no idea if this will work)
-// const { isLoading: isPostingUser, mutate: postUser } = useMutation(
-//     async (user) => {
-//         return await apiClient.post(`/users`, JSON.stringify({ user: user }))
-//     },
-//     {
-//         onSuccess: (res) => {
-//             const result = {
-//                 status: res.status + '-' + res.statusText,
-//                 headers: res.headers,
-//                 data: res.data
-//             }
-
-//             localStorage.setItem(res.data.token)
-
-//             return result
-//         },    
-//         onError: (err) => {
-//             return err.response?.data || err
-//         }
-//     }
-// )
-
 export function userSignup(user) {   
    return async dispatch => {
       try {
          return await apiClient
-            .post('/users', JSON.stringify({ user: user }))
+            .post('/signup', JSON.stringify({ user: user }))
             .then((response) => {
                let data = response.data
-               localStorage.setItem('token', data.token)
+               console.log(response)
+               localStorage.setItem('token', data.token.token)
                dispatch(signupUser(data))
             })
       } catch (err) {
@@ -68,11 +22,13 @@ export function userLogin(user) {
    return async dispatch => {
       try {
          return await apiClient
-            .post('/users', JSON.stringify({ user: user }))
+            .post('/login', JSON.stringify({ user: user }))
             .then(( response ) => {
                let data = response.data
-               localStorage.setItem('token', data.token)
-               dispatch(loginUser)
+               console.log(response)
+               localStorage.setItem('token', data.token.token)
+               localStorage.setItem('token_exp', data.token.exp)
+               dispatch(loginUser(data))
             })
       } catch (err) {
          console.error(err)
@@ -80,35 +36,19 @@ export function userLogin(user) {
    }
 }
 
-// export const userLogin = (user) => {
-//     return async dispatch => {
-//         try {
-//            const resp = await fetch(API + 'login', {
-//               method: 'POST',
-//               headers: {
-//                  'Content-Type': 'application/json',
-//                  Accept: 'application/json'
-//               },
-//               body: JSON.stringify(user)
-//            })
-//            const data = await resp.json()
-//            localStorage.setItem('token', data.token)
-//            dispatch(loginUser(data))
-//         } catch (error) {
-//            console.error('Error:', error)
-//         }
-//      }
-// }
-
 export function userPersist() {
    return async dispatch => {
       const token = localStorage.token
-      if (token) {
+      const d = new Date()
+      const current_time = d.getTime()
+
+      if (token || localStorage.token_exp < current_time) {
          try {
             return await apiClient
                .get('/persist', {headers: {Authorization: `Bearer ${token}`}})
                .then(( response ) => {
                   let data = response.data
+                  console.log(data)
                   dispatch(loginUser(data))
                })
          } catch (err) {
@@ -118,27 +58,6 @@ export function userPersist() {
       }
    }
 }
-
-// export const userPersist = () => {
-//     return async dispatch => {
-//        const token = localStorage.token
-//        if (token) {
-//           try {
-//              const resp = await fetch(API + 'persist', {
-//                 method: 'GET',
-//                 headers: {
-//                    Authorization: `Bearer ${token}`
-//                 },
-//              })
-//              const data = await resp.json()
-//              dispatch(loginUser(data))
-//           } catch (error) {
-//              localStorage.removeItem('token')
-//              console.error('Error:', error)
-//           }  
-//        }
-//     }
-//  }
 
  export const signupUser = (userObj) => ({
    type: 'SIGNUP_USER',
