@@ -14,14 +14,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logoutUser, userPersist } from './store/actions/userActions'
 
 const App = () => {
-  const currentUser = useSelector((state) => state)
-  const dispatch = useDispatch
+  // const currentUser = useSelector((state) => state)
+  // const dispatch = useDispatch
 
-  useEffect(() => {
-    console.log(currentUser)
+  // useEffect(() => {
+    // console.log(currentUser)
     // const loggedInUser = currentUser
     // console.log(loggedInUser)
-  }, [])
+  // }, [])
 
   // const handleLogout = (e) => {
   //   e.preventDefault()
