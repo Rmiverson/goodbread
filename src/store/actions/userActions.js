@@ -7,8 +7,6 @@ export function userSignup(user) {
             .post('/signup', JSON.stringify({ user: user }))
             .then((response) => {
                let data = response.data
-               console.log(response)
-               localStorage.setItem('token', data.token.token)
                dispatch(signupUser(data))
             })
       } catch (err) {
@@ -24,7 +22,6 @@ export function userLogin(user) {
             .post('/login', JSON.stringify({ user: user }))
             .then(( response ) => {
                let data = response.data
-               localStorage.setItem('user', response.data)
                dispatch(loginUser(data))
             })
       } catch (err) {
