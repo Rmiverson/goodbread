@@ -1,31 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit'
-import reducer from './reducers'
+import { persistedReducer } from './reducers'
+import { persistStore } from 'redux-persist'
+import thunk from 'redux-thunk'
 
-const saveToLocalStorage = (state) => {
-    try {
-        localStorage.setItem('state', JSON.stringify(state))
-        console.log(localStorage)
-    } catch (error) {
-        console.error(error)
-    }
+const logger = store => next => action => {
+    console.group(action.type)
+    console.info('dispatching', action)
+    let result = next(action)
+    console.log('next state', store.getState())
+    console.groupEnd()
+    return result
 }
 
-const loadFromLocalStorage = () => {
-    try {
-        const stateStr = localStorage.getItem('state')
-        return stateStr ? JSON.parse(stateStr) : undefined
-    } catch (error) {
-        console.error(error)
-        return undefined
-    }
-}
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: [thunk, logger],
+    devTools: process.env.NODE_ENV !== 'production'
+ })
 
-const persistedStore = loadFromLocalStorage()
-
-const store = configureStore({ reducer: reducer, middleware: (getDefaultMiddleware) => getDefaultMiddleware() }, persistedStore )
-
-store.subscribe(() => {
-    saveToLocalStorage(store.getState())
-})
-
-export default store
+export const persistor = persistStore(store)
