@@ -1,8 +1,16 @@
+import storage from 'redux-persist/lib/storage'
+import persistReducer from 'redux-persist/es/persistReducer'
+
+const persistConfig = {
+    key: 'root',
+    storage
+}
+
 export const initialState = {
     user: {}
 }
 
-export default function reducer( state = initialState, action) {
+export function appReducer( state = initialState, action) {
     switch (action.type) {
         case 'SIGNUP_USER':
             return {...state, user: action.payload}
@@ -14,3 +22,5 @@ export default function reducer( state = initialState, action) {
             return state
     }
 }
+
+export const persistedReducer = persistReducer(persistConfig, appReducer)
