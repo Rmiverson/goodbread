@@ -1,5 +1,6 @@
 import './scss/App.css'
 
+import { useSelector } from 'react'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Folder from './containers/Folder'
 import Home from './containers/Home'
@@ -8,11 +9,13 @@ import Recipe from './containers/Recipe'
 import LoginSignup from './containers/LoginSignup'
 import SubFolder from './containers/SubFolder'
 import ProtectedRoute from './containers/ProtectedRoute'
+import Nav from './containers/Nav'
 
-const App = () => {
-
+const App = () => {  
   return (
-    <BrowserRouter>
+    <>
+      <Nav />
+      <BrowserRouter>
         <Routes>
           <Route index 
           element={
@@ -43,7 +46,8 @@ const App = () => {
           }/>
           <Route path='*' element={<div>404 not found</div>} />
         </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </>
   )
 }
 
