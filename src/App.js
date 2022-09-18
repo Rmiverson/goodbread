@@ -1,6 +1,4 @@
 import './scss/App.css'
-
-import { useSelector } from 'react'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import Folder from './containers/Folder'
 import Home from './containers/Home'
