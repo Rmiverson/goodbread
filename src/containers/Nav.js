@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser } from '../store/actions/userActions'
 
@@ -11,8 +11,8 @@ const Nav = () => {
         if (currentUser.id) {
             return(
                 <nav>
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/profile">Profile</NavLink>
+                    <Link to="/">Home</Link>
+                    <Link to="/profile">Profile</Link>
                     <button onClick={dispatch(logoutUser)}>Logout</button>
                 </nav>                
             )         
