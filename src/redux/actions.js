@@ -30,6 +30,8 @@ export function userLogin(user) {
    }
 }
 
+export function userLogout(dispatch) {dispatch(logoutUser())}
+
  export const signupUser = (userObj) => ({
    type: 'SIGNUP_USER',
    payload: userObj

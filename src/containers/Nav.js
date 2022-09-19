@@ -1,14 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { logoutUser } from '../redux/actions'
+import { userLogout } from '../redux/actions'
 
 const Nav = () => {
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.user)
 
     const handleLogout = () => {
-        dispatch(logoutUser)
+        dispatch(userLogout)
     }
 
     const renderNav = () => {
@@ -17,7 +17,7 @@ const Nav = () => {
                 <>
                     <Link to="/">Home</Link>
                     <Link to="/profile">Profile</Link>
-                    <Link to="/login-signup" onClick={handleLogout()}>Logout</Link>
+                    <Link to="/login-signup" onClick={handleLogout}>Logout</Link>
                 </>
             )
         } else {

@@ -16,19 +16,12 @@ export const appReducer = ( state = initialState, action) => {
             return {...state, user: action.payload}
         case 'LOGIN_USER':
             return {...state, user: action.payload}
+        case 'LOGOUT_USER':
+            storage.removeItem('persist:root')
+            return {...state, user: {}}
         default:
             return state
     }
 }
 
-const rootReducer = (state, action) => {
-    if (action.type === 'LOGOUT_USER') {
-        console.log('hit')
-        storage.removeItem('persist:root')
-        return appReducer(undefined, action)
-    }
-    
-    return appReducer(state, action)
-}
-
-export const persistedReducer = persistReducer(persistConfig, rootReducer)
+export const persistedReducer = persistReducer(persistConfig, appReducer)
