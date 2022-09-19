@@ -7,18 +7,17 @@ const Nav = () => {
     const dispatch = useDispatch()
     const currentUser = useSelector((state) => state.user)
 
-    const handleLogout = (e) => {
-        e.preventDefault()
+    const handleLogout = () => {
         dispatch(logoutUser)
     }
 
     const renderNav = () => {
-        if (currentUser) {
+        if (currentUser.id) {
             return (
                 <>
                     <Link to="/">Home</Link>
                     <Link to="/profile">Profile</Link>
-                    <button onClick={handleLogout}>Logout</button>
+                    <Link to="/login-signup" onClick={handleLogout()}>Logout</Link>
                 </>
             )
         } else {

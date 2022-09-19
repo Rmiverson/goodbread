@@ -23,6 +23,7 @@ export const appReducer = ( state = initialState, action) => {
 
 const rootReducer = (state, action) => {
     if (action.type === 'LOGOUT_USER') {
+        console.log('hit')
         storage.removeItem('persist:root')
         return appReducer(undefined, action)
     }
