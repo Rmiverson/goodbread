@@ -1,5 +1,5 @@
 import './scss/App.css'
-import { Routes, Route, BrowserRouter } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import Folder from './containers/Folder'
 import Home from './containers/Home'
 import Profile from './containers/Profile'
@@ -11,9 +11,8 @@ import Nav from './containers/Nav'
 
 const App = () => {  
   return (
-    <>
+    <div className='App'>
       <Nav />
-      <BrowserRouter>
         <Routes>
           <Route index 
           element={
@@ -44,8 +43,7 @@ const App = () => {
           }/>
           <Route path='*' element={<div>404 not found</div>} />
         </Routes>
-      </BrowserRouter>
-    </>
+    </div>
   )
 }
 
