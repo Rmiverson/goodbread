@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import { userLogin, userSignup } from '../store/actions/userActions'
+import { userLogin, userSignup } from '../redux/actions'
 
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'

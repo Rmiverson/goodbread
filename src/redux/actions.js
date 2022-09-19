@@ -1,4 +1,4 @@
-import apiClient from '../../http-common'
+import apiClient from '../http-common'
 
 export function userSignup(user) {   
    return async dispatch => {
