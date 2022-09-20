@@ -18,7 +18,7 @@ const CreateRecipe = () => {
 
    /* 
    TODO: adjust formatting and inputs to match api schema
-        *contents: {heading: "", text: ""} => textbox: {title: "", text_content}
+        // *contents: {heading: "", text: ""} => textbox: {title: "", text_content}
         *ingredients: [{name: "", amount: ""}] => unordered_list: {title: "", list_items: []}
         *instructions: [""] => ordered_list: {title: "", list_items: []}
         *tags: [""] => tags: [{label: ""}]
@@ -59,13 +59,13 @@ const CreateRecipe = () => {
         setData({...data, textboxes: data.textboxes.filter((s, sIndex) => index !== sIndex)})
     }
 
-   // ingredients
-    const handleIngredientNameChange = (index) => (e) => {
-        const newIngredients = data.ingredients.map((ingredient, sIndex) => {
-            if (index !== sIndex) return ingredient
-            return {...ingredient, name: e.target.value}
+   // ingredients => unordered_list
+    const handleUnorderedListTitleChange = (index) => (e) => {
+        const newUnorderedList = data.unorderedLists.map((unorderedList, sIndex) => {
+            if (index !== sIndex) return unorderedList
+            return {...unorderedList, name: e.target.value}
         })
-        setData({...data, ingredients: newIngredients})
+        setData({...data, unorderedLists: newUnorderedList})
     }
 
     const handleIngredientAmountChange = (index) => (e) => {
@@ -74,6 +74,24 @@ const CreateRecipe = () => {
             return {...ingredient, amount: e.target.value}
         })
         setData({...data, ingredients: newIngredients})
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    const handleUnorderedListListItemChange = (index) => (e) => {
+        const newUnorderedList = data.unorderedLists.map((unorderedList, sIndex) => {
+            if (index !== sIndex) return unorderedList
+            return {...unorderedList, listItems: [...listItems, ]}
+        })
     }
 
     const handleAddIngredient = () => {
