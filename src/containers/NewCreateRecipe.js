@@ -39,6 +39,9 @@ const CreateRecipe =  () => {
     // title handler
     // description handler
 
+    // textboxes, ULs, OLs, and tags should be separated out into individual components 
+    // props for each of these should pass down the respective state setters
+
     // textbox title change handler
     // textbox text_content change handler
     // textbox add
@@ -62,6 +65,11 @@ const CreateRecipe =  () => {
     // tag add
     // tag remove
 
+    // submit recipe handler
+
+    // axios/react-query functions to post recipe to api
+    // on complete set new recipe id and reroute to the recipes display page
+
     return(
         <div className='create-recipe-page'>
             <form id='create-recipe-form' onSubmit={submitRecipe}>
@@ -71,9 +79,14 @@ const CreateRecipe =  () => {
                 <label>Description</label>
                 <input required type='text' name='description' />
 
+                {/* buttons to add each type of component */}
 
+                {/* map components here with a switch case */}
+                {/* render each component element based on type */}
             </form>
 
+            <input form='create-recipe-form' type='submit' value='Submit Recipe' />
+            {/* reroute page to newly created recipe */}
         </div>
     )
 }    
