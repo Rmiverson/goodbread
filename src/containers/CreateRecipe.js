@@ -76,17 +76,6 @@ const CreateRecipe = () => {
         setData({...data, ingredients: newIngredients})
     }
 
-
-
-
-
-
-
-
-
-
-
-
     const handleUnorderedListListItemChange = (index) => (e) => {
         const newUnorderedList = data.unorderedLists.map((unorderedList, sIndex) => {
             if (index !== sIndex) return unorderedList
