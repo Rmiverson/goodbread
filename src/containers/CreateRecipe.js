@@ -32,8 +32,33 @@ const CreateRecipe = () => {
 //          setPostId(recipe.id)
 //          setSubmitted(true)
 //       }
-//    )    
-   
+//    )   
+
+    // textboxs
+    const handleTextboxTitleChange = (index) => (e) => {
+        const newTextbox = data.textboxes.map((textbox, sIndex) => {
+            if (index !== sIndex) return textbox
+            return {...textbox, title: e.target.value}
+        })
+        setData({...data, textboxes: newTextbox})
+    }
+
+    const handleTextboxTextContentChange = (index) => (e) => {
+        const newTextbox = data.textboxes.map((textbox, sIndex) => {
+            if (index !== sIndex) return textbox
+            return {...textbox, text_content: e.target.value}
+        })
+        setData({...data, textboxes: newTextbox})
+    }
+
+    const handleAddTextbox = () => {
+        setData({...data, textboxes: [...data.textboxes, {title: '', text_content: ''}]})
+    }  
+
+    const handleRemoveTextbox = (index) => () => {
+        setData({...data, textboxes: data.textboxes.filter((s, sIndex) => index !== sIndex)})
+    }
+
    // ingredients
     const handleIngredientNameChange = (index) => (e) => {
         const newIngredients = data.ingredients.map((ingredient, sIndex) => {
@@ -93,30 +118,7 @@ const CreateRecipe = () => {
         setData({...data, tags: data.tags.filter((s, sIndex) => index !== sIndex)})
     }
 
-    // content
-    const handleContentsHeadingChange = (index) => (e) => {
-        const newContents = data.contents.map((content, sIndex) => {
-            if (index !== sIndex) return content
-            return {...content, heading: e.target.value}
-        })
-        setData({...data, contents: newContents})
-    }
 
-    const handleContentsTextChange = (index) => (e) => {
-        const newContents = data.contents.map((content, sIndex) => {
-            if (index !== sIndex) return content
-            return {...content, text: e.target.value}
-        })
-        setData({...data, contents: newContents})
-    }
-
-    const handleAddContent = () => {
-        setData({...data, contents: [...data.contents, {heading: '', text: ''}]})
-    }
-
-    const handleRemoveContent = (index) => () => {
-        setData({...data, contents: data.contents.filter((s, sIndex) => index !== sIndex)})
-    }
 
     const renderReRoute = () => {
       return (submitted && <Navigate to={`/recipe/${recipeId}`} />)
