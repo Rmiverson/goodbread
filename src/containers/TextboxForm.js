@@ -7,12 +7,12 @@ const TextboxForm = (props) => {
                 type='text'
                 placeholder='Title'
                 value={props.title}
-                onChange={props.handleTextboxTitleChange}
+                onChange={props.handleTextboxTitleChange(props.key)}
             />
             <input 
                 type='text'
                 value={props.text_content}
-                onChange={props.handleTextboxTextContentChange}
+                onChange={props.handleTextboxTextContentChange(props.key)}
             />
             <button type='button' onClick={props.removeTextbox}>-</button>
         </div>
