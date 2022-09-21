@@ -1,274 +1,101 @@
-import React, { useState, useCallback } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Navigate } from 'react-router-dom'
-// import { newPostFetch } from '../store/actions/postActions'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-const CreateRecipe = () => {
-   const [submitted, setSubmitted] = useState(false)
-   const [recipeId, setRecipeId] = useState('')
-   const [data, setData] = useState({
-      contents: [{heading: '', text: ''}],
-      ingredients: [{name: '', amount: 0}],
-      instructions: [''],
-      tags: ['']
-   })
+const CreateRecipe =  () => {
+    const [submitted, setSubmitted] = useState(false)
+    const [recipeId, setRecipeId] = useState()
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [components, setComponents] = useState([])
+    const [tags, setTags] = useState([])
 
-   const currentUser = useSelector((state) => state.user)
-   const dispatch = useDispatch()
+    /* 
+    example JSON input for backend
+    [
+        {
+            "type": "ul",
+            "title":"ul_test",
+            "list_items":[
+                "1",
+                "2"    
+            ]
+        },
+        {
+            "type": "ol",
+            "title":"ol_test",
+            "list_items":[
+                "1",
+                "2"    
+            ]
+        },
+        {
+            "type": "textbox",
+            "title":"textbox_test",
+            "text_content": "test text content."
+        }
+    ]
+    */
 
-   /* 
-   TODO: adjust formatting and inputs to match api schema
-        // *contents: {heading: "", text: ""} => textbox: {title: "", text_content}
-        *ingredients: [{name: "", amount: ""}] => unordered_list: {title: "", list_items: []}
-        *instructions: [""] => ordered_list: {title: "", list_items: []}
-        *tags: [""] => tags: [{label: ""}]
-        *++ description: ""
-    TODO: get post working with axios + React-query
-    TODO: get navigate to work, and redirect to the created post
-   */
+    // title handler
+    const onTitleChange = (e) => setTitle(e.target.value)
 
-//    const updateIdCallback = useCallback(
-//       (recipe) => {
-//          setPostId(recipe.id)
-//          setSubmitted(true)
-//       }
-//    )   
+    // description handler
+    const onDescChange = (e) => {setDescription(e.target.value)}
 
-    // textboxs
-    const handleTextboxTitleChange = (index) => (e) => {
-        const newTextbox = data.textboxes.map((textbox, sIndex) => {
-            if (index !== sIndex) return textbox
-            return {...textbox, title: e.target.value}
-        })
-        setData({...data, textboxes: newTextbox})
-    }
+    // textboxes, ULs, OLs, and tags should be separated out into individual components 
+    // props for each of these should pass down the respective state setters
 
-    const handleTextboxTextContentChange = (index) => (e) => {
-        const newTextbox = data.textboxes.map((textbox, sIndex) => {
-            if (index !== sIndex) return textbox
-            return {...textbox, text_content: e.target.value}
-        })
-        setData({...data, textboxes: newTextbox})
-    }
+    // textbox title change handler
+    // textbox text_content change handler
+    // textbox add
+    // textbox remove
 
-    const handleAddTextbox = () => {
-        setData({...data, textboxes: [...data.textboxes, {title: '', text_content: ''}]})
-    }  
+    // unordered_list title change handler
+    // unordered_list list_item change handler
+    // unordered_list list_item add
+    // unordered_list list_item remove
+    // unordered_list add
+    // unordered_list remove
 
-    const handleRemoveTextbox = (index) => () => {
-        setData({...data, textboxes: data.textboxes.filter((s, sIndex) => index !== sIndex)})
-    }
+    // ordered_list title change handler
+    // ordered_list list_item change handler
+    // ordered_list list_item add
+    // ordered_list list_item remove
+    // ordered_list add
+    // ordered_list remove
 
-   // ingredients => unordered_list
-    const handleUnorderedListTitleChange = (index) => (e) => {
-        const newUnorderedList = data.unorderedLists.map((unorderedList, sIndex) => {
-            if (index !== sIndex) return unorderedList
-            return {...unorderedList, name: e.target.value}
-        })
-        setData({...data, unorderedLists: newUnorderedList})
-    }
+    // tag change handler
+    // tag add
+    // tag remove
 
-    const handleIngredientAmountChange = (index) => (e) => {
-        const newIngredients = data.ingredients.map((ingredient, sIndex) => {
-            if (index !== sIndex) return ingredient
-            return {...ingredient, amount: e.target.value}
-        })
-        setData({...data, ingredients: newIngredients})
-    }
-
-    const handleUnorderedListListItemChange = (index) => (e) => {
-        const newUnorderedList = data.unorderedLists.map((unorderedList, sIndex) => {
-            if (index !== sIndex) return unorderedList
-            return {...unorderedList, listItems: [...listItems, ]}
-        })
-    }
-
-    const handleAddIngredient = () => {
-        setData({...data, ingredients: [...data.ingredients, {name: '', amount: 0}]})
-    }
-
-    const handleRemoveIngredient = (index) => () => {
-        setData({...data, ingredients: data.ingredients.filter((s, sIndex) => index !== sIndex)})
-    }
-
-    // instructions
-    const handleInstructionChange = (index) => (e) => {
-        const newInstructions = data.instructions.map((instruction, sIndex) => {
-            if (index !== sIndex) return instruction
-            return e.target.value
-        })
-        setData({...data, instructions: newInstructions})
-    }
-
-    const handleAddInstruction = () => {
-        setData({...data, instructions: [...data.instructions, '']})
-    }
-
-    const handleRemoveInstruction = (index) => () => {
-        setData({...data, instructions: data.instructions.filter((s, sIndex) => index !== sIndex)})
-    }
-
-    // tags
-    const handleTagChange = (index) => (e) => {
-        const newTags = data.tags.map((tag, sIndex) => {
-            if (index !== sIndex) return tag
-            return e.target.value            
-        })
-        setData({...data, tags: newTags})
-    }
-
-    const handleAddTag = () => {
-        setData({...data, tags: [...data.tags, '']})
-    }
-
-    const handleRemoveTag = (index) => () => {
-        setData({...data, tags: data.tags.filter((s, sIndex) => index !== sIndex)})
-    }
-
-
-
-    const renderReRoute = () => {
-      return (submitted && <Navigate to={`/recipe/${recipeId}`} />)
-   }
-
+    // submit recipe handler
     const submitRecipe = (e) => {
         e.preventDefault()
-
-        let recipeData = {
-            user_id: currentUser.id,
-            title: e.target.title.value,
-            contents: data.contents,
-            ingredients: data.ingredients,
-            instructions: data.instructions,
-            tags: data.tags
-        }
-
-        console.log(recipeData)
+        console.log('submit')
     }
 
-    return (
+    // axios/react-query functions to post recipe to api
+    // on complete set new recipe id and reroute to the recipes display page
+
+    return(
         <div className='create-recipe-page'>
             <form id='create-recipe-form' onSubmit={submitRecipe}>
                 <label>Title</label>
-                <input required type='text' name='title' defaultValue=''  />
+                <input required type='text' name='title' value={title} onChange={onTitleChange} />
 
-                {/* content */}
-                <label>Text Content</label>
-                {data.contents.map((content, index) => (
-                    <div key={index} className='content'>
-                        <input 
-                            type='text'
-                            placeholder='heading'
-                            value={content.heading}
-                            onChange={handleContentsHeadingChange(index)}
-                        />
-                        <input 
-                            type='text'
-                            placeholder={'text'}
-                            value={content.text}
-                            onChange={handleContentsTextChange(index)}
-                        />
-                        <button
-                            type='button'
-                            onClick={handleRemoveContent(index)}
-                        >
-                            -
-                        </button>
-                    </div>
-                ))}
-                <button
-                    type='button'
-                    onClick={handleAddContent}
-                >
-                    Add Text Content
-                </button>
+                <label>Description</label>
+                <input required type='text' name='description' value={description} onChange={onDescChange} />
 
-                {/* ingredients */}
-                <label>Ingredients</label>
-                {data.ingredients.map((ingredient, index) => (
-                    <div key={index} className='ingredient'>
-                        <input
-                            type='text'
-                            placeholder={`Ingredient #${index + 1}`}
-                            value={ingredient.name}
-                            onChange={handleIngredientNameChange(index)}
-                        />
-                        <input
-                            type='number'
-                            placeholder={0}
-                            value={ingredient.amount}
-                            onChange={handleIngredientAmountChange(index)}
-                        />
-                        <button
-                            type='button'
-                            onClick={handleRemoveIngredient(index)}
-                        >
-                            -
-                        </button>
-                    </div>
-                ))}
-                <button
-                    type='button'
-                    onClick={handleAddIngredient}
-                >
-                    Add Ingredient
-                </button>
+                {/* buttons to add each type of component */}
 
-                {/*  Instructions  */}
-                <label>instructions</label>
-                {data.instructions.map((instruction, index) => (
-                    <div key={index} className='instruction'>
-                        <input
-                            type='text'
-                            placeholder={`Instruction #${index + 1}`}
-                            value={instruction}
-                            onChange={handleInstructionChange(index)}
-                        />
-                        <button
-                            type='button'
-                            onClick={handleRemoveInstruction(index)}
-                        >
-                            -
-                        </button>
-                    </div>
-                ))}
-                <button
-                    type='button'
-                    onClick={handleAddInstruction}
-                >
-                    Add Instruction
-                </button>
+                {/* map components here with a switch case */}
+                {/* render each component element based on type */}
+            </form>
 
-                {/* Tags */}
-                <label>Tags</label>
-                {data.tags.map((tag, index) => (
-                    <div key={index} className='tags'> 
-                        <input
-                            type='text'
-                            placeholder={`Tag #${index + 1}`}
-                            value={tag}
-                            onChange={handleTagChange(index)}
-                        />
-                        <button
-                            type='button'
-                            onClick={handleRemoveTag(index)}
-                        >
-                            -
-                        </button>
-                    </div>
-                ))}
-                <button
-                    type='button'
-                    onClick={handleAddTag}
-                >
-                    Add Tag
-                </button>
-            </form>   
-            
             <input form='create-recipe-form' type='submit' value='Submit Recipe' />
-            {/* {renderReRoute()} */}
+            {/* reroute page to newly created recipe */}
         </div>
     )
-}
+}    
 
 export default CreateRecipe
