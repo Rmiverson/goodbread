@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
+import TextboxForm from './TextboxForm'
 
 const CreateRecipe =  () => {
     const [submitted, setSubmitted] = useState(false)
@@ -45,10 +46,23 @@ const CreateRecipe =  () => {
     // textboxes, ULs, OLs, and tags should be separated out into individual components 
     // props for each of these should pass down the respective state setters
 
-    // textbox title change handler
-    // textbox text_content change handler
     // textbox add
+    const addTextbox = () => {
+        
+    }
+
     // textbox remove
+    const removeTextbox = () => {
+
+    }
+
+    const handleTextboxTitleChange = (e) => {
+
+    }
+
+    const handleTextboxTextContentChange = (e) => {
+
+    }
 
     // unordered_list title change handler
     // unordered_list list_item change handler
@@ -87,9 +101,19 @@ const CreateRecipe =  () => {
                 <input required type='text' name='description' value={description} onChange={onDescChange} />
 
                 {/* buttons to add each type of component */}
+                <div className='add-component-ribbon'>
+                    <button>Add Textbox</button>
+                </div>
 
                 {/* map components here with a switch case */}
                 {/* render each component element based on type */}
+                {components.map((component, index) => {
+                    switch(component.type) {
+                        case 'textbox':
+                            <TextboxForm key={index}/>
+                            break
+                    }                    
+                })}
             </form>
 
             <input form='create-recipe-form' type='submit' value='Submit Recipe' />
