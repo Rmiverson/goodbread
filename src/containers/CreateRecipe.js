@@ -142,6 +142,32 @@ const CreateRecipe =  () => {
                                     <button type='button' onClick={removeTextbox(index)}>-</button>
                                 </div>                                
                             )
+                        case 'ul':
+                            return(
+                                <div key={index} className='ul-form'>
+                                    <input 
+                                        type='text'
+                                        placeholder='Title'
+                                        value={component.title}
+                                        onChange={handleUlTitleChange(index)}
+                                    />
+
+                                    {component.list_items.map((list_item, sIndex) => (
+                                        <div key={sIndex}> 
+                                            <input 
+                                                type='text'
+                                                placeholder='Item Text'
+                                                value={list_item}
+                                                onChange={onListItemChange(index, sIndex)}
+                                            />
+
+                                            <button type='button'>-</button>
+                                        </div>
+                                    ))}
+
+                                    <button type='button'>-</button>
+                                </div>
+                            )
                     }                    
                 })}
             </form>
