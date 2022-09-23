@@ -2,22 +2,22 @@ import React from 'react'
 
 const TextboxForm = (props) => {
     return (
-        <div key={index} className='textbox-form'>
+        <div className='textbox-form'>
             <label>Text Box Title</label>
             <input 
                 type='text'
                 placeholder='Title'
-                value={component.title}
-                onChange={handleComponentTitleChange(index)}
+                value={props.component.title}
+                onChange={props.handleComponentTitleChange(props.index)}
             />
 
             <label>Text Box Content</label>
             <input 
                 type='text'
-                value={component.text_content}
-                onChange={handleTextboxTextContentChange(index)}
+                value={props.component.text_content}
+                onChange={props.handleTextboxTextContentChange(props.index)}
             />
-            <button type='button' onClick={removeComponent(index)}>-</button>
+            <button type='button' onClick={props.removeComponent(props.index)}>-</button>
         </div>      
     )
 }

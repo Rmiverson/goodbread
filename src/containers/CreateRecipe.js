@@ -107,9 +107,6 @@ const CreateRecipe = () => {
         console.log(data)
     }
 
-    // axios/react-query functions to post recipe to api
-    // on complete set new recipe id and reroute to the recipes display page
-
     return(
         <div className='create-recipe-page'>
             <form id='create-recipe-form' onSubmit={submitRecipe}>
@@ -132,23 +129,14 @@ const CreateRecipe = () => {
                     switch(component.type) {
                         case 'textbox':
                             return(
-                                <div key={index} className='textbox-form'>
-                                    <label>Text Box Title</label>
-                                    <input 
-                                        type='text'
-                                        placeholder='Title'
-                                        value={component.title}
-                                        onChange={handleComponentTitleChange(index)}
-                                    />
-
-                                    <label>Text Box Content</label>
-                                    <input 
-                                        type='text'
-                                        value={component.text_content}
-                                        onChange={handleTextboxTextContentChange(index)}
-                                    />
-                                    <button type='button' onClick={removeComponent(index)}>-</button>
-                                </div>                                
+                                <TextboxForm
+                                    key={index}
+                                    index={index}
+                                    component={component}
+                                    handleComponentTitleChange={handleComponentTitleChange} 
+                                    handleTextboxTextContentChange={handleTextboxTextContentChange} 
+                                    removeComponent={removeComponent} 
+                                />
                             )
                         case 'ul':
                             return(
