@@ -64,9 +64,9 @@ const CreateRecipe = () => {
     const handleListItemChange = (index, zIndex) => (e) => {
         const newComponents = components.map((component, sIndex) => {
             if (index !== sIndex) return component
-            const newComponentListItems = component.list_items.map((list_item, xIndex) => {
-            if (zIndex !== xIndex) return list_item
-            return e.target.value
+                const newComponentListItems = component.list_items.map((list_item, xIndex) => {
+                if (zIndex !== xIndex) return list_item
+                    return e.target.value
             })
             return {...component, list_items: newComponentListItems}
         })
