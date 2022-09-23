@@ -18,7 +18,7 @@ const CreateRecipe =  () => {
             "title":"ul_test",
             "list_items":[
                 "1",
-                "2"    
+                "2"
             ]
         },
         {
@@ -26,7 +26,7 @@ const CreateRecipe =  () => {
             "title":"ol_test",
             "list_items":[
                 "1",
-                "2"    
+                "2"
             ]
         },
         {
@@ -46,23 +46,25 @@ const CreateRecipe =  () => {
     // textboxes, ULs, OLs, and tags should be separated out into individual components 
     // props for each of these should pass down the respective state setters
 
-    // textbox add
-    const addTextbox = () => {
-        setComponents([...components, {type: 'textbox', title: '', text_content: ''}])
-    }
-
-    // textbox remove
-    const removeTextbox = (index) => () => {
+    
+    // component remove
+    const removeComponent = (index) => () => {
         setComponents([components.filter((component, sIndex) => index !== sIndex)])
-    }
-
-    // textbox title change
-    const handleTextboxTitleChange = (index) => (e) => {
+    }    
+    
+    // component title change
+    const handleComponentTitleChange = (index) => (e) => {
         const newComponents = components.map((component, sIndex) => {
             if (index !== sIndex) return component
             return {...component, title: e.target.value}
         })
         setComponents(newComponents)
+    }
+
+    
+    // textbox add
+    const addTextbox = () => {
+        setComponents([...components, {type: 'textbox', title: '', text_content: ''}])
     }
 
     // textbox text content change
@@ -74,12 +76,17 @@ const CreateRecipe =  () => {
         setComponents(newComponents)
     }
 
-    // unordered_list title change handler
     // unordered_list list_item change handler
     // unordered_list list_item add
     // unordered_list list_item remove
+    const removeListItem = () => {
+        
+    }
+
     // unordered_list add
-    // unordered_list remove
+    const addUl = () => {
+        setComponents([...components, {type: 'ul', title:'', list_items: ['']}])
+    }
 
     // ordered_list title change handler
     // ordered_list list_item change handler
@@ -119,6 +126,7 @@ const CreateRecipe =  () => {
                 {/* buttons to add each type of component */}
                 <div className='add-component-ribbon'>
                     <button type='button' onClick={addTextbox}>Add Textbox</button>
+                    <button type='button' onClick={addUl}>Add Bullet List</button>
                 </div>
 
                 {/* map components here with a switch case */}
@@ -128,44 +136,51 @@ const CreateRecipe =  () => {
                         case 'textbox':
                             return(
                                 <div key={index} className='textbox-form'>
+                                    <label>Text Box Title</label>
                                     <input 
                                         type='text'
                                         placeholder='Title'
                                         value={component.title}
-                                        onChange={handleTextboxTitleChange(index)}
+                                        onChange={handleComponentTitleChange(index)}
                                     />
+
+                                    <label>Text Box Content</label>
                                     <input 
                                         type='text'
                                         value={component.text_content}
                                         onChange={handleTextboxTextContentChange(index)}
                                     />
-                                    <button type='button' onClick={removeTextbox(index)}>-</button>
+                                    <button type='button' onClick={removeComponent(index)}>-</button>
                                 </div>                                
                             )
                         case 'ul':
                             return(
                                 <div key={index} className='ul-form'>
+                                    <label>Bullet List Title</label>
                                     <input 
                                         type='text'
                                         placeholder='Title'
                                         value={component.title}
-                                        onChange={handleUlTitleChange(index)}
+                                        onChange={handleComponentTitleChange(index)}
                                     />
 
-                                    {component.list_items.map((list_item, sIndex) => (
-                                        <div key={sIndex}> 
-                                            <input 
-                                                type='text'
-                                                placeholder='Item Text'
-                                                value={list_item}
-                                                onChange={onListItemChange(index, sIndex)}
-                                            />
+                                    <button type='button'>Add List Item</button>
+                                    <ul>
+                                        {component.list_items.map((list_item, zIndex) => (
+                                            <li key={zIndex}> 
+                                                <input 
+                                                    type='text'
+                                                    placeholder='Item Text'
+                                                    value={list_item}
+                                                    // onChange={onListItemChange(index, zIndex)}
+                                                />
 
-                                            <button type='button'>-</button>
-                                        </div>
-                                    ))}
+                                                <button type='button' onClick={removeListItem(index, zIndex)}>-</button>
+                                            </li>
+                                        ))}                                        
+                                    </ul>
 
-                                    <button type='button'>-</button>
+                                    <button type='button' onClick={removeComponent(index)}>-</button>
                                 </div>
                             )
                     }                    
