@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import OlForm from '../components/OlForm'
 // import { useSelector } from 'react-redux'
 import TextboxForm from '../components/TextboxForm'
 
@@ -140,33 +141,16 @@ const CreateRecipe = () => {
                             )
                         case 'ul':
                             return(
-                                <div key={index} className='ul-form'>
-                                    <label>Bullet List Title</label>
-                                    <input 
-                                        type='text'
-                                        placeholder='List Title'
-                                        value={component.title}
-                                        onChange={handleComponentTitleChange(index)}
-                                    />
-
-                                    <button type='button' onClick={addListItem(index)}>Add List Item</button>
-                                    <ul>
-                                        {component.list_items.map((list_item, zIndex) => (
-                                        <li key={zIndex}> 
-                                            <input 
-                                                type='text'
-                                                placeholder='Item Text'
-                                                value={list_item}
-                                                onChange={handleListItemChange(index, zIndex)}
-                                            />
-
-                                            <button type='button' onClick={removeListItem(index, zIndex)}>-</button>
-                                        </li>
-                                        ))}                                        
-                                    </ul>
-
-                                    <button type='button' onClick={removeComponent(index)}>Remove Bullet List</button>
-                                </div>
+                                <OlForm 
+                                    key={index}
+                                    index={index}
+                                    component={component}
+                                    handleComponentTitleChange={handleComponentTitleChange}
+                                    addListItem={addListItem}
+                                    handleListItemChange={handleListItemChange}
+                                    removeListItem={removeListItem}
+                                    removeComponent={removeComponent}
+                                />
                             )
                         case 'ol':
                             return(
