@@ -77,10 +77,30 @@ const CreateRecipe =  () => {
     }
 
     // unordered_list list_item change handler
+    const handleListItemChange = (index, zIndex) => (e) => {
+        const newComponents = components.map((component, sIndex) => {
+            if (index !== sIndex) return component
+            const newComponentListItems = component.list_items.map((list_item, xIndex) => {
+                if (zIndex !== xIndex) return list_item
+                return e.target.value
+            })
+            return {...component, list_items: newComponentListItems}
+        })
+        setComponents(newComponents)
+    }
+
     // unordered_list list_item add
+    const addListItem = (index) => () => {
+        const newComponents = components.map((component, sIndex) => {
+            if (index !== sIndex) return component
+            return {...component, list_items: [...component.list_items, '']}
+        })
+        setComponents(newComponents)
+    }
+
     // unordered_list list_item remove
-    const removeListItem = () => {
-        
+    const removeListItem = (index, zIndex) => () => {
+
     }
 
     // unordered_list add
@@ -164,7 +184,7 @@ const CreateRecipe =  () => {
                                         onChange={handleComponentTitleChange(index)}
                                     />
 
-                                    <button type='button'>Add List Item</button>
+                                    <button type='button' onClick={addListItem(index)}>Add List Item</button>
                                     <ul>
                                         {component.list_items.map((list_item, zIndex) => (
                                             <li key={zIndex}> 
@@ -172,7 +192,7 @@ const CreateRecipe =  () => {
                                                     type='text'
                                                     placeholder='Item Text'
                                                     value={list_item}
-                                                    // onChange={onListItemChange(index, zIndex)}
+                                                    onChange={handleListItemChange(index, zIndex)}
                                                 />
 
                                                 <button type='button' onClick={removeListItem(index, zIndex)}>-</button>
