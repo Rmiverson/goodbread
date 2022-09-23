@@ -16,7 +16,7 @@ const CreateRecipe =  () => {
    // description handler
    const onDescChange = (e) => setDescription(e.target.value)
 
-   
+
    // textboxes, ULs, OLs, and tags should be separated out into individual components 
    // props for each of these should pass down the respective state setters
 
@@ -122,6 +122,7 @@ const CreateRecipe =  () => {
                <div className='add-component-ribbon'>
                   <button type='button' onClick={addTextbox}>Add Textbox</button>
                   <button type='button' onClick={addUl}>Add Bullet List</button>
+                  <button type='button' onClick={addOl}>Add Numbered List</button>
                </div>
 
                {/* map components here with a switch case */}
