@@ -10,7 +10,7 @@ const CreateRecipe = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [components, setComponents] = useState([])
-    const [tags, setTags] = useState([])
+    const [tags, setTags] = useState([''])
 
     // title handler
     const handleTitleChange = (e) => setTitle(e.target.value)
@@ -74,15 +74,36 @@ const CreateRecipe = () => {
     const removeListItem = (targetComponentIndex, targetListItemIndex) => () => {
         const newComponents = components.map((component, componentIndex) => {
             if (targetComponentIndex !== componentIndex) return component
-            return {...component, list_items: component.list_items.filter((list_item, listItemIndex) => targetListItemIndex !== listItemIndex)}
+            if (component.list_items.length <= 1) {
+                console.error('Lists must have at least one item.')
+                return component
+            } else {
+                return {...component, list_items: component.list_items.filter((list_item, listItemIndex) => targetListItemIndex !== listItemIndex)}
+            }
         })
         setComponents(newComponents)
     }
 
     // tag change handler
+    const handleTagChange = (targetIndex) => (e) => {
+        const newTags = tags.map((tag, tagIndex) => {
+            if (targetIndex !== tagIndex) return tag
+            return e.target.value
+        })
+        setTags(newTags)
+    }
 
     // tag add
+    const addTag = () => setTags([...tags, ''])
+
     // tag remove
+    const removeTag = (targetIndex) => () => {
+        if (tags.length <= 1) {
+            console.error('Must have at least one tag.')
+        } else {
+            setTags(tags.filter((tag, tagIndex) => targetIndex !== tagIndex))
+        }
+    }
 
     // submit recipe handler
     const submitRecipe = (e) => {
@@ -153,8 +174,28 @@ const CreateRecipe = () => {
                                     removeComponent={removeComponent}
                                 />
                             )
+                        default:
+                            return(
+                                <h4>No Components Added</h4>
+                            )
                     }                    
                 })}
+
+                <label>Tags</label>
+                <button type='button' onClick={addTag}>Add Tag</button>
+                <ul>
+                    {tags.map((tag, index) => (
+                        <li key={index}>
+                            <input 
+                                type='text'
+                                placeholder='tag name'
+                                value={tag}
+                                onChange={handleTagChange(index)}
+                            />
+                            <button type='button' onClick={removeTag(index)}>-</button>
+                        </li>
+                    ))}
+                </ul>
             </form>
 
             <input form='create-recipe-form' type='submit' value='Submit Recipe' />
