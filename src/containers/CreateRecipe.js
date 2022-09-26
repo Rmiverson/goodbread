@@ -18,24 +18,19 @@ const CreateRecipe = () => {
     // description handler
     const handleDescChange = (e) => setDescription(e.target.value)
 
-
-    // textboxes, ULs, OLs, and tags should be separated out into individual components 
-    // props for each of these should pass down the respective state setters
-
     // component remove
-    const removeComponent = (index) => () => {
-        setComponents(components.filter((component, sIndex) => index !== sIndex))
+    const removeComponent = (targetIndex) => () => {
+        setComponents(components.filter((component, componentIndex) => targetIndex !== componentIndex))
     }    
 
     // component title change
-    const handleComponentTitleChange = (index) => (e) => {
-        const newComponents = components.map((component, sIndex) => {
-            if (index !== sIndex) return component
+    const handleComponentTitleChange = (targetIndex) => (e) => {
+        const newComponents = components.map((component, componentIndex) => {
+            if (targetIndex !== componentIndex) return component
             return {...component, title: e.target.value}
         })
         setComponents(newComponents)
     }
-
 
     // textbox add
     const addTextbox = () => {
@@ -43,9 +38,9 @@ const CreateRecipe = () => {
     }
 
     // textbox text content change
-    const handleTextboxTextContentChange = (index) => (e) => {
-        const newComponents = components.map((component, sIndex) => {
-            if (index !== sIndex) return component
+    const handleTextboxTextContentChange = (targetIndex) => (e) => {
+        const newComponents = components.map((component, compoentnIndex) => {
+            if (targetIndex !== compoentnIndex) return component
             return {...component, text_content: e.target.value}
         })
         setComponents(newComponents)
@@ -62,11 +57,11 @@ const CreateRecipe = () => {
     }
 
     // list_item change handler
-    const handleListItemChange = (index, zIndex) => (e) => {
-        const newComponents = components.map((component, sIndex) => {
-            if (index !== sIndex) return component
-                const newComponentListItems = component.list_items.map((list_item, xIndex) => {
-                if (zIndex !== xIndex) return list_item
+    const handleListItemChange = (targetComponentIndex, TargetListIndex) => (e) => {
+        const newComponents = components.map((component, componentIndex) => {
+            if (targetComponentIndex !== componentIndex) return component
+                const newComponentListItems = component.list_items.map((list_item, listItemIndex) => {
+                if (TargetListIndex !== listItemIndex) return list_item
                     return e.target.value
             })
             return {...component, list_items: newComponentListItems}
@@ -75,19 +70,19 @@ const CreateRecipe = () => {
     }
 
     // list_item add
-    const addListItem = (index) => () => {
-        const newComponents = components.map((component, sIndex) => {
-            if (index !== sIndex) return component
+    const addListItem = (targetIndex) => () => {
+        const newComponents = components.map((component, componentIndex) => {
+            if (targetIndex !== componentIndex) return component
             return {...component, list_items: [...component.list_items, '']}
         })
         setComponents(newComponents)
     }
 
     // list_item remove
-    const removeListItem = (index, zIndex) => () => {
-        const newComponents = components.map((component, sIndex) => {
-            if (index !== sIndex) return component
-            return {...component, list_items: component.list_items.filter((list_item, xIndex) => zIndex !== xIndex)}
+    const removeListItem = (targetComponentIndex, targetListItemIndex) => () => {
+        const newComponents = components.map((component, componentIndex) => {
+            if (targetComponentIndex !== componentIndex) return component
+            return {...component, list_items: component.list_items.filter((list_item, listItemIndex) => targetListItemIndex !== listItemIndex)}
         })
         setComponents(newComponents)
     }
