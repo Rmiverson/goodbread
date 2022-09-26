@@ -24,7 +24,7 @@ const CreateRecipe = () => {
 
     // component remove
     const removeComponent = (index) => () => {
-        setComponents([...components, components.filter((component, sIndex) => index !== sIndex)])
+        setComponents(components.filter((component, sIndex) => index !== sIndex))
     }    
 
     // component title change
