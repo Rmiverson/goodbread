@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import OlForm from '../components/OlForm'
 import UlForm from '../components/UlForm'
 import TextboxForm from '../components/TextboxForm'
+import TagForm from '../components/TagForm'
 
 const CreateRecipe = () => {
     // const [submitted, setSubmitted] = useState(false)
@@ -177,21 +178,12 @@ const CreateRecipe = () => {
                     }                    
                 })}
 
-                <label>Tags</label>
-                <button type='button' onClick={addTag}>Add Tag</button>
-                <ul>
-                    {tags.map((tag, index) => (
-                        <li key={index}>
-                            <input 
-                                type='text'
-                                placeholder='tag name'
-                                value={tag}
-                                onChange={handleTagChange(index)}
-                            />
-                            <button type='button' onClick={removeTag(index)}>-</button>
-                        </li>
-                    ))}
-                </ul>
+                <TagForm
+                    tags={tags}
+                    addTag={addTag}
+                    handleTagChange={handleTagChange}
+                    removeTag={removeTag}
+                />
             </form>
 
             <input form='create-recipe-form' type='submit' value='Submit Recipe' />
