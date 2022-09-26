@@ -13,6 +13,10 @@ const CreateRecipe = () => {
     const [components, setComponents] = useState([])
     const [tags, setTags] = useState([''])
 
+
+    // TODO: add ways to reorder components and list items
+    // TODO: add post functions to submit recipe, and reroute to that recipe
+
     // title handler
     const handleTitleChange = (e) => setTitle(e.target.value)
 
