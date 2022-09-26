@@ -133,8 +133,6 @@ const CreateRecipe = () => {
                     <button type='button' onClick={addOl}>Add Numbered List</button>
                 </div>
 
-                {/* map components here with a switch case */}
-                {/* render each component element based on type */}
                 {components.map((component, index) => {
                     switch(component.type) {
                         case 'textbox':
@@ -175,9 +173,7 @@ const CreateRecipe = () => {
                                 />
                             )
                         default:
-                            return(
-                                <h4>No Components Added</h4>
-                            )
+                            return null
                     }                    
                 })}
 
