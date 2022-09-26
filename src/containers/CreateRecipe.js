@@ -19,9 +19,7 @@ const CreateRecipe = () => {
     const handleDescChange = (e) => setDescription(e.target.value)
 
     // component remove
-    const removeComponent = (targetIndex) => () => {
-        setComponents(components.filter((component, componentIndex) => targetIndex !== componentIndex))
-    }    
+    const removeComponent = (targetIndex) => () => setComponents(components.filter((component, componentIndex) => targetIndex !== componentIndex))    
 
     // component title change
     const handleComponentTitleChange = (targetIndex) => (e) => {
@@ -33,10 +31,14 @@ const CreateRecipe = () => {
     }
 
     // textbox add
-    const addTextbox = () => {
-        setComponents([...components, {type: 'textbox', title: '', text_content: ''}])
-    }
+    const addTextbox = () => setComponents([...components, {type: 'textbox', title: '', text_content: ''}])
 
+    // unordered_list add
+    const addUl = () => setComponents([...components, {type: 'ul', title:'', list_items: ['']}])
+
+    // ordered_list add
+    const addOl = () => setComponents([...components, {type: 'ol', title:'', list_items: ['']}])
+    
     // textbox text content change
     const handleTextboxTextContentChange = (targetIndex) => (e) => {
         const newComponents = components.map((component, compoentnIndex) => {
@@ -44,16 +46,6 @@ const CreateRecipe = () => {
             return {...component, text_content: e.target.value}
         })
         setComponents(newComponents)
-    }
-
-    // unordered_list add
-    const addUl = () => {
-        setComponents([...components, {type: 'ul', title:'', list_items: ['']}])
-    }
-
-    // ordered_list add
-    const addOl = () => {
-        setComponents([...components, {type: 'ol', title:'', list_items: ['']}])
     }
 
     // list_item change handler
