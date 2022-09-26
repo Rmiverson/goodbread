@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import OlForm from '../components/OlForm'
 // import { useSelector } from 'react-redux'
+import OlForm from '../components/OlForm'
+import UlForm from '../components/UlForm'
 import TextboxForm from '../components/TextboxForm'
 
 const CreateRecipe = () => {
@@ -23,7 +24,7 @@ const CreateRecipe = () => {
 
     // component remove
     const removeComponent = (index) => () => {
-        setComponents([components.filter((component, sIndex) => index !== sIndex)])
+        setComponents([...components, components.filter((component, sIndex) => index !== sIndex)])
     }    
 
     // component title change
@@ -141,7 +142,7 @@ const CreateRecipe = () => {
                             )
                         case 'ul':
                             return(
-                                <OlForm 
+                                <UlForm 
                                     key={index}
                                     index={index}
                                     component={component}
@@ -154,33 +155,16 @@ const CreateRecipe = () => {
                             )
                         case 'ol':
                             return(
-                            <div key={index} className='ol-form'>
-                                <label>Numbered List Title</label>
-                                <input 
-                                        type='text'
-                                        placeholder='List Title'
-                                        value={component.title}
-                                        onChange={handleComponentTitleChange(index)}
+                                <OlForm 
+                                    key={index}
+                                    index={index}
+                                    component={component}
+                                    handleComponentTitleChange={handleComponentTitleChange}
+                                    addListItem={addListItem}
+                                    handleListItemChange={handleListItemChange}
+                                    removeListItem={removeListItem}
+                                    removeComponent={removeComponent}
                                 />
-
-                                <button type='button' onClick={addListItem(index)}>Add List Item</button>
-                                <ol>
-                                    {component.list_items.map((list_item, zIndex) => (
-                                        <li key={zIndex}>
-                                            <input
-                                                type='text'
-                                                placeholder='Item Text'
-                                                value={list_item}
-                                                onChange={handleListItemChange(index, zIndex)}
-                                            />
-
-                                            <button type='button' onClick={removeListItem(index, zIndex)}>-</button>
-                                        </li>
-                                    ))}
-                                </ol>
-
-                                <button type='button' onClick={removeComponent(index)}>Remove Numbered List</button>
-                            </div>
                             )
                     }                    
                 })}

@@ -17,7 +17,7 @@ const TextboxForm = (props) => {
                 value={props.component.text_content}
                 onChange={props.handleTextboxTextContentChange(props.index)}
             />
-            <button type='button' onClick={props.removeComponent(props.index)}>-</button>
+            <button type='button' onClick={props.removeComponent(props.index)}>Remove Text Box</button>
         </div>      
     )
 }

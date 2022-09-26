@@ -2,20 +2,20 @@ import React from 'react'
 
 const OlForm = (props) => {
     return(
-        <div className='ul-form'>
-            <label>Bullet List Title</label>
+        <div className='ol-form'>
+            <label>Numbered List Title</label>
             <input 
-                type='text'
-                placeholder='List Title'
-                value={props.component.title}
-                onChange={props.handleComponentTitleChange(props.index)}
+                    type='text'
+                    placeholder='List Title'
+                    value={props.component.title}
+                    onChange={props.handleComponentTitleChange(props.index)}
             />
 
             <button type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
-            <ul>
+            <ol>
                 {props.component.list_items.map((list_item, zIndex) => (
-                    <li key={zIndex}> 
-                        <input 
+                    <li key={zIndex}>
+                        <input
                             type='text'
                             placeholder='Item Text'
                             value={list_item}
@@ -24,10 +24,10 @@ const OlForm = (props) => {
 
                         <button type='button' onClick={props.removeListItem(props.index, zIndex)}>-</button>
                     </li>
-                ))}                                        
-            </ul>
+                ))}
+            </ol>
 
-            <button type='button' onClick={props.removeComponent(props.index)}>Remove Bullet List</button>
+            <button type='button' onClick={props.removeComponent(props.index)}>Remove Numbered List</button>
         </div>
     )
 }
