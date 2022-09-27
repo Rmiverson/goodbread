@@ -1,24 +1,51 @@
-import React, { useState } from 'react'
-// import { useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { List, arrayMove } from 'react-movable'
+import { useMutation } from 'react-query'
 
 import OlForm from '../components/OlForm'
 import UlForm from '../components/UlForm'
 import TextboxForm from '../components/TextboxForm'
 import TagForm from '../components/TagForm'
 
+import apiClient from '../http-common'
+import { Navigate } from 'react-router-dom'
+
 const CreateRecipe = () => {
-    // const [submitted, setSubmitted] = useState(false)
-    // const [recipeId, setRecipeId] = useState()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [components, setComponents] = useState([])
     const [tags, setTags] = useState([''])
+    const [postResult, setPostResult] = useState(null)
+    const [submitted, setSubmitted] = useState(false)
 
+    const currentUser = useSelector((state) => state.user)
 
-    // // TODO: add ways to reorder components and list items
-    // TODO: track component indexes and keep them in api
-    // TODO: add post functions to submit recipe, and reroute to that recipe
+    let dataPackage = {}
+
+    const { isLoading: isPostingRecipe, mutate: postRecipe } = useMutation(
+        async () => {
+            return await apiClient.post('/recipes', {recipe: dataPackage})
+        },
+        {
+            onSuccess: (res) => {
+                const result = {
+                    status: res.status + "-" + res.statusText,
+                    headers: res.headers,
+                    data: res.data
+                }
+                setPostResult(result)
+                setSubmitted(true)
+            },
+            onError: (err) => {
+                console.error(err.response?.data || err)
+            }
+        }
+    )
+
+    useEffect(() => {
+        if (isPostingRecipe) setPostResult('Loading...')
+    }, [isPostingRecipe])    
 
     const reorderArr = (arr, currentIndex, direction) => {
         let targetIndex = currentIndex + direction
@@ -145,98 +172,109 @@ const CreateRecipe = () => {
         e.preventDefault()
 
         let componentCollection = components.map((component, componentIndex) => {
-            return {...component, index: componentIndex}
+            return {...component, index_order: componentIndex}
         })
 
-        let data = {
+        dataPackage = {
+            user_id: currentUser.id,
             title: title,
             description: description,
             components: componentCollection,
-            tags: tags
+            tag_list: tags
         }
 
-        console.log(data)
+        try {
+            postRecipe()
+        } catch (err) {
+            setPostResult(err)
+        }
     }
 
-    return(
-        <div className='create-recipe-page'>
-            <form id='create-recipe-form' onSubmit={submitRecipe}>
-                <label>Title</label>
-                <input required type='text' name='title' value={title} onChange={handleTitleChange} />
+    if (postResult === 'loading...') {
+        return <span>loading...</span>
+    } else if (submitted) {
+        return <Navigate to={`/recipe/${postResult.data.id}`} replace />
+    } else {
+        return(
+            <div className='create-recipe-page'>
+                <form id='create-recipe-form' onSubmit={submitRecipe}>
+                    <label>Title</label>
+                    <input required type='text' name='title' value={title} onChange={handleTitleChange} />
 
-                <label>Description</label>
-                <input required type='text' name='description' value={description} onChange={handleDescChange} />
+                    <label>Description</label>
+                    <input required type='text' name='description' value={description} onChange={handleDescChange} />
 
-                {/* buttons to add each type of component */}
-                <div className='add-component-ribbon'>
-                    <button type='button' onClick={addTextbox}>Add Textbox</button>
-                    <button type='button' onClick={addUl}>Add Bullet List</button>
-                    <button type='button' onClick={addOl}>Add Numbered List</button>
-                </div>
+                    {/* buttons to add each type of component */}
+                    <div className='add-component-ribbon'>
+                        <button type='button' onClick={addTextbox}>Add Textbox</button>
+                        <button type='button' onClick={addUl}>Add Bullet List</button>
+                        <button type='button' onClick={addOl}>Add Numbered List</button>
+                    </div>
 
-                <List 
-                    values={components.map((component, index) => {
-                        switch(component.type) {
-                            case 'textbox':
-                                return(
-                                    <TextboxForm
-                                        key={index}
-                                        index={index}
-                                        component={component}
-                                        handleComponentTitleChange={handleComponentTitleChange} 
-                                        handleTextboxTextContentChange={handleTextboxTextContentChange} 
-                                        removeComponent={removeComponent} 
-                                    />
-                                )
-                            case 'ul':
-                                return(
-                                    <UlForm 
-                                        key={index}
-                                        index={index}
-                                        component={component}
-                                        handleComponentTitleChange={handleComponentTitleChange}
-                                        addListItem={addListItem}
-                                        handleListItemChange={handleListItemChange}
-                                        handleListItemReorder={handleListItemReorder}
-                                        removeListItem={removeListItem}
-                                        removeComponent={removeComponent}
-                                    />
-                                )
-                            case 'ol':
-                                return(
-                                    <OlForm 
-                                        key={index}
-                                        index={index}
-                                        component={component}
-                                        handleComponentTitleChange={handleComponentTitleChange}
-                                        addListItem={addListItem}
-                                        handleListItemChange={handleListItemChange}
-                                        handleListItemReorder={handleListItemReorder}
-                                        removeListItem={removeListItem}
-                                        removeComponent={removeComponent}
-                                    />
-                                )
-                            default:
-                                return null
-                        }                    
-                    })}
-                    onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
-                    renderList={({ children, props }) => <ul {...props}>{children}</ul>}
-                    renderItem={({ value, props }) => <li {...props}>{value}</li>}
-                />
+                    <List 
+                        values={components.map((component, index) => {
+                            switch(component.type) {
+                                case 'textbox':
+                                    return(
+                                        <TextboxForm
+                                            key={index}
+                                            index={index}
+                                            component={component}
+                                            handleComponentTitleChange={handleComponentTitleChange} 
+                                            handleTextboxTextContentChange={handleTextboxTextContentChange} 
+                                            removeComponent={removeComponent} 
+                                        />
+                                    )
+                                case 'ul':
+                                    return(
+                                        <UlForm 
+                                            key={index}
+                                            index={index}
+                                            component={component}
+                                            handleComponentTitleChange={handleComponentTitleChange}
+                                            addListItem={addListItem}
+                                            handleListItemChange={handleListItemChange}
+                                            handleListItemReorder={handleListItemReorder}
+                                            removeListItem={removeListItem}
+                                            removeComponent={removeComponent}
+                                        />
+                                    )
+                                case 'ol':
+                                    return(
+                                        <OlForm 
+                                            key={index}
+                                            index={index}
+                                            component={component}
+                                            handleComponentTitleChange={handleComponentTitleChange}
+                                            addListItem={addListItem}
+                                            handleListItemChange={handleListItemChange}
+                                            handleListItemReorder={handleListItemReorder}
+                                            removeListItem={removeListItem}
+                                            removeComponent={removeComponent}
+                                        />
+                                    )
+                                default:
+                                    return null
+                            }                    
+                        })}
+                        onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
+                        renderList={({ children, props }) => <ul {...props}>{children}</ul>}
+                        renderItem={({ value, props }) => <li {...props}>{value}</li>}
+                    />
 
-                <TagForm
-                    tags={tags}
-                    addTag={addTag}
-                    handleTagChange={handleTagChange}
-                    removeTag={removeTag}
-                />
-            </form>
+                    <TagForm
+                        tags={tags}
+                        addTag={addTag}
+                        handleTagChange={handleTagChange}
+                        removeTag={removeTag}
+                    />
+                </form>
 
-            <input form='create-recipe-form' type='submit' value='Submit Recipe' />
-            {/* reroute page to newly created recipe */}
-        </div>
-    )
+                <input form='create-recipe-form' type='submit' value='Submit Recipe' />
+                {/* reroute page to newly created recipe */}
+            </div>
+        )        
+    }
 }    
 
 export default CreateRecipe
