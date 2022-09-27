@@ -19,10 +19,14 @@ const CreateRecipe = () => {
     // TODO: add ways to reorder components and list items
     // TODO: add post functions to submit recipe, and reroute to that recipe
 
-    // let testArr = [1,2,3,4,5]
-
-    const reorderArr = (arr, currentIndex, targetIndex) => {
+    const reorderArr = (arr, currentIndex, direction) => {
         let grabbed = arr[currentIndex]
+        let targetIndex = currentIndex + direction
+
+        if (targetIndex >= arr.length || targetIndex < 0) {
+            return arr
+        }
+
         let swapped = arr[targetIndex]
 
         arr[targetIndex] = grabbed
@@ -99,6 +103,17 @@ const CreateRecipe = () => {
             } else {
                 return {...component, list_items: component.list_items.filter((list_item, listItemIndex) => targetListItemIndex !== listItemIndex)}
             }
+        })
+        setComponents(newComponents)
+    }
+
+    // list_item reorder
+    const handleListItemReorder = (targetComponentIndex, targetListItemIndex, direction) => () => {
+        const newComponents = components.map((component, componentIndex) => {
+            if (targetComponentIndex !== componentIndex) return component
+
+            let newListItems = reorderArr(component.list_items, targetListItemIndex, direction)
+            return {...component, list_items: newListItems}
         })
         setComponents(newComponents)
     }
@@ -180,6 +195,7 @@ const CreateRecipe = () => {
                                         handleComponentTitleChange={handleComponentTitleChange}
                                         addListItem={addListItem}
                                         handleListItemChange={handleListItemChange}
+                                        handleListItemReorder={handleListItemReorder}
                                         removeListItem={removeListItem}
                                         removeComponent={removeComponent}
                                     />
@@ -193,6 +209,7 @@ const CreateRecipe = () => {
                                         handleComponentTitleChange={handleComponentTitleChange}
                                         addListItem={addListItem}
                                         handleListItemChange={handleListItemChange}
+                                        handleListItemReorder={handleListItemReorder}
                                         removeListItem={removeListItem}
                                         removeComponent={removeComponent}
                                     />
