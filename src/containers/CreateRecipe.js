@@ -17,6 +17,16 @@ const CreateRecipe = () => {
     // TODO: add ways to reorder components and list items
     // TODO: add post functions to submit recipe, and reroute to that recipe
 
+
+    const reorderArr = (arr, currentIndex, targetIndex) => {
+        let grabbed = arr[currentIndex]
+        
+
+
+    }
+
+
+
     // title handler
     const handleTitleChange = (e) => setTitle(e.target.value)
 
@@ -138,49 +148,51 @@ const CreateRecipe = () => {
                     <button type='button' onClick={addOl}>Add Numbered List</button>
                 </div>
 
-                {components.map((component, index) => {
-                    switch(component.type) {
-                        case 'textbox':
-                            return(
-                                <TextboxForm
-                                    key={index}
-                                    index={index}
-                                    component={component}
-                                    handleComponentTitleChange={handleComponentTitleChange} 
-                                    handleTextboxTextContentChange={handleTextboxTextContentChange} 
-                                    removeComponent={removeComponent} 
-                                />
-                            )
-                        case 'ul':
-                            return(
-                                <UlForm 
-                                    key={index}
-                                    index={index}
-                                    component={component}
-                                    handleComponentTitleChange={handleComponentTitleChange}
-                                    addListItem={addListItem}
-                                    handleListItemChange={handleListItemChange}
-                                    removeListItem={removeListItem}
-                                    removeComponent={removeComponent}
-                                />
-                            )
-                        case 'ol':
-                            return(
-                                <OlForm 
-                                    key={index}
-                                    index={index}
-                                    component={component}
-                                    handleComponentTitleChange={handleComponentTitleChange}
-                                    addListItem={addListItem}
-                                    handleListItemChange={handleListItemChange}
-                                    removeListItem={removeListItem}
-                                    removeComponent={removeComponent}
-                                />
-                            )
-                        default:
-                            return null
-                    }                    
-                })}
+                <ul>
+                    {components.map((component, index) => {
+                        switch(component.type) {
+                            case 'textbox':
+                                return(
+                                    <TextboxForm
+                                        key={index}
+                                        index={index}
+                                        component={component}
+                                        handleComponentTitleChange={handleComponentTitleChange} 
+                                        handleTextboxTextContentChange={handleTextboxTextContentChange} 
+                                        removeComponent={removeComponent} 
+                                    />
+                                )
+                            case 'ul':
+                                return(
+                                    <UlForm 
+                                        key={index}
+                                        index={index}
+                                        component={component}
+                                        handleComponentTitleChange={handleComponentTitleChange}
+                                        addListItem={addListItem}
+                                        handleListItemChange={handleListItemChange}
+                                        removeListItem={removeListItem}
+                                        removeComponent={removeComponent}
+                                    />
+                                )
+                            case 'ol':
+                                return(
+                                    <OlForm 
+                                        key={index}
+                                        index={index}
+                                        component={component}
+                                        handleComponentTitleChange={handleComponentTitleChange}
+                                        addListItem={addListItem}
+                                        handleListItemChange={handleListItemChange}
+                                        removeListItem={removeListItem}
+                                        removeComponent={removeComponent}
+                                    />
+                                )
+                            default:
+                                return null
+                        }                    
+                    })}
+                </ul>
 
                 <TagForm
                     tags={tags}

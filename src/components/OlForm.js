@@ -2,7 +2,8 @@ import React from 'react'
 
 const OlForm = (props) => {
     return(
-        <div className='ol-form'>
+        <li className='ol-form'>
+            <div>[~]</div>
             <label>Numbered List Title</label>
             <input 
                 type='text'
@@ -28,7 +29,7 @@ const OlForm = (props) => {
             </ol>
 
             <button type='button' onClick={props.removeComponent(props.index)}>Remove Numbered List</button>
-        </div>
+        </li>
     )
 }
 
