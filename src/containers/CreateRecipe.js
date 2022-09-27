@@ -16,17 +16,18 @@ const CreateRecipe = () => {
     const [tags, setTags] = useState([''])
 
 
-    // TODO: add ways to reorder components and list items
+    // // TODO: add ways to reorder components and list items
+    // TODO: track component indexes and keep them in api
     // TODO: add post functions to submit recipe, and reroute to that recipe
 
     const reorderArr = (arr, currentIndex, direction) => {
-        let grabbed = arr[currentIndex]
         let targetIndex = currentIndex + direction
 
         if (targetIndex >= arr.length || targetIndex < 0) {
             return arr
         }
 
+        let grabbed = arr[currentIndex]
         let swapped = arr[targetIndex]
 
         arr[targetIndex] = grabbed
@@ -142,16 +143,17 @@ const CreateRecipe = () => {
     // submit recipe handler
     const submitRecipe = (e) => {
         e.preventDefault()
+
+        let componentCollection = components.map((component, componentIndex) => {
+            return {...component, index: componentIndex}
+        })
+
         let data = {
             title: title,
             description: description,
-            components: components,
+            components: componentCollection,
             tags: tags
         }
-
-        // console.log(testArr)
-        // testArr = reorderArr(testArr, 1 ,4)
-        // console.log(testArr)
 
         console.log(data)
     }
