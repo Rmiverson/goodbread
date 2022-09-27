@@ -17,12 +17,16 @@ const CreateRecipe = () => {
     // TODO: add ways to reorder components and list items
     // TODO: add post functions to submit recipe, and reroute to that recipe
 
+    let testArr = [1,2,3,4,5]
 
     const reorderArr = (arr, currentIndex, targetIndex) => {
         let grabbed = arr[currentIndex]
-        
+        let swapped = arr[targetIndex]
 
+        arr[targetIndex] = grabbed
+        arr[currentIndex] = swapped
 
+        return arr
     }
 
 
@@ -129,7 +133,12 @@ const CreateRecipe = () => {
             components: components,
             tags: tags
         }
-        console.log(data)
+
+        console.log(testArr)
+        testArr = reorderArr(testArr, 1 ,4)
+        console.log(testArr)
+
+        // console.log(data)
     }
 
     return(
