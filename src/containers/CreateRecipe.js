@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 // import { useSelector } from 'react-redux'
+import { List, arrayMove } from 'react-movable'
+
 import OlForm from '../components/OlForm'
 import UlForm from '../components/UlForm'
 import TextboxForm from '../components/TextboxForm'
@@ -17,7 +19,7 @@ const CreateRecipe = () => {
     // TODO: add ways to reorder components and list items
     // TODO: add post functions to submit recipe, and reroute to that recipe
 
-    let testArr = [1,2,3,4,5]
+    // let testArr = [1,2,3,4,5]
 
     const reorderArr = (arr, currentIndex, targetIndex) => {
         let grabbed = arr[currentIndex]
@@ -28,8 +30,6 @@ const CreateRecipe = () => {
 
         return arr
     }
-
-
 
     // title handler
     const handleTitleChange = (e) => setTitle(e.target.value)
@@ -134,11 +134,11 @@ const CreateRecipe = () => {
             tags: tags
         }
 
-        console.log(testArr)
-        testArr = reorderArr(testArr, 1 ,4)
-        console.log(testArr)
+        // console.log(testArr)
+        // testArr = reorderArr(testArr, 1 ,4)
+        // console.log(testArr)
 
-        // console.log(data)
+        console.log(data)
     }
 
     return(
@@ -157,8 +157,8 @@ const CreateRecipe = () => {
                     <button type='button' onClick={addOl}>Add Numbered List</button>
                 </div>
 
-                <ul>
-                    {components.map((component, index) => {
+                <List 
+                    values={components.map((component, index) => {
                         switch(component.type) {
                             case 'textbox':
                                 return(
@@ -201,7 +201,10 @@ const CreateRecipe = () => {
                                 return null
                         }                    
                     })}
-                </ul>
+                    onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
+                    renderList={({ children, props }) => <ul {...props}>{children}</ul>}
+                    renderItem={({ value, props }) => <li {...props}>{value}</li>}
+                />
 
                 <TagForm
                     tags={tags}

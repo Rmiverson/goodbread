@@ -2,8 +2,7 @@ import React from 'react'
 
 const TextboxForm = (props) => {
     return (
-        <li className='textbox-form'>
-            <div>[~]</div>
+        <>
             <label>Text Box Title</label>
             <input 
                 type='text'
@@ -19,7 +18,7 @@ const TextboxForm = (props) => {
                 onChange={props.handleTextboxTextContentChange(props.index)}
             />
             <button type='button' onClick={props.removeComponent(props.index)}>Remove Text Box</button>
-        </li>      
+        </>      
     )
 }
 

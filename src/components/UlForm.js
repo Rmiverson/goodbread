@@ -2,8 +2,7 @@ import React from 'react'
 
 const UlForm = (props) => {
     return(
-        <li className='ul-form'>
-            <div>[~]</div>  
+        <>  
             <label>Bullet List Title</label>
             <input 
                 type='text'
@@ -29,7 +28,7 @@ const UlForm = (props) => {
             </ul>
 
             <button type='button' onClick={props.removeComponent(props.index)}>Remove Bullet List</button>
-        </li> 
+        </> 
     )
 }
 
