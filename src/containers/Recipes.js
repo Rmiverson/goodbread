@@ -1,65 +1,81 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
-
-const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+import { useQuery } from 'react-query'
+import { Link } from 'react-router-dom'
+import apiClient from '../http-common'
 
 const Recipes = (props) => {
-    const itemsPerPage = 4
     const currentUser = props.currentUser
 
-    const [currentItems, setCurrentItems] = useState(null)
+    const [currentItems, setCurrentItems] = useState([])
     const [pageCount, setPageCount] = useState(0)
+    const [currentPage, setCurrentPage] = useState(0)
 
-    const [itemOffSet, setItemOffSet] = useState(0)
+    const { isLoading: isLoadingRecipes, refetch: getAllRecipes } = useQuery(
+        'query-all-user-recipes',
+        async () => {
+            return await apiClient.get(`/recipes/?page=${currentPage + 1}&user_id=${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+        },
+        {
+            enabled: false,
+            retry: 1,
+            onSuccess: (res) => {
+                const result = {
+                    status: res.status + '-' + res.statusText,
+                    headers: res.headers,
+                    data: res.data.data,
+                    meta: res.data.meta
+                }
+                console.log(res)
+                setCurrentItems(result.data)
+                setPageCount(result.meta.total_pages)
+            }
+        }
+    )
+
 
     useEffect(() => {
+        function ferretRecipes() {
+            try {
+                getAllRecipes()
+            } catch (err) {
+                console.error(err)
+            }
+        }
 
-        const endOffSet = itemOffSet + itemsPerPage
-
-        console.log(`Loading items from ${itemOffSet} to ${endOffSet}`)
-        
-        setCurrentItems(items.slice(itemOffSet, endOffSet))
-        
-        setPageCount(Math.ceil(items.length / itemsPerPage))
-    }, [itemOffSet, itemsPerPage])
+        ferretRecipes()
+    }, [getAllRecipes, currentPage])
 
     const handlePageClick = (e) => {
-        const newOffSet = (e.selected * itemsPerPage) % items.length
-        console.log(`User requested page number ${e.selected}, which is offset ${newOffSet}`)
-        setItemOffSet(newOffSet)
+        setCurrentPage(e.selected)
     }
 
-    const renderItems = (items) => {
+    if (isLoadingRecipes) {
+        return <span>Loading...</span>
+    } else {
         return (
-            <>
-                {items && 
-                    items.map((item, index) => (
-                        <div key={index}>
-                            <h4>Item #{item}</h4> 
-                        </div>
-                    ))
-                }                
-            </>
-        )
-    }
-
-    return (
-        <div className='all-recipes'>
-            <h2>All Recipes</h2>
-            <div className='all-recipes-list'>
-                {renderItems(currentItems)}
-                <ReactPaginate 
-                    breakLabel='...'
-                    nextLabel='next >'
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={pageCount}
-                    previousLabel='< previous'
-                    renderOnZeroPageCount={null}
-                />
+            <div className='all-recipes'>
+                <h2>All Recipes</h2>
+                <div className='all-recipes-list'>
+                    {currentItems.map((item, itemIndex) => (
+                        <Link key={itemIndex} to={`/recipe/${item.id}`}>
+                            <h4>{item.title}</h4>
+                            <p>{item.description}</p>
+                        </Link>
+                    ))}  
+                    <ReactPaginate 
+                        breakLabel='...'
+                        nextLabel='next >'
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel='< previous'
+                        renderOnZeroPageCount={null}
+                    />
+                </div>
             </div>
-        </div>
-    )
+        )        
+    }
 }
 
 export default Recipes
