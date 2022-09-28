@@ -32,10 +32,6 @@ const Recipe = () => {
     )
 
     useEffect(() => {
-        if (isLoadingRecipe) setResult("loading...")
-    }, [isLoadingRecipe])
-
-    useEffect(() => {
         function ferretRecipeById() {       
             if (id) {
                 try {
@@ -51,10 +47,8 @@ const Recipe = () => {
 
     console.log(result)
 
-    if (result === 'loading...') {
-        return (
-            <span>Loading...</span>
-        )
+    if (isLoadingRecipe) {
+        return <span>Loading...</span>
     } else {
         return (
             <div className='Recipe'>

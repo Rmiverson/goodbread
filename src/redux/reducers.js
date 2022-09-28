@@ -19,6 +19,8 @@ export const appReducer = ( state = initialState, action) => {
         case 'LOGOUT_USER':
             storage.removeItem('persist:root')
             return {...state, user: {}}
+        case 'UPDATE_USER':
+            return {...state, user: action.payload}
         default:
             return state
     }
