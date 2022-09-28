@@ -8,6 +8,7 @@ import LoginSignup from './containers/LoginSignup'
 import SubFolder from './containers/SubFolder'
 import ProtectedRoute from './containers/ProtectedRoute'
 import CreateRecipe from './containers/CreateRecipe'
+import CreateFolder from './containers/CreateFolder'
 
 
 
@@ -28,6 +29,11 @@ const RouteBoard = () => {
             <Route path='/folder/:id' element={
                 <ProtectedRoute>
                     <Folder />
+                </ProtectedRoute>
+            }/>
+            <Route path='/create-folder' element={
+                <ProtectedRoute>
+                    <CreateFolder />
                 </ProtectedRoute>
             }/>
             <Route path='/subfolder/:id' element={
