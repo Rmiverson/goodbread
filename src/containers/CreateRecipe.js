@@ -32,7 +32,8 @@ const CreateRecipe = () => {
                 const result = {
                     status: res.status + "-" + res.statusText,
                     headers: res.headers,
-                    data: res.data
+                    data: res.data.data,
+                    meta: res.data.meta
                 }
                 setPostResult(result)
                 setSubmitted(true)
