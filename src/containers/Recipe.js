@@ -22,7 +22,8 @@ const Recipe = () => {
                 const result = {
                     status: res.status + '-' + res.statusText,
                     headers: res.headers,
-                    data: res.data
+                    data: res.data.data,
+                    meta: res.data.meta
                 }
                 setResult(result)
                 setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
