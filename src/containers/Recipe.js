@@ -23,7 +23,7 @@ const Recipe = () => {
                     data: res.data
                 }
                 setResult(result)
-                setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat())
+                setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat()).sort((a, b) => (a.index_order - b.index_order))
             },
             onError: (err) => {
                 setResult(err.response?.data || err)
@@ -60,11 +60,46 @@ const Recipe = () => {
             <div className='Recipe'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
-                {dataComponents.map((dataComponent, index) => (
-                    <div key={index}>
-                        <h4>{dataComponent.title}</h4>
-                    </div>
-                ))}
+                {dataComponents.map((dataComponent, index) => {
+                    switch(dataComponent.component_type) {
+                        case 'textbox':
+                            return (
+                                <div key={index}>
+                                    <h4>{dataComponent.title}</h4>
+                                    <p>{dataComponent.text_content}</p>
+                                </div>
+                            )
+                        case 'ul':
+                            return (
+                                <div key={index}>
+                                    <h4>{dataComponent.title}</h4>
+                                    <ul>
+                                        {dataComponent.list_items.map((list_item, list_item_index) => {
+                                            return <li key={list_item_index}>{list_item}</li>
+                                        })}
+                                    </ul>
+                                </div>
+                            )
+                        case 'ol':
+                            return (
+                                <div key={index}>
+                                    <h4>{dataComponent.title}</h4>
+                                    <ol>
+                                        {dataComponent.list_items.map((list_item, list_item_index) => {
+                                            return <li key={list_item_index}>{list_item}</li>
+                                        })}
+                                    </ol>
+                                </div>
+                            )
+                        default:
+                            return <h4>Error: Unknown component type</h4>
+                    }
+                })}
+                <ul className='tag-list'>
+                    {result.data.tags.map((tag, index) => (
+                        <li key={index}>{tag.label}</li>
+                    ))}
+                </ul>
             </div>
         )        
     }
