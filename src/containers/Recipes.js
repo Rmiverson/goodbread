@@ -50,6 +50,27 @@ const Recipes = (props) => {
         setCurrentPage(e.selected)
     }
 
+    const renderRecipes = () => {
+        return currentItems.map((item, itemIndex) => {
+            if (props.formList === true) {
+                return (
+                    <div key={itemIndex}>
+                        <h4>{item.title}</h4>
+                        <p>{item.description}</p>
+                        <button type='button' onClick={props.handleAddRecipe(item)}>Add Recipe</button>
+                    </div>
+                )
+            } else {
+                return (
+                    <Link key={itemIndex} to={`/recipe/${item.id}`}>
+                        <h4>{item.title}</h4>
+                        <p>{item.description}</p>
+                    </Link>                    
+                )
+            }
+        })
+    }
+
     if (isLoadingRecipes) {
         return <span>Loading...</span>
     } else {
@@ -57,12 +78,7 @@ const Recipes = (props) => {
             <div className='all-recipes'>
                 <h2>All Recipes</h2>
                 <div className='all-recipes-list'>
-                    {currentItems.map((item, itemIndex) => (
-                        <Link key={itemIndex} to={`/recipe/${item.id}`}>
-                            <h4>{item.title}</h4>
-                            <p>{item.description}</p>
-                        </Link>
-                    ))}  
+                    {renderRecipes()}
                     <ReactPaginate 
                         breakLabel='...'
                         nextLabel='next >'
