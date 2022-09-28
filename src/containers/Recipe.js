@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 
 const Recipe = () => {
     const [result, setResult] = useState('loading...')
     const [dataComponents, setDataComponents] = useState([])
+    const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
 
     const { isLoading: isLoadingRecipe, refetch: getRecipeById } = useQuery(
         'query-recipe-by-id',
         async () => {
-            return await apiClient.get(`/recipes/${id}`)
+            return await apiClient.get(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
         },
         {
             enabled: false,
@@ -48,8 +50,6 @@ const Recipe = () => {
 
         ferretRecipeById()
     }, [getRecipeById, setResult, id])
-
-    console.log(result)
 
     if (result === 'loading...') {
         return (
