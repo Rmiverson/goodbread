@@ -54,7 +54,9 @@ const Home = () => {
         return(
             <div className='Home'>
                 <h2>Home</h2>
-                {console.log(currentUser)}
+                {currentUser.recipes.map((recipe, index) => (
+                    <Link key={index} to={`/recipe/${recipe.id}`}>{recipe.title}</Link>
+                ))}
                 <Link to='/create-recipe'>Create Recipe</Link>
             </div>
         )        
