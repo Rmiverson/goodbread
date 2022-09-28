@@ -23,7 +23,7 @@ const Recipe = () => {
                     data: res.data
                 }
                 setResult(result)
-                setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat()).sort((a, b) => (a.index_order - b.index_order))
+                setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
             },
             onError: (err) => {
                 setResult(err.response?.data || err)
@@ -92,7 +92,8 @@ const Recipe = () => {
                                 </div>
                             )
                         default:
-                            return <h4>Error: Unknown component type</h4>
+                            return (<>{console.error('Error: Unknown component type')}</>)
+                            
                     }
                 })}
                 <ul className='tag-list'>
