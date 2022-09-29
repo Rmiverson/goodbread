@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
-import CardGrid from '../components/CardGrid'
+import FolderCards from '../components/FolderCards'
 import apiClient from '../http-common'
 
 const Folders = (props) => {
@@ -59,7 +59,7 @@ const Folders = (props) => {
         return (
             <div className='all-folders'>
                 <h2>All Folders</h2>
-                <CardGrid items={result.data} />
+                <FolderCards items={result.data} />
                 <ReactPaginate 
                     breakLabel='...'
                     nextLabel='next >'
