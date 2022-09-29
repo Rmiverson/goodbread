@@ -23,12 +23,13 @@ const CreateFolder = () => {
         },
         {
             onSuccess: (res) => {
-                const result = {
+                const apiResp = {
                     status: res.status + '-' + res.statusText,
                     headers: res.headers,
-                    data: res.data
+                    data: res.data.data,
+                    meta: res.data.meta
                 }
-                setPostResult(result)
+                setPostResult(apiResp)
                 setSubmitted(true)
             },
             onError: (err) => {
@@ -65,6 +66,7 @@ const CreateFolder = () => {
         dataPackage = {
             user_id: currentUser.id,
             title: title,
+            description: description,
             recipe_ids: recipeIds
         }
 
