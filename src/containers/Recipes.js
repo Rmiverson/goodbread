@@ -26,13 +26,11 @@ const Recipes = (props) => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                console.log(res)
                 setCurrentItems(result.data)
                 setPageCount(result.meta.total_pages)
             }
         }
     )
-
 
     useEffect(() => {
         function ferretRecipes() {
