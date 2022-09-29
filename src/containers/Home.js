@@ -23,6 +23,7 @@ const Home = () => {
         <div className='Home'>
             <h2>Home</h2>
             <Link to='/create-recipe'>Create Recipe</Link>
+            <Link to='/create-folder'>Create Folder</Link>
             <Recipes currentUser={currentUser} />
         </div>
     )        
