@@ -6,8 +6,7 @@ import apiClient from '../http-common'
 
 const Folders = (props) => {
     const currentUser = props.currentUser
-
-    const [result, setResult] = useState({data: [], status: 'Loading...'})
+    const [result, setResult] = useState({data: [], status: null, message: null})
     const [pageCount, setPageCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)
 
@@ -26,19 +25,15 @@ const Folders = (props) => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setResult({...result, data: apiResp.data, status: apiResp.status})
+                setResult({data: apiResp.data, status: apiResp.status, message: res.statusText})
                 setPageCount(apiResp.meta.total_pages)
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({...result, status: 'Error', message: err.response?.data || err})
+                setResult({data: [], status: 'Error', message: err.response?.data || err})
             }
         }
     )
-
-    useEffect(() => {
-        if (isLoadingFolders) setResult({...result, status: 'Loading...'})
-    }, [isLoadingFolders, result])
 
     useEffect(() => {
         function ferretUserFolders() {
@@ -46,18 +41,17 @@ const Folders = (props) => {
                 getAllUserFolders()
             } catch (err) {
                 console.error(err)
-                setResult({...result, status: 'Error', message: err})
+                setResult({data: [], status: 'Error', message: err})                    
             }
         }
-
         ferretUserFolders()
-    }, [getAllUserFolders, currentPage, result])
+    }, [getAllUserFolders, currentPage])
 
     const handlePageClick = (e) => {
         setCurrentPage(e.selected)
     }
 
-    if (result.status === 'Loading') {
+    if (isLoadingFolders) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>
