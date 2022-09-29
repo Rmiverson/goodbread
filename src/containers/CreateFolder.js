@@ -11,6 +11,7 @@ const CreateFolder = () => {
     const [postResult, setPostResult] = useState(null)
     const [submitted, setSubmitted] = useState(false)
     const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     const [checkedRecipes, setCheckedRecipes] = useState([])
 
     const currentUser = useSelector((state) => state.user)
@@ -18,15 +19,14 @@ const CreateFolder = () => {
 
     const { isLoading: isPostingFolder, mutate: postFolder } = useMutation(
         async ()  => {
-            await apiClient.post('/folders', {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.post('/folders', {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
         },
         {
             onSuccess: (res) => {
                 const result = {
                     status: res.status + '-' + res.statusText,
                     headers: res.headers,
-                    data: res.data.data,
-                    meta: res.data.meta
+                    data: res.data
                 }
                 setPostResult(result)
                 setSubmitted(true)
@@ -41,8 +41,9 @@ const CreateFolder = () => {
         if (isPostingFolder) setPostResult('Loading...')
     }, [isPostingFolder])
 
-
     const handleTitleChange = (e) => setTitle(e.target.value)
+
+    const handleDescriptionChange = (e) => setDescription(e.target.value)
 
     const handleAddRecipe = (recipe) => () => {
         if (!checkedRecipes.includes(recipe)) {
@@ -59,9 +60,12 @@ const CreateFolder = () => {
     const submitFolder = (e) => {
         e.preventDefault()
 
+        let recipeIds = checkedRecipes.map((recipe) => {return recipe.id})
+
         dataPackage = {
             user_id: currentUser.id,
-            title: title
+            title: title,
+            recipe_ids: recipeIds
         }
 
         try {
@@ -82,6 +86,9 @@ const CreateFolder = () => {
                 <form onSubmit={submitFolder}>
                     <label>Title</label>
                     <input required type='text' name='title' value={title} onChange={handleTitleChange} />
+
+                    <label>Description</label>
+                    <input type='text' name='description' value={description} onChange={handleDescriptionChange}/>
 
                     {checkedRecipes.map((recipe, recipeIndex) => (
                         <div key={recipeIndex}>
