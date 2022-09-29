@@ -61,7 +61,7 @@ const Recipes = (props) => {
             <div className='all-recipes'>
                 <h2>All Recipes</h2>
                 <div className='all-recipes-list'>
-                    <RecipeCards items={result.data} formList={props.formList} />
+                    <RecipeCards items={result.data} handleAddRecipe={props.handleAddRecipe} formList={props.formList} />
                     <ReactPaginate 
                         breakLabel='...'
                         nextLabel='next >'
