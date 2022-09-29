@@ -21,9 +21,9 @@ const Folder = () => {
                 const result = {
                     status: res.status + '-' + res.statusText,
                     headers: res.headers,
-                    data: res.data
+                    data: res.data.data,
+                    meta: res.data.meta
                 }
-                console.log(result)
                 setResult(result)
             },
             onError: (err) => {
