@@ -1,14 +1,15 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Folders from './Folders'
 import Recipes from './Recipes'
 
 const Home = () => {
     const currentUser = useSelector((state) => state.user)
 
     //// make a call fetching all recipes w/ pagination
-    // TODO: make a call for folders w/ pagination
-    // TODO: make a way to make new folders and route to them
+    // // make a call for folders w/ pagination
+    // // make a way to make new folders and route to them
     // TODO: ^^ same with sub-folders
     // TODO: work out profile page
     // TODO: work out folder page
@@ -25,6 +26,7 @@ const Home = () => {
             <Link to='/create-recipe'>Create Recipe</Link>
             <Link to='/create-folder'>Create Folder</Link>
             <Recipes currentUser={currentUser} />
+            <Folders currentUser={currentUser} />
         </div>
     )        
 }
