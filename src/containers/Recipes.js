@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
-import { Link } from 'react-router-dom'
+import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
 
 const Recipes = (props) => {
@@ -48,27 +48,6 @@ const Recipes = (props) => {
         setCurrentPage(e.selected)
     }
 
-    const renderRecipes = () => {
-        return currentItems.map((item, itemIndex) => {
-            if (props.formList === true) {
-                return (
-                    <div key={itemIndex}>
-                        <h4>{item.title}</h4>
-                        <p>{item.description}</p>
-                        <button type='button' onClick={props.handleAddRecipe(item)}>Add Recipe</button>
-                    </div>
-                )
-            } else {
-                return (
-                    <Link key={itemIndex} to={`/recipe/${item.id}`}>
-                        <h4>{item.title}</h4>
-                        <p>{item.description}</p>
-                    </Link>                    
-                )
-            }
-        })
-    }
-
     if (isLoadingRecipes) {
         return <span>Loading...</span>
     } else {
@@ -76,7 +55,7 @@ const Recipes = (props) => {
             <div className='all-recipes'>
                 <h2>All Recipes</h2>
                 <div className='all-recipes-list'>
-                    {renderRecipes()}
+                    <RecipeCards items={currentItems} formList={props.formList} />
                     <ReactPaginate 
                         breakLabel='...'
                         nextLabel='next >'
