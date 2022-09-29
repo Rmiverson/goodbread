@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 
 const Folder = () => {
-    const [result, setResult] = useState({status: 'Loading...'})
+    const [result, setResult] = useState({data: {}, status: null, message: null})
     const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
 
@@ -18,24 +18,21 @@ const Folder = () => {
             enabled: false,
             retry: 1,
             onSuccess: (res) => {
-                const result = {
+                const apiResp = {
                     status: res.status + '-' + res.statusText,
                     headers: res.headers,
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setResult(result)
+                // console.log(apiResp)
+                setResult({data: apiResp.data, status: apiResp.status, message: null})
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({status: 'Error', message: err.response?.data || err})
+                setResult({data: {}, status: 'Error', message: err.response?.data || err})
             }
         }
     )
-
-    useEffect(() => {
-        if (isLoadingFolder) setResult({status: 'Loading...'})
-    }, [isLoadingFolder])
 
     useEffect(() => {
         function ferretFolderById() {
@@ -52,7 +49,7 @@ const Folder = () => {
         ferretFolderById()
     }, [getFolderById, setResult, id])
 
-    if (result.status === 'Loading...') {
+    if (isLoadingFolder) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>
