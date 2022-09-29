@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 
 const Recipe = () => {
-    const [result, setResult] = useState('loading...')
+    const [result, setResult] = useState({status: 'Loading...'})
     const [dataComponents, setDataComponents] = useState([])
     const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
@@ -29,13 +29,14 @@ const Recipe = () => {
                 setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
             },
             onError: (err) => {
-                setResult(err.response?.data || err)
+                console.error(err.response?.data || err)
+                setResult({status: 'Error', message: err.response?.data || err})
             }
         }
     )
 
     useEffect(() => {
-        if (isLoadingRecipe) setResult("loading...")
+        if (isLoadingRecipe) setResult({status: 'Loading...'})
     }, [isLoadingRecipe])
 
     useEffect(() => {
@@ -52,10 +53,12 @@ const Recipe = () => {
         ferretRecipeById()
     }, [getRecipeById, setResult, id])
 
-    if (result === 'loading...') {
+    if (result.status === 'Loading...') {
         return (
             <span>Loading...</span>
         )
+    } else if (result.status === 'Error') {
+        return <span>{result.status + ': ' + result.message}</span>
     } else {
         return (
             <div className='Recipe'>
