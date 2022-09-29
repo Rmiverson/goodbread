@@ -25,6 +25,7 @@ const Folder = () => {
                     meta: res.data.meta
                 }
                 // console.log(apiResp)
+                // TODO: add display for current folders recipes, may need a new api route
                 setResult({data: apiResp.data, status: apiResp.status, message: null})
             },
             onError: (err) => {
