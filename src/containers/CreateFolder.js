@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useMutation } from 'react-query'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
@@ -8,8 +8,7 @@ import apiClient from '../http-common'
 import Recipes from './Recipes'
 
 const CreateFolder = () => {
-    const [postResult, setPostResult] = useState(null)
-    const [submitted, setSubmitted] = useState(false)
+    const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false})
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [checkedRecipes, setCheckedRecipes] = useState([])
@@ -29,18 +28,14 @@ const CreateFolder = () => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setPostResult(apiResp)
-                setSubmitted(true)
+                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: true})
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
+                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
             }
         }
     )
-
-    useEffect(() => {
-        if (isPostingFolder) setPostResult('Loading...')
-    }, [isPostingFolder])
 
     const handleTitleChange = (e) => setTitle(e.target.value)
 
@@ -60,7 +55,6 @@ const CreateFolder = () => {
 
     const submitFolder = (e) => {
         e.preventDefault()
-
         let recipeIds = checkedRecipes.map((recipe) => {return recipe.id})
 
         dataPackage = {
@@ -74,13 +68,16 @@ const CreateFolder = () => {
             postFolder()
         } catch (err) {
             console.error(err)
+            setResult({data: {}, status: 'Error', message: err, submitted: false})
         }
     }
     
-    if (postResult === 'Loading...') {
-        return <span>{postResult}</span>
-    } else if (submitted) {
-        return <Navigate to={`/folder/${postResult.data.id}`} replace/>
+    if (isPostingFolder) {
+        return <span>Loading...</span>
+    } else if (result.status === 'Error') {
+        return <span>{result.status + ': ' + result.message}</span>
+    } else if (result.submitted) {
+        return <Navigate to={`/folder/${result.data.id}`} replace/>
     } else {
         return(
             <div className='create-folder-form'>
