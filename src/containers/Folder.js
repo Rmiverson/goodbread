@@ -60,6 +60,7 @@ const Folder = () => {
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
                 <Link to={`/folder/${id}/subfolder/create`} >Create Sub-Folder</Link>
+                <Link to='/recipe/create'>Create Recipe</Link>
                 <SubFolders folderId={id} currentUser={currentUser} />
                 <FolderRecipes folderId={id} currentUser={currentUser} />
             </div>
