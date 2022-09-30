@@ -17,7 +17,7 @@ const CreateFolder = () => {
     let dataPackage = {}
 
     const { isLoading: isPostingFolder, mutate: postFolder } = useMutation(
-        async ()  => {
+        async () => {
             return await apiClient.post('/folders', {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
         },
         {
@@ -81,7 +81,7 @@ const CreateFolder = () => {
     } else {
         return(
             <div className='create-folder-form'>
-                <h3>Create Folder Form</h3>
+                <h2>Create Folder Form</h2>
                 <form onSubmit={submitFolder}>
                     <label>Title</label>
                     <input required type='text' name='title' value={title} onChange={handleTitleChange} />
