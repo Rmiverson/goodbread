@@ -11,7 +11,7 @@ const Folder = () => {
     const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
 
-    const {isLoading: isLoadingFolder, refetch: getFolderById } = useQuery(
+    const { isLoading: isLoadingFolder, refetch: getFolderById } = useQuery(
         'query-folder-by-id',
         async () => {
             return await apiClient.get(`/folders/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
@@ -38,7 +38,7 @@ const Folder = () => {
     useEffect(() => {
         function ferretFolderById() {
             if (id) {
-                try{
+                try {
                     getFolderById()
                 } catch (err) {
                     console.error(err)
@@ -56,7 +56,7 @@ const Folder = () => {
         return <span>{result.status + ': ' + result.message}</span>
     } else {
         return (
-            <div className='Folder'>
+            <div className='folder'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
                 <Link to={`/folder/${id}/subfolder/create`} >Create Sub-Folder</Link>
