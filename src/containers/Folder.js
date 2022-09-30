@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
+import FolderRecipes from './FolderRecipes'
 
 const Folder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -12,7 +13,7 @@ const Folder = () => {
     const {isLoading: isLoadingFolder, refetch: getFolderById } = useQuery(
         'query-folder-by-id',
         async () => {
-            return await apiClient.get(`/folders/${id}`, { headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/folders/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
         },
         {
             enabled: false,
@@ -24,8 +25,6 @@ const Folder = () => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                // console.log(apiResp)
-                // TODO: add display for current folders recipes, may need a new api route
                 setResult({data: apiResp.data, status: apiResp.status, message: null})
             },
             onError: (err) => {
@@ -59,6 +58,7 @@ const Folder = () => {
             <div className='Folder'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
+                <FolderRecipes folderId={id} currentUser={currentUser}/>
             </div>
         )        
     }
