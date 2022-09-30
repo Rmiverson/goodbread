@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
+import SubFolderRecipes from './SubFolderRecipes'
 
 const SubFolder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -57,6 +58,8 @@ const SubFolder = () => {
             <div className='sub-folder'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
+                <Link to='/recipe/create'>Create Recipe</Link>
+                <SubFolderRecipes subFolderId={id} currentUser={currentUser} />
             </div>      
         )
     }
