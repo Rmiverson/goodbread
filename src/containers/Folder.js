@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
@@ -58,6 +58,7 @@ const Folder = () => {
             <div className='Folder'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
+                <Link to={`/folder/${id}/subfolder/create`} >Create Sub-Folder</Link>
                 <FolderRecipes folderId={id} currentUser={currentUser}/>
             </div>
         )        
