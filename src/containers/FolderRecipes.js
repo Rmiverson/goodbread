@@ -14,7 +14,7 @@ const FolderRecipes = (props) => {
     const { isLoading: isLoadingFolderRecipes, refetch: getFolderRecipes } = useQuery(
         'query-all-folder-recipes',
         async () => {
-            return await apiClient.get(`/folders/${id}/recipes?page=${currentPage + 1}&user_id=${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/folders/${id}/recipes?page=${currentPage + 1}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
         },
         {
             enabled: false,
