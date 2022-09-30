@@ -37,7 +37,7 @@ const RouteBoard = () => {
                     <CreateFolder />
                 </ProtectedRoute>
             }/>
-            <Route path='/folder/:folderId/subfolder/:subFolderId' element={
+            <Route path='/folder/:folderId/subfolder/:id' element={
                 <ProtectedRoute>
                     <SubFolder />
                 </ProtectedRoute>
