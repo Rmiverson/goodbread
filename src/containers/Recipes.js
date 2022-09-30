@@ -13,7 +13,7 @@ const Recipes = (props) => {
     const { isLoading: isLoadingRecipes, refetch: getAllUserRecipes } = useQuery(
         'query-all-user-recipes',
         async () => {
-            return await apiClient.get(`/recipes/?page=${currentPage + 1}&user_id=${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/users/${currentUser.id}/recipes/?page=${currentPage + 1}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
         },
         {
             enabled: false,
