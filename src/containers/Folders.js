@@ -47,9 +47,7 @@ const Folders = (props) => {
         ferretUserFolders()
     }, [getAllUserFolders, currentPage])
 
-    const handlePageClick = (e) => {
-        setCurrentPage(e.selected)
-    }
+    const handlePageClick = (e) => setCurrentPage(e.selected)
 
     if (isLoadingFolders) {
         return <span>Loading...</span>
@@ -58,7 +56,7 @@ const Folders = (props) => {
     } else {
         return (
             <div className='all-folders'>
-                <h2>All Folders</h2>
+                <h2>Folders</h2>
                 <FolderCards items={result.data} />
                 <ReactPaginate 
                     breakLabel='...'
