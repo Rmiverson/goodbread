@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 
 const Recipe = () => {
-    const [result, setResult] = useState({status: 'Loading...'})
+    const [result, setResult] = useState({data: {}, status: null, message: null})
     const [dataComponents, setDataComponents] = useState([])
     const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
@@ -19,25 +19,21 @@ const Recipe = () => {
             enabled: false,
             retry: 1,
             onSuccess: (res) => {
-                const result = {
+                const apiResp = {
                     status: res.status + '-' + res.statusText,
                     headers: res.headers,
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setResult(result)
-                setDataComponents([result.data.unordered_lists, result.data.ordered_lists, result.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
+                setResult({data: apiResp.data, status: apiResp.status, message: null})
+                setDataComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({status: 'Error', message: err.response?.data || err})
+                setResult({data: {}, status: 'Error', message: err.response?.data || err})
             }
         }
     )
-
-    useEffect(() => {
-        if (isLoadingRecipe) setResult({status: 'Loading...'})
-    }, [isLoadingRecipe])
 
     useEffect(() => {
         function ferretRecipeById() {       
@@ -53,7 +49,7 @@ const Recipe = () => {
         ferretRecipeById()
     }, [getRecipeById, setResult, id])
 
-    if (result.status === 'Loading...') {
+    if (isLoadingRecipe || !result.status) {
         return (
             <span>Loading...</span>
         )
