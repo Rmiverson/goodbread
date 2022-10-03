@@ -74,7 +74,7 @@ const CreateSubFolder = () => {
         }
     }
 
-    if (isPostingSubFolder) {
+    if (isPostingSubFolder || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>

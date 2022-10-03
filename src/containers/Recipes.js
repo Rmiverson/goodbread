@@ -52,7 +52,7 @@ const Recipes = (props) => {
         setCurrentPage(e.selected)
     }
 
-    if (isLoadingRecipes) {
+    if (isLoadingRecipes || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>

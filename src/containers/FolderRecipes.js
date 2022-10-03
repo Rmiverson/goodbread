@@ -51,7 +51,7 @@ const FolderRecipes = (props) => {
 
     const handlePageClick = (e) => setCurrentPage(e.selected)
 
-    if (isLoadingFolderRecipes) {
+    if (isLoadingFolderRecipes || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>

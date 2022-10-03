@@ -49,7 +49,7 @@ const Folders = (props) => {
 
     const handlePageClick = (e) => setCurrentPage(e.selected)
 
-    if (isLoadingFolders) {
+    if (isLoadingFolders || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>

@@ -47,7 +47,7 @@ const SubFolders = (props) => {
 
     const handlePageClick = (e) => setCurrentPage(e.selected)
 
-    if (isLoadingSubFolders) {
+    if (isLoadingSubFolders || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>

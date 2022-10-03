@@ -50,7 +50,7 @@ const Folder = () => {
         ferretFolderById()
     }, [getFolderById, setResult, id])
 
-    if (isLoadingFolder) {
+    if (isLoadingFolder || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>

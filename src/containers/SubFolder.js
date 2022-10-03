@@ -49,7 +49,7 @@ const SubFolder = () => {
         ferretSubFolderById()
     }, [getSubFolderById, setResult, id])
 
-    if (isLoadingSubFolder) {
+    if (isLoadingSubFolder || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>
