@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-import { userLogin, userSignup } from '../redux/actions'
-
+import { updateUser } from '../redux/actions'
+import { useMutation } from 'react-query'
+import apiClient from '../http-common'
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
 
 const Login = () => {
+    const [result, setResult] = useState({data: {}, status: null, message: null})
     const [loginUsername, setLoginUsername] = useState('')
     const [loginPassword, setLoginPassword] = useState('')
 
@@ -17,20 +19,54 @@ const Login = () => {
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
+    const { isLoading: isPostingUserLogin, mutate: postUserLogin } = useMutation(
+        async () => {
+            return await apiClient.post('/login', {user: {username: loginUsername, password: loginPassword}})
+        },
+        {
+            onSuccess: (res) => {
+                const apiResp = {
+                    status: res.status + "-" + res.statusText,
+                    headers: res.headers,
+                    data: res.data
+                }
+                setResult({data: apiResp.data, status: apiResp.status, message: null})
+                dispatch(updateUser(apiResp.data))
+            },
+            onError: (err) => {
+                console.error(err.response?.data || err)
+                setResult({data: {}, status: 'Error', message: err.response?.data || err})
+            }
+        }
+    )
+
+    const { isLoading: isPostingUserSignup, mutate: postUserSignup } = useMutation(
+        async () => {
+            return await apiClient.post('/signup', { user: { username: signupUsername, email: signupEmail, password: signupPassword } })
+        },
+        {
+            onSuccess: (res) => {
+                const apiResp = {
+                    status: res.status + "-" + res.statusText,
+                    headers: res.headers,
+                    data: res.data
+                }
+                setResult({data: apiResp.data, status: apiResp.status, message: null})
+                dispatch(updateUser(apiResp.data))
+            },
+            onError: (err) => {
+                console.error(err.response?.data || err)
+                setResult({data: {}, status: 'Error', message: err.response?.data || err})
+            }
+        }
+    )
+
     const handleLoginChange = (e) => {
         if (e.target.name === 'username') {
             setLoginUsername(e.target.value)
         } else if (e.target.name === 'password') {
             setLoginPassword(e.target.value)
         }
-    }
-
-    const handleLoginSubmit = (e) => {
-        e.preventDefault()
-        dispatch(userLogin({
-            username: loginUsername,
-            password: loginPassword
-        }))
     }
 
     const handleSignupChange = (e) => {
@@ -43,21 +79,31 @@ const Login = () => {
         }
     }
 
-    const handleSignupSubmit = (e) => {
+    const handleLoginSubmit = (e) => {
         e.preventDefault()
-        dispatch(userSignup({
-            username: signupUsername,
-            email: signupEmail,
-            password: signupPassword
-        }))
+        postUserLogin()
     }
 
-    if (!!user.id) {
+    const handleSignupSubmit = (e) => {
+        e.preventDefault()
+        postUserSignup()
+    }
+
+    const renderErrors = () => {
+        if (result.status === 'Error') {
+            return <span>{result.status + ': ' + result.message}</span>
+        }
+    }
+
+    if (isPostingUserLogin || isPostingUserSignup) {
+        return <span>Loading...</span>
+    } else if (!!user.id) {
         return <Navigate to='/' replace/>
     } else {
         return (
             <div className='LoginSignup'>
                 <h2>Login & Signup</h2>
+                {renderErrors()}
                 <LoginForm handleChange={handleLoginChange} handleSubmit={handleLoginSubmit} username={loginUsername} password={loginPassword}/>
                 <SignupForm handleChange={handleSignupChange} handleSubmit={handleSignupSubmit} username={signupUsername} email={signupEmail} password={signupPassword} />
             </div>
