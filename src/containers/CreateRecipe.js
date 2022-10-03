@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { List, arrayMove } from 'react-movable'
 import { useMutation } from 'react-query'
@@ -16,8 +16,7 @@ const CreateRecipe = () => {
     const [description, setDescription] = useState('')
     const [components, setComponents] = useState([])
     const [tags, setTags] = useState([''])
-    const [postResult, setPostResult] = useState(null)
-    const [submitted, setSubmitted] = useState(false)
+    const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false})
 
     const currentUser = useSelector((state) => state.user)
 
@@ -29,24 +28,20 @@ const CreateRecipe = () => {
         },
         {
             onSuccess: (res) => {
-                const result = {
+                const apiResp = {
                     status: res.status + "-" + res.statusText,
                     headers: res.headers,
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setPostResult(result)
-                setSubmitted(true)
+                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: true})
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
+                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
             }
         }
-    )
-
-    useEffect(() => {
-        if (isPostingRecipe) setPostResult('Loading...')
-    }, [isPostingRecipe])    
+    )  
 
     const reorderArr = (arr, currentIndex, direction) => {
         let targetIndex = currentIndex + direction
@@ -187,14 +182,13 @@ const CreateRecipe = () => {
         try {
             postRecipe()
         } catch (err) {
-            setPostResult(err)
-        }
+            setResult({data: {}, status: 'Error', message: err, submitted: false})        }
     }
 
-    if (postResult === 'loading...') {
+    if (isPostingRecipe) {
         return <span>loading...</span>
-    } else if (submitted) {
-        return <Navigate to={`/recipe/${postResult.data.id}`} replace />
+    } else if (result.submitted) {
+        return <Navigate to={`/recipe/${result.data.id}`} replace />
     } else {
         return(
             <div className='create-recipe-page'>
@@ -205,7 +199,6 @@ const CreateRecipe = () => {
                     <label>Description</label>
                     <input required type='text' name='description' value={description} onChange={handleDescChange} />
 
-                    {/* buttons to add each type of component */}
                     <div className='add-component-ribbon'>
                         <button type='button' onClick={addTextbox}>Add Textbox</button>
                         <button type='button' onClick={addUl}>Add Bullet List</button>
@@ -272,7 +265,6 @@ const CreateRecipe = () => {
                 </form>
 
                 <input form='create-recipe-form' type='submit' value='Submit Recipe' />
-                {/* reroute page to newly created recipe */}
             </div>
         )        
     }

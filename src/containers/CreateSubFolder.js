@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { useMutation } from 'react-query'
 import { useSelector } from 'react-redux'
 import { Navigate, useParams } from 'react-router-dom'
-
 import apiClient from '../http-common'
-
 import FolderRecipes from './FolderRecipes'
 
 const CreateSubFolder = () => {
@@ -33,7 +31,6 @@ const CreateSubFolder = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult()
                 setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
             }
         }
