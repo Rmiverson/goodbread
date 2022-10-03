@@ -71,17 +71,22 @@ const CreateFolder = () => {
             setResult({data: {}, status: 'Error', message: err, submitted: false})
         }
     }
+
+    const renderErrors = () => {
+        if (result.status === 'Error') {
+            return <span>{result.status + ': ' + result.message}</span>
+        }
+    }
     
     if (isPostingFolder || !result.status) {
         return <span>Loading...</span>
-    } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message}</span>
     } else if (result.submitted) {
         return <Navigate to={`/folder/${result.data.id}`} replace/>
     } else {
         return(
             <div className='create-folder-form'>
                 <h2>Create Folder Form</h2>
+                {renderErrors()}
                 <form onSubmit={submitFolder}>
                     <label>Title</label>
                     <input required type='text' name='title' value={title} onChange={handleTitleChange} />

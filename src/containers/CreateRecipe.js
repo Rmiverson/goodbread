@@ -185,6 +185,12 @@ const CreateRecipe = () => {
             setResult({data: {}, status: 'Error', message: err, submitted: false})        }
     }
 
+    const renderErrors = () => {
+        if (result.status === 'Error') {
+            return <span>{result.status + ': ' + result.message}</span>
+        }
+    }
+
     if (isPostingRecipe) {
         return <span>loading...</span>
     } else if (result.submitted) {
@@ -192,6 +198,8 @@ const CreateRecipe = () => {
     } else {
         return(
             <div className='create-recipe-page'>
+                <h2>Create Recipe</h2>
+                {renderErrors()}
                 <form id='create-recipe-form' onSubmit={submitRecipe}>
                     <label>Title</label>
                     <input required type='text' name='title' value={title} onChange={handleTitleChange} />

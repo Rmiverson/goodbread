@@ -71,16 +71,21 @@ const CreateSubFolder = () => {
         }
     }
 
+    const renderErrors = () => {
+        if (result.status === 'Error') {
+            return <span>{result.status + ': ' + result.message}</span>
+        }
+    }
+
     if (isPostingSubFolder || !result.status) {
         return <span>Loading...</span>
-    } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message}</span>
     } else if (result.submitted) {
         return <Navigate to={`/folder/${parentFolderId}/subfolder/${result.data.id}`} replace/>
     } else {
         return(
             <div className='create-sub-folder-form'>
                 <h2>Create Sub-Folder Form</h2>
+                {renderErrors()}
                 <form onSubmit={submitSubFolder}>
                     <label>Title</label>
                     <input required type='text' name='title' value={title} onChange={handleTitleChange} />
