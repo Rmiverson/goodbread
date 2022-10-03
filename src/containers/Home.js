@@ -7,10 +7,8 @@ import Recipes from './Recipes'
 const Home = () => {
     const currentUser = useSelector((state) => state.user)
 
-    // TODO: work out profile page
     // TODO: add ways to edit: recipes, folders, sub-folder, user
     // TODO: in the edit pages, add ways to delete that resource
-    // TODO: strait out error handling and make it more useful for the user
     // TODO: get started on styling
 
     // Future TODO: migrate sub-folders to be folders but just with self-joins
