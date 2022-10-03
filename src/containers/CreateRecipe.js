@@ -78,13 +78,13 @@ const CreateRecipe = () => {
     }
 
     // textbox add
-    const addTextbox = () => setComponents([...components, {type: 'textbox', title: '', text_content: ''}])
+    const addTextbox = () => setComponents([...components, {component_type: 'textbox', title: '', text_content: ''}])
 
     // unordered_list add
-    const addUl = () => setComponents([...components, {type: 'ul', title:'', list_items: ['']}])
+    const addUl = () => setComponents([...components, {component_type: 'ul', title:'', list_items: ['']}])
 
     // ordered_list add
-    const addOl = () => setComponents([...components, {type: 'ol', title:'', list_items: ['']}])
+    const addOl = () => setComponents([...components, {component_type: 'ol', title:'', list_items: ['']}])
     
     // textbox text content change
     const handleTextboxTextContentChange = (targetIndex) => (e) => {
@@ -215,7 +215,7 @@ const CreateRecipe = () => {
 
                     <List 
                         values={components.map((component, index) => {
-                            switch(component.type) {
+                            switch(component.component_type) {
                                 case 'textbox':
                                     return(
                                         <TextboxForm
