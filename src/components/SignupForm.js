@@ -35,7 +35,7 @@ const SignupForm = (props) => {
                     required
                 />
 
-                <input type='submit' className='submit-button' value='Login'/>
+                <input type='submit' className='submit-button' value='Signup'/>
             </form>
         </div>        
     )
