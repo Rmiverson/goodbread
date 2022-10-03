@@ -1,5 +1,3 @@
-import apiClient from '../http-common'
-
 export function userUpdate(user) {return async dispatch => dispatch(updateUser(user))}
 
 export function userLogout(dispatch) {return dispatch(logoutUser())}

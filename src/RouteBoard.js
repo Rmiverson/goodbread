@@ -10,8 +10,7 @@ import ProtectedRoute from './containers/ProtectedRoute'
 import CreateRecipe from './containers/CreateRecipe'
 import CreateFolder from './containers/CreateFolder'
 import CreateSubFolder from './containers/CreateSubFolder'
-
-
+import EditRecipe from './containers/EditRecipe'
 
 const RouteBoard = () => {
     return(
@@ -55,6 +54,11 @@ const RouteBoard = () => {
             <Route path='/recipe/:id' element={
                 <ProtectedRoute>
                     <Recipe />
+                </ProtectedRoute>
+            }/>
+            <Route path='/recipe/edit/:id' element={
+                <ProtectedRoute>
+                    <EditRecipe />
                 </ProtectedRoute>
             }/>                
             
