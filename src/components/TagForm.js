@@ -11,7 +11,7 @@ const TagForm = (props) => {
                         <input 
                             type='text'
                             placeholder='tag name'
-                            value={tag}
+                            value={tag.label}
                             onChange={props.handleTagChange(index)}
                         />
                         <button type='button' onClick={props.removeTag(index)}>-</button>
