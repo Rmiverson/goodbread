@@ -15,7 +15,7 @@ const EditRecipe = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [components, setComponents] = useState([])
-    const [tags, setTags] = useState([''])
+    const [tags, setTags] = useState([{id: null, label: null}])
     const { id } = useParams()
     const currentUser = useSelector((state) => state.user)
 
@@ -40,7 +40,7 @@ const EditRecipe = () => {
                 setTitle(apiResp.data.title)
                 setDescription(apiResp.data.description)
                 setComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
-                setTags(apiResp.data.tags.map((tag) => tag.label))
+                setTags(apiResp.data.tags)
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
@@ -119,13 +119,13 @@ const EditRecipe = () => {
     }
 
     // textbox add
-    const addTextbox = () => setComponents([...components, {component_type: 'textbox', title: '', text_content: ''}])
+    const addTextbox = () => setComponents([...components, {id: null, component_type: 'textbox', title: '', text_content: ''}])
 
     // unordered_list add
-    const addUl = () => setComponents([...components, {component_type: 'ul', title:'', list_items: ['']}])
+    const addUl = () => setComponents([...components, {id: null, component_type: 'ul', title:'', list_items: ['']}])
 
     // ordered_list add
-    const addOl = () => setComponents([...components, {component_type: 'ol', title:'', list_items: ['']}])
+    const addOl = () => setComponents([...components, {id: null, component_type: 'ol', title:'', list_items: ['']}])
     
     // textbox text content change
     const handleTextboxTextContentChange = (targetIndex) => (e) => {
@@ -187,13 +187,13 @@ const EditRecipe = () => {
     const handleTagChange = (targetIndex) => (e) => {
         const newTags = tags.map((tag, tagIndex) => {
             if (targetIndex !== tagIndex) return tag
-            return e.target.value
+            return {...tag, label: e.target.value}
         })
         setTags(newTags)
     }
 
     // tag add
-    const addTag = () => setTags([...tags, ''])
+    const addTag = () => setTags([...tags, {id: null, label: ''}])
 
     // tag remove
     const removeTag = (targetIndex) => () => {
