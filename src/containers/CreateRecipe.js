@@ -15,7 +15,7 @@ const CreateRecipe = () => {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [components, setComponents] = useState([])
-    const [tags, setTags] = useState([''])
+    const [tags, setTags] = useState([{id: null, label: '' }])
     const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false})
 
     const currentUser = useSelector((state) => state.user)
@@ -78,13 +78,13 @@ const CreateRecipe = () => {
     }
 
     // textbox add
-    const addTextbox = () => setComponents([...components, {component_type: 'textbox', title: '', text_content: ''}])
+    const addTextbox = () => setComponents([...components, {id: null, component_type: 'textbox', title: '', text_content: ''}])
 
     // unordered_list add
-    const addUl = () => setComponents([...components, {component_type: 'ul', title:'', list_items: ['']}])
+    const addUl = () => setComponents([...components, {id: null, component_type: 'ul', title:'', list_items: ['']}])
 
     // ordered_list add
-    const addOl = () => setComponents([...components, {component_type: 'ol', title:'', list_items: ['']}])
+    const addOl = () => setComponents([...components, {id: null, component_type: 'ol', title:'', list_items: ['']}])
     
     // textbox text content change
     const handleTextboxTextContentChange = (targetIndex) => (e) => {
@@ -146,13 +146,13 @@ const CreateRecipe = () => {
     const handleTagChange = (targetIndex) => (e) => {
         const newTags = tags.map((tag, tagIndex) => {
             if (targetIndex !== tagIndex) return tag
-            return e.target.value
+            return {id: null, label: e.target.value}
         })
         setTags(newTags)
     }
 
     // tag add
-    const addTag = () => setTags([...tags, ''])
+    const addTag = () => setTags([...tags, {id: null, label: ''}])
 
     // tag remove
     const removeTag = (targetIndex) => () => {
