@@ -47,11 +47,7 @@ const CreateFolder = () => {
         }
     }
 
-    const handleRemoveRecipe = (targetRecipe) => () => {
-        if (checkedRecipes.includes(targetRecipe)) {
-            setCheckedRecipes(checkedRecipes.filter((recipe) => recipe.id !== targetRecipe.id))
-        }
-    }
+    const handleRemoveRecipe = (targetRecipe) => () => setCheckedRecipes(checkedRecipes.filter((recipe) => recipe.id !== targetRecipe.id))
 
     const submitFolder = (e) => {
         e.preventDefault()
@@ -78,7 +74,7 @@ const CreateFolder = () => {
         }
     }
     
-    if (isPostingFolder || !result.status) {
+    if (isPostingFolder) {
         return <span>Loading...</span>
     } else if (result.submitted) {
         return <Navigate to={`/folder/${result.data.id}`} replace/>
@@ -101,7 +97,7 @@ const CreateFolder = () => {
                         </div>
                     ))}
 
-                    <Recipes formList={true} currentUser={currentUser} handleAddRecipe={handleAddRecipe}/>
+                    <Recipes formList={true} currentUser={currentUser} handleAddRecipe={handleAddRecipe} handleRemoveRecipe={handleRemoveRecipe} checkedRecipes={checkedRecipes.map(recipe => recipe.id)}/>
 
                     <input type='submit' value='Submit Folder' />
                 </form>
