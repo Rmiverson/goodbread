@@ -11,7 +11,7 @@ import TextboxForm from '../components/TextboxForm'
 import TagForm from '../components/TagForm'
 
 const EditRecipe = () => {
-    const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false})
+    const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false, deleted: false})
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [components, setComponents] = useState([])
@@ -36,7 +36,7 @@ const EditRecipe = () => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: false})
+                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: false, deleted: false})
                 setTitle(apiResp.data.title)
                 setDescription(apiResp.data.description)
                 setComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
@@ -61,12 +61,33 @@ const EditRecipe = () => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: true})
+                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: true, deleted: false})
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
+                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false, deleted: false})
             }
+        }
+    )
+
+    const { isLoading: isDeletingRecipe, mutate: deleteRecipe } = useMutation(
+        async () => {
+            return await apiClient.delete(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+        },
+        {
+            onSuccess: (res) => {
+                const apiResp = {
+                    status: res.status + "-" + res.statusText,
+                    headers: res.headers,
+                    data: res.data.data,
+                    meta: res.data.meta
+                }
+                setResult({data: {}, status: apiResp.status, message: null, submitted: false, deleted: true})
+            },
+            onError: (err) => {
+                console.error(err.response?.data || err)
+                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false, deleted: false})
+            }            
         }
     )
 
@@ -204,6 +225,15 @@ const EditRecipe = () => {
         }
     }
 
+    const handleDelete = () => {
+        try {
+            deleteRecipe()
+        } catch (err) {
+            console.error(err)
+            setResult({data: {}, status: 'Error', message: err, submitted: false, deleted: false})
+        }
+    }
+
     const submitRecipe = (e) => {
         e.preventDefault()
 
@@ -223,7 +253,8 @@ const EditRecipe = () => {
         try {
             putRecipe()
         } catch (err) {
-            setResult({data: {}, status: 'Error', message: err, submitted: false})        }
+            console.error(err)
+            setResult({data: {}, status: 'Error', message: err, submitted: false, deleted: false})}
     }
 
     const renderErrors = () => {
@@ -232,10 +263,12 @@ const EditRecipe = () => {
         }
     }
 
-    if (isPuttingRecipe || isLoadingRecipe || !result.status) {
+    if (isPuttingRecipe || isLoadingRecipe || isDeletingRecipe || !result.status) {
         return <span>Loading...</span>
     } else if (result.submitted) {
         return <Navigate to={`/recipe/${result.data.id}`} replace />
+    } else if (result.deleted) {
+        return <Navigate to='/' replace />
     } else {
         return (
             <div className='edit-recipe-page'>
@@ -311,7 +344,10 @@ const EditRecipe = () => {
                     handleTagChange={handleTagChange}
                     removeTag={removeTag}
                 />
-            <input form='edit-recipe-form' type='submit' value='Submit Recipe' />    
+
+                <input type='button' onClick={handleDelete} value='Delete Recipe' />
+
+                <input form='edit-recipe-form' type='submit' value='Submit Recipe' />    
             </form>
         </div>
         )
