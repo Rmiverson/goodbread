@@ -12,6 +12,7 @@ import CreateFolder from './containers/CreateFolder'
 import CreateSubFolder from './containers/CreateSubFolder'
 import EditRecipe from './containers/EditRecipe'
 import EditFolder from './containers/EditFolder'
+import EditUser from './containers/EditUser'
 
 const RouteBoard = () => {
     return(
@@ -25,6 +26,11 @@ const RouteBoard = () => {
             <Route path='/profile' element={
                 <ProtectedRoute>
                     <Profile />
+                </ProtectedRoute>
+            }/>
+            <Route path='/profile/edit' element={
+                <ProtectedRoute>
+                    <EditUser />
                 </ProtectedRoute>
             }/>
             <Route path='/folder/:id' element={
