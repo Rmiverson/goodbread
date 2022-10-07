@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import apiClient from '../http-common'
 import { updateUser } from '../redux/actions'
 
@@ -46,7 +47,7 @@ const Profile = () => {
         ferretUserById()
     }, [getUserById, setResult])
 
-    if (isLoadingUser || !result.data) {
+    if (isLoadingUser || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
         return <span>{result.status + ': ' + result.message}</span>
@@ -57,8 +58,11 @@ const Profile = () => {
                 <h4>{`Name: ${result.data.first_name} ${result.data.last_name}`}</h4>
                 <h4>User description</h4>
                 <p>{result.data.description}</p>
+                <h4>Email</h4>
+                <p>{result.data.email}</p>
                 <h4>{`Number of Recipes: ${result.data.recipes.length}`}</h4>
                 <h4>{`Number of Folders: ${result.data.folders.length}`}</h4>
+                <Link to='/profile/edit'>Edit Profile</Link>
             </div>
         )        
     }
