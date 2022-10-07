@@ -7,12 +7,9 @@ import Recipes from './Recipes'
 const Home = () => {
     const currentUser = useSelector((state) => state.user)
 
-    // TODO: add ways to edit: recipes, folders, sub-folder, user
-    // TODO: in the edit pages, add ways to delete that resource
+    // TODO: add deletes for recipes, folder, and users
+    // TODO: migrate sub-folders to be folders but just with self-joins
     // TODO: get started on styling
-
-    // Future TODO: migrate sub-folders to be folders but just with self-joins
-
 
     return(
         <div className='Home'>
