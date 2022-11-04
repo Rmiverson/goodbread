@@ -8,7 +8,6 @@ const Home = () => {
     const currentUser = useSelector((state) => state.user)
 
     // TODO: add deletes for recipes, folder, and users
-    // TODO: migrate sub-folders to be folders but just with self-joins
     // TODO: get started on styling
 
     return(

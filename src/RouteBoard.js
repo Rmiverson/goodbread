@@ -5,11 +5,9 @@ import Home from './containers/Home'
 import Profile from './containers/Profile'
 import Recipe from './containers/Recipe'
 import LoginSignup from './containers/LoginSignup'
-import SubFolder from './containers/SubFolder'
 import ProtectedRoute from './containers/ProtectedRoute'
 import CreateRecipe from './containers/CreateRecipe'
 import CreateFolder from './containers/CreateFolder'
-import CreateSubFolder from './containers/CreateSubFolder'
 import EditRecipe from './containers/EditRecipe'
 import EditFolder from './containers/EditFolder'
 import EditUser from './containers/EditUser'
@@ -46,16 +44,6 @@ const RouteBoard = () => {
             <Route path='/folder/edit/:id' element={
                 <ProtectedRoute>
                     <EditFolder />
-                </ProtectedRoute>
-            }/>
-            <Route path='/folder/:folderId/subfolder/:id' element={
-                <ProtectedRoute>
-                    <SubFolder />
-                </ProtectedRoute>
-            }/>
-            <Route path='/folder/:folderId/subfolder/create' element={
-                <ProtectedRoute>
-                    <CreateSubFolder />
                 </ProtectedRoute>
             }/>
             <Route path='/recipe/create' element={

@@ -4,7 +4,6 @@ import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 import FolderRecipes from './FolderRecipes'
-import SubFolders from './SubFolders'
 
 const Folder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -59,10 +58,8 @@ const Folder = () => {
             <div className='folder'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
-                <Link to={`/folder/${id}/subfolder/create`} >Create Sub-Folder</Link>
                 <Link to='/recipe/create'>Create Recipe</Link>
                 <Link to={`/folder/edit/${id}`}>Edit Folder</Link>
-                <SubFolders folderId={id} currentUser={currentUser} />
                 <FolderRecipes folderId={id} currentUser={currentUser} />
             </div>
         )        
