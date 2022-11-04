@@ -54,11 +54,32 @@ const EditFolder = () => {
                     data: res.data.data,
                     meta: res.data.meta
                 }
-                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: true})
+                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: true, deleted: false})
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
+                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false, deleted: false})
+            }
+        }
+    )
+
+    const { isLoading: isDeletingFolder, mutate: deleteFolder } = useMutation(
+        async () => {
+            return await apiClient.delete(`/folders/${ id }`, { headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+        },
+        {
+            onSuccess: (res) => {
+                const apiResp = {
+                    status: res.status + '-' + res.statusText,
+                    headers: res.headers,
+                    data: res.data.data,
+                    meta: res.data.meta
+                }
+                setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: false, deleted: true})
+            },
+            onError: (err) => {
+                console.error(err.response?.data || err)
+                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false, deleted: false})
             }
         }
     )
@@ -115,10 +136,12 @@ const EditFolder = () => {
         }
     }
 
-    if (isLoadingFolder || isPostingFolder) {
+    if (isLoadingFolder || isPostingFolder || isDeletingFolder) {
         return <span>Loading...</span>
     } else if (result.submitted) {
         return <Navigate to={`/folder/${result.data.id}`} replace/>
+    } else if (result.deleted){
+        return <Navigate to={'/'} replace/>
     } else {
         return(
             <div className='create-folder-form'>
@@ -139,6 +162,8 @@ const EditFolder = () => {
                     ))}
 
                     <Recipes formList={true} currentUser={currentUser} handleAddRecipe={handleAddRecipe} handleRemoveRecipe={handleRemoveRecipe} checkedRecipes={checkedRecipes.map(recipe => recipe.id)}/>
+
+                    <button type='button' onClick={deleteFolder}>Delete Folder</button>
 
                     <input type='submit' value='Submit Folder' />
                 </form>
