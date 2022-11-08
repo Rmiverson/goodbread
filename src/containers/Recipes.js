@@ -73,6 +73,7 @@ const Recipes = (props) => {
                 <div className='recipes-grid'>
                     {renderCards(result.data)}
                     <ReactPaginate 
+                        className='page-controls'
                         breakLabel='...'
                         nextLabel='next >'
                         onPageChange={handlePageClick}

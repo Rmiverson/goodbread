@@ -23,3 +23,14 @@
     box-shadow: inset 0px 0px 0.5em #0f0f0f45;
   }
 }
+
+.page-controls {
+  list-style: none;
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+
+  li {
+    padding: 0 5px 0 5px;
+  }
+}
