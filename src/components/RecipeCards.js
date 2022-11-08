@@ -13,7 +13,7 @@ const RecipeCards = (props) => {
     const previewContent = (content) => {
         let str = content
         if (str.length > 250) {
-           str = str.substring(0, 150) + '...'
+           str = str.substring(0, 90) + '...'
         }
         return str
      }
