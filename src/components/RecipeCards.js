@@ -10,22 +10,30 @@ const RecipeCards = (props) => {
         }
     }
 
+    const previewContent = (content) => {
+        let str = content
+        if (str.length > 250) {
+           str = str.substring(0, 150) + '...'
+        }
+        return str
+     }
+
     return (
         <div className='card-grid'>
             {props.items.map((item, itemIndex) => {
                 if (props.formList === true) {
                     return (
-                        <div key={itemIndex}>
+                        <div className='grid-item' key={itemIndex}>
                             <h4>{item.title}</h4>
-                            <p>{item.description}</p>
+                            <p>{previewContent(item.description)}</p>
                             {renderFormbutton(item)}
                         </div>
                     )
                 } else {
                     return (
-                        <Link key={itemIndex} to={`/recipe/${item.id}`}>
+                        <Link className='grid-item' key={itemIndex} to={`/recipe/${item.id}`}>
                             <h4>{item.title}</h4>
-                            <p>{item.description}</p>
+                            <p>{previewContent(item.description)}</p>
                         </Link>                    
                     )
                 }
