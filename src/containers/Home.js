@@ -1,3 +1,4 @@
+import '../scss/home.scss'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import Recipes from './Recipes'
@@ -8,8 +9,8 @@ const Home = () => {
 
     return(
         <div className='home'>
-            <Recipes currentUser={currentUser} />                
             <Folders currentUser={currentUser} />
+            <Recipes currentUser={currentUser} />                
         </div>
     )        
 }
