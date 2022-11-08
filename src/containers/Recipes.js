@@ -49,6 +49,14 @@ const Recipes = (props) => {
         ferretRecipes()
     }, [getAllUserRecipes, currentPage])
 
+    const renderCards = (data) => {
+        if (data.length >= 1) {
+            return <RecipeCards items={data} handleAddRecipe={props.handleAddRecipe} formList={props.formList} handleRemoveRecipe={props.handleRemoveRecipe} checkedRecipes={props.checkedRecipes}/>
+        } else {
+            return <span>No recipes here yet</span>
+        }
+    }
+
     const handlePageClick = (e) => {
         setCurrentPage(e.selected)
     }
@@ -60,10 +68,10 @@ const Recipes = (props) => {
     } else {
         return (
             <div className='all-recipes'>
-                <h2>All Recipes</h2>
+                <h2>Recipes</h2>
                 <Link to='/recipe/create'>Create Recipe</Link>
                 <div className='all-recipes-list'>
-                    <RecipeCards items={result.data} handleAddRecipe={props.handleAddRecipe} formList={props.formList} handleRemoveRecipe={props.handleRemoveRecipe} checkedRecipes={props.checkedRecipes}/>
+                    {renderCards(result.data)}
                     <ReactPaginate 
                         breakLabel='...'
                         nextLabel='next >'

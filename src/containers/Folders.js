@@ -48,6 +48,14 @@ const Folders = (props) => {
         ferretUserFolders()
     }, [getAllUserFolders, currentPage])
 
+    const renderCards = (data) => {
+        if (data.length >= 1) {
+            return <FolderCards items={data} />
+        } else {
+            return <span>No folders here yet</span>
+        }
+    }
+
     const handlePageClick = (e) => setCurrentPage(e.selected)
 
     if (isLoadingFolders || !result.status) {
@@ -59,16 +67,18 @@ const Folders = (props) => {
             <div className='all-folders'>
                 <h2>Folders</h2>
                 <Link to='/folder/create'>Create Folder</Link>
-                <FolderCards items={result.data} />
-                <ReactPaginate 
-                    breakLabel='...'
-                    nextLabel='next >'
-                    onPageChange={handlePageClick}
-                    pageRangeDisplayed={5}
-                    pageCount={pageCount}
-                    previousLabel='< previous'
-                    renderOnZeroPageCount={null}
-                />
+                <div className='all-folders-list'>
+                    {renderCards(result.data)}
+                    <ReactPaginate 
+                        breakLabel='...'
+                        nextLabel='next >'
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel='< previous'
+                        renderOnZeroPageCount={null}
+                    />
+                </div>
             </div>
         )
     }
