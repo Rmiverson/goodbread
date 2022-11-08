@@ -64,10 +64,10 @@ const Folders = (props) => {
         return <span>{result.status + ': ' + result.message}</span>
     } else {
         return (
-            <div className='all-folders'>
+            <div className='folders'>
                 <h2>Folders</h2>
                 <Link className='button' to='/folder/create'>Create Folder</Link>
-                <div className='all-folders-list'>
+                <div className='folders-list'>
                     {renderCards(result.data)}
                     <ReactPaginate 
                         breakLabel='...'

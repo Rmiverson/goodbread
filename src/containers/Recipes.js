@@ -67,10 +67,10 @@ const Recipes = (props) => {
         return <span>{result.status + ': ' + result.message}</span>
     } else {
         return (
-            <div className='all-recipes'>
+            <div className='recipes'>
                 <h2>Recipes</h2>
                 <Link className='button' to='/recipe/create'>Create Recipe</Link>
-                <div className='all-recipes-list'>
+                <div className='recipes-grid'>
                     {renderCards(result.data)}
                     <ReactPaginate 
                         breakLabel='...'
