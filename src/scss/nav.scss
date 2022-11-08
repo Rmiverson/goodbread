@@ -1,0 +1,21 @@
+nav {
+    display: flex;
+    flex-flow: row-reverse;
+}
+
+.nav-item {
+    padding: 12px;
+    color: #0f0f0f;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+
+    &:hover {
+        // box-shadow: inset 0 -0.5em  0.5em rgba(0, 0, 0, 0.1), 0 0 0 2px rgb(255, 255, 255);
+        background-color: rgba(40, 40, 40, 0.2);
+    }
+}
+
+.logout:hover {
+    background-color: rgba(236, 57, 57, 0.2);
+}
