@@ -1,4 +1,4 @@
-import './scss/App.scss'
+import './scss/app.scss'
 import Nav from './containers/Nav'
 import RouteBoard from './RouteBoard'
 
