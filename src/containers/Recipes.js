@@ -53,7 +53,7 @@ const Recipes = (props) => {
         if (data.length >= 1) {
             return <RecipeCards items={data} handleAddRecipe={props.handleAddRecipe} formList={props.formList} handleRemoveRecipe={props.handleRemoveRecipe} checkedRecipes={props.checkedRecipes}/>
         } else {
-            return <span>No recipes here yet</span>
+            return <p>No recipes here yet</p>
         }
     }
 
@@ -69,7 +69,7 @@ const Recipes = (props) => {
         return (
             <div className='all-recipes'>
                 <h2>Recipes</h2>
-                <Link to='/recipe/create'>Create Recipe</Link>
+                <Link className='button' to='/recipe/create'>Create Recipe</Link>
                 <div className='all-recipes-list'>
                     {renderCards(result.data)}
                     <ReactPaginate 

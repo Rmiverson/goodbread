@@ -8,7 +8,6 @@ const Home = () => {
 
     return(
         <div className='home'>
-            <h2>Home</h2>
             <Recipes currentUser={currentUser} />                
             <Folders currentUser={currentUser} />
         </div>

@@ -52,7 +52,7 @@ const Folders = (props) => {
         if (data.length >= 1) {
             return <FolderCards items={data} />
         } else {
-            return <span>No folders here yet</span>
+            return <p>No folders here yet</p>
         }
     }
 
@@ -66,7 +66,7 @@ const Folders = (props) => {
         return (
             <div className='all-folders'>
                 <h2>Folders</h2>
-                <Link to='/folder/create'>Create Folder</Link>
+                <Link className='button' to='/folder/create'>Create Folder</Link>
                 <div className='all-folders-list'>
                     {renderCards(result.data)}
                     <ReactPaginate 
