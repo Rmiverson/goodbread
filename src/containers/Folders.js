@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
 import FolderCards from '../components/FolderCards'
 import apiClient from '../http-common'
+import { Link } from 'react-router-dom'
 
 const Folders = (props) => {
     const currentUser = props.currentUser
@@ -57,6 +58,7 @@ const Folders = (props) => {
         return (
             <div className='all-folders'>
                 <h2>Folders</h2>
+                <Link to='/folder/create'>Create Folder</Link>
                 <FolderCards items={result.data} />
                 <ReactPaginate 
                     breakLabel='...'

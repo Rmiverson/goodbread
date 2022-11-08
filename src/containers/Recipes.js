@@ -3,6 +3,7 @@ import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
 import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
+import { Link } from 'react-router-dom'
 
 const Recipes = (props) => {
     const currentUser = props.currentUser
@@ -60,6 +61,7 @@ const Recipes = (props) => {
         return (
             <div className='all-recipes'>
                 <h2>All Recipes</h2>
+                <Link to='/recipe/create'>Create Recipe</Link>
                 <div className='all-recipes-list'>
                     <RecipeCards items={result.data} handleAddRecipe={props.handleAddRecipe} formList={props.formList} handleRemoveRecipe={props.handleRemoveRecipe} checkedRecipes={props.checkedRecipes}/>
                     <ReactPaginate 
