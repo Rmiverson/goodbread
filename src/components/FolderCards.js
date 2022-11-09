@@ -3,12 +3,11 @@ import { Link } from 'react-router-dom'
 
 const FolderCards = (props) => {
     return (
-        <div className='card-grid'>
+        <div className='card-list'>
             {props.items.map((item, itemIndex) => {
                 return (
-                    <Link key={itemIndex} to={`/folder/${item.id}`} className='folder-card'> 
+                    <Link className='list-item' key={itemIndex} to={`/folder/${item.id}`}> 
                         <h4>{item.title}</h4>
-                        <p>{item.description}</p>            
                     </Link>                    
                 )       
             })}

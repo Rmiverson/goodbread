@@ -70,12 +70,13 @@ const Folders = (props) => {
                 <div className='folders-list'>
                     {renderCards(result.data)}
                     <ReactPaginate 
+                        className='page-controls'
                         breakLabel='...'
-                        nextLabel='next >'
+                        nextLabel='>'
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
                         pageCount={pageCount}
-                        previousLabel='< previous'
+                        previousLabel='<'
                         renderOnZeroPageCount={null}
                     />
                 </div>
