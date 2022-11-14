@@ -2,6 +2,16 @@
   height: 100%;
 }
 
+:root {
+  --white: #ffffff;
+  --black: #0f0f0f;
+  --blackTransparent: #0f0f0f45;
+  --lightBlue: #50b9b7;
+  --lightBlueTransparent: #50b9b775;
+  --blueGreenTransparent: #4bd1b094;
+  --salmon: rgb(255, 125, 125);
+}
+
 .App {
   text-align: center;
   height: 100%;
@@ -10,15 +20,16 @@
 .button {
   font-size: 1em;
   padding: 10px;
-  color: #0f0f0f;
+  color: var(--black);
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
   border-radius: 5em;
-  box-shadow: 0px 0px 0.5em #0f0f0f45;
+  box-shadow: 0px 0px 0.5em var(--blackTransparent);
 
   &:hover {
-    box-shadow: inset 0px 0px 0.5em #0f0f0f45;
+    box-shadow: inset 0px 0px 0.5em var(--blackTransparent);
+    background-color: var(--blueGreenTransparent);
   }
 }
 
@@ -39,7 +50,7 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 15px;
   grid-auto-rows: minmax(100px, auto);
   margin: 20px;
@@ -52,10 +63,10 @@
   height: 100%;
   color:#0f0f0f;
   text-decoration: none;
-  box-shadow: 0px 0px 0.5em #0f0f0f45;
+  box-shadow: 0px 0px 0.5em var(--blackTransparent);
   border-radius: 0.5em;
 
   &:hover {
-    box-shadow: inset 0px 0px 0.5em #0f0f0f45;
+    box-shadow: inset 0px 0px 0.5em var(--blackTransparent);
   }
 }
