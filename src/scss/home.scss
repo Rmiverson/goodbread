@@ -10,11 +10,11 @@
 .folders {
     width: 25%;
     height: 100%;
-    box-shadow: 0em 0.5em 0.5em #0f0f0f45;
+    box-shadow: 0em 0.5em 0.5em var(--blackTransparent);
 }
 
 .list-item {
-    color:#0f0f0f;
+    color: var(--black);
     text-decoration: none;
-    // left off here
+    //left off here
 }

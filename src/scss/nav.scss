@@ -4,22 +4,22 @@ nav {
 }
 
 .nav-bar {
-    background-color: #50b9b7;
+    background-color: var(--lightBlue);
 }
 
 .nav-item {
     padding: 12px;
-    color: #0f0f0f;
+    color: var(--black);
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 600;
 
     &:hover {
-        box-shadow: inset 0px 0px 0.5em #0f0f0f45;
+        box-shadow: inset 0px 0px 0.5em var(--blackTransparent);
     }
 }
 
 .logout:hover {
-    background-color: rgb(255, 125, 125);
-    box-shadow: inset 0px 0px 0.5em #0f0f0f45;
+    background-color: var(--salmon);
+    box-shadow: inset 0px 0px 0.5em var(--blackTransparent);
 }
