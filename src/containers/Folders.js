@@ -1,3 +1,4 @@
+import '../scss/folders.scss'
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
