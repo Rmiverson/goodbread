@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import '../scss/create-recipe.scss'
 import { useSelector } from 'react-redux'
 import { List, arrayMove } from 'react-movable'
 import { useMutation } from 'react-query'
@@ -198,14 +199,14 @@ const CreateRecipe = () => {
     } else {
         return(
             <div className='create-recipe-page'>
-                <h2>Create Recipe</h2>
+                <h2>Create New Recipe</h2>
                 {renderErrors()}
                 <form id='create-recipe-form' onSubmit={submitRecipe}>
                     <label>Title</label>
-                    <input required type='text' name='title' value={title} onChange={handleTitleChange} />
+                    <input className='text-input' required type='text' name='title' value={title} onChange={handleTitleChange} />
 
                     <label>Description</label>
-                    <input required type='text' name='description' value={description} onChange={handleDescChange} />
+                    <textarea className='text-input' required name='description' value={description} onChange={handleDescChange} rows='4' />
 
                     <div className='add-component-ribbon'>
                         <button type='button' onClick={addTextbox}>Add Textbox</button>
@@ -213,7 +214,7 @@ const CreateRecipe = () => {
                         <button type='button' onClick={addOl}>Add Numbered List</button>
                     </div>
 
-                    <List 
+                    <List
                         values={components.map((component, index) => {
                             switch(component.component_type) {
                                 case 'textbox':
@@ -260,8 +261,8 @@ const CreateRecipe = () => {
                             }                    
                         })}
                         onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
-                        renderList={({ children, props }) => <ul {...props}>{children}</ul>}
-                        renderItem={({ value, props }) => <li {...props}>{value}</li>}
+                        renderList={({ children, props }) => <ul className='content-list'{...props}>{children}</ul>}
+                        renderItem={({ value, props }) => <li className='content-item'{...props}>{value}</li>}
                     />
 
                     <TagForm
