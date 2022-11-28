@@ -4,6 +4,8 @@ import { useQuery } from 'react-query'
 import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
 
+import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
+
 const FolderRecipes = (props) => {
     const currentUser = props.currentUser
     const [result, setResult] = useState({data: [], status: null, message: null}) 
@@ -62,11 +64,11 @@ const FolderRecipes = (props) => {
                 <RecipeCards items={result.data} formList={props.formList} handleAddRecipe={props.handleAddRecipe}/>
                 <ReactPaginate 
                     breakLabel='...'
-                    nextLabel='next >'
+                    nextLabel={<HiOutlineChevronRight />}
                     onPageChange={handlePageClick}
                     pageRangeDisplayed={5}
                     pageCount={pageCount}
-                    previousLabel='< previous'
+                    previousLabel={<HiOutlineChevronLeft />}
                     renderOnZeroPageCount={null}
                 />
             </div>

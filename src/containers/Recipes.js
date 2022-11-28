@@ -5,6 +5,8 @@ import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
 import { Link } from 'react-router-dom'
 
+import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
+
 const Recipes = (props) => {
     const currentUser = props.currentUser
     const [result, setResult] = useState({data: [], status: null, message: null})
@@ -75,11 +77,11 @@ const Recipes = (props) => {
                     <ReactPaginate 
                         className='page-controls'
                         breakLabel='...'
-                        nextLabel='>'
+                        nextLabel={<HiOutlineChevronRight />}
                         onPageChange={handlePageClick}
                         pageRangeDisplayed={5}
                         pageCount={pageCount}
-                        previousLabel='<'
+                        previousLabel={<HiOutlineChevronLeft />}
                         renderOnZeroPageCount={null}
                     />
                 </div>
