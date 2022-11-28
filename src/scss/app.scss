@@ -40,10 +40,22 @@
   justify-content: center;
 
   li {
-    padding: 0 5px 0 5px;
+    padding: 5px;
+    margin: 0 5px 0 5px;
+    box-shadow: 0px 0px 5px var(--blackTransparent);
+    border-radius: 5px;
+    width: 16px;
+
+    a {
+      svg {
+        height: 100%;
+      }
+    }
+
 
     &:hover {
       cursor: pointer;
+        box-shadow: inset 0px 0px 5px var(--blackTransparent);
     }
   }
 }
@@ -67,6 +79,8 @@
   border-radius: 0.5em;
 
   &:hover {
-    box-shadow: inset 0px 0px 0.5em var(--blackTransparent);
+    h4 {
+      text-decoration: underline;
+    }
   }
 }
