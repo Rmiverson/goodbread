@@ -1,0 +1,45 @@
+#create-recipe-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.text-input {
+    width: 500px;
+
+}
+
+.content-list, .content-item {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content-list {
+    width: 60vw;
+}
+
+.content-item {
+    padding: 1rem 0px 1rem 0px;
+    flex-direction: row;
+    width: 100%;
+}
+
+.content-input-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.grab-icon {
+    &:hover {
+        cursor: -webkit-grab;
+    }
+
+    &:active {
+        cursor: -webkit-grabbing;
+    }
+}
