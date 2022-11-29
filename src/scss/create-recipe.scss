@@ -33,13 +33,3 @@
     align-items: center;
     width: 100%;
 }
-
-.grab-icon {
-    &:hover {
-        cursor: -webkit-grab;
-    }
-
-    &:active {
-        cursor: -webkit-grabbing;
-    }
-}
