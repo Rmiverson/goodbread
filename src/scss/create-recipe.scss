@@ -43,3 +43,31 @@
     align-items: center;
     width: 100%;
 }
+
+.list-control-up, .list-control-down, .list-control-delete {
+    // buttons have some kind of default styling making the svg be higher than it should
+    padding: 4px;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    box-shadow: 0px 0px 5px var(--blackTransparent);
+    border-radius: 5px;
+    margin: 0 5px 0 5px;
+
+    svg {
+        height: 100%;
+    }
+
+    &:hover {
+        cursor: pointer;
+        box-shadow: inset 0px 0px 5px var(--blackTransparent);
+    }
+}
+
+.list-control-up, .list-control-down {
+
+}
+
+.list-control-delete {
+
+}
