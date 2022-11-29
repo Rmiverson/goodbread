@@ -261,8 +261,8 @@ const CreateRecipe = () => {
                             }                    
                         })}
                         onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
-                        renderList={({ children, props }) => <ul className='content-list'{...props}>{children}</ul>}
-                        renderItem={({ value, props }) => <li className='content-item'{...props}>{value}</li>}
+                        renderList={({ children, props }) => <div className='content-list'{...props}>{children}</div>}
+                        renderItem={({ value, props }) => <div className='content-item grabbable'{...props}>{value}</div>}
                     />
 
                     <TagForm
