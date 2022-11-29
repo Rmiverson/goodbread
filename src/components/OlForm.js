@@ -1,5 +1,5 @@
 import React from 'react'
-import {HiMenu} from "react-icons/hi"
+import { HiMenu, HiChevronUp, HiChevronDown, HiOutlineX } from "react-icons/hi"
 
 const OlForm = (props) => {
     return(
@@ -17,8 +17,8 @@ const OlForm = (props) => {
                 <ol>
                     {props.component.list_items.map((list_item, listItemIndex) => (
                         <li key={listItemIndex}>
-                            <button type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, -1)}>^</button>
-                            <button type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, 1)}>v</button>
+                            <button className='list-control-up' type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, -1)}><HiChevronUp /></button>
+                            <button className='list-control-down' type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, 1)}><HiChevronDown /></button>
                             <input
                                 type='text'
                                 placeholder='Item Text'
@@ -26,7 +26,7 @@ const OlForm = (props) => {
                                 onChange={props.handleListItemChange(props.index, listItemIndex)}
                             />
 
-                            <button type='button' onClick={props.removeListItem(props.index, listItemIndex)}>-</button>
+                            <button className='list-control-delete' type='button' onClick={props.removeListItem(props.index, listItemIndex)}><HiOutlineX /></button>
                         </li>
                     ))}
                     <button type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
