@@ -14,7 +14,6 @@ const OlForm = (props) => {
                     onChange={props.handleComponentTitleChange(props.index)}
                 />
 
-                <button type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
                 <ol>
                     {props.component.list_items.map((list_item, listItemIndex) => (
                         <li key={listItemIndex}>
@@ -30,7 +29,9 @@ const OlForm = (props) => {
                             <button type='button' onClick={props.removeListItem(props.index, listItemIndex)}>-</button>
                         </li>
                     ))}
+                    <button type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
                 </ol>
+                
 
                 <button type='button' onClick={props.removeComponent(props.index)}>Remove Numbered List</button>           
             </div>

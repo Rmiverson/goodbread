@@ -14,7 +14,6 @@ const UlForm = (props) => {
                     onChange={props.handleComponentTitleChange(props.index)}
                 />
 
-                <button type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
                 <ul>
                     {props.component.list_items.map((list_item, listItemIndex) => (
                         <li key={listItemIndex}>
@@ -29,7 +28,9 @@ const UlForm = (props) => {
 
                             <button type='button' onClick={props.removeListItem(props.index, listItemIndex)}>-</button>
                         </li>
-                    ))}                                        
+                    ))}
+                    
+                    <button type='button' onClick={props.addListItem(props.index)}>Add List Item</button>                                 
                 </ul>
 
                 <button type='button' onClick={props.removeComponent(props.index)}>Remove Bullet List</button>
