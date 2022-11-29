@@ -66,7 +66,7 @@ const Recipes = (props) => {
     if (isLoadingRecipes || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message}</span>
+        return <span>{result.status + ': ' + result.message.errors}</span>
     } else {
         return (
             <div className='recipes'>
