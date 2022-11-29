@@ -15,8 +15,8 @@ const TextboxForm = (props) => {
                 />
 
                 <label>Text Box Content</label>
-                <input 
-                    type='text'
+                <textarea
+                    rows='4'
                     value={props.component.text_content}
                     onChange={props.handleTextboxTextContentChange(props.index)}
                 />
