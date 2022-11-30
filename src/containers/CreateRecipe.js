@@ -203,10 +203,10 @@ const CreateRecipe = () => {
                 {renderErrors()}
                 <form id='create-recipe-form' onSubmit={submitRecipe}>
                     <label>Title</label>
-                    <input className='text-input' required type='text' name='title' value={title} onChange={handleTitleChange} />
+                    <input className='title-input' required type='text' name='title' value={title} onChange={handleTitleChange} />
 
                     <label>Description</label>
-                    <textarea className='text-input' required name='description' value={description} onChange={handleDescChange} rows='4' />
+                    <textarea className='desc-input' required name='description' value={description} onChange={handleDescChange} rows='4' />
 
                     <div className='add-component-ribbon'>
                         <button type='button' onClick={addTextbox}>Add Textbox</button>
