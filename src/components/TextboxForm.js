@@ -6,21 +6,28 @@ const TextboxForm = (props) => {
         <>
             <div className='grab-icon'><HiMenu /></div>
             <div className='content-input-form'>
-                <label>Text Box Title</label>
-                <input 
-                    type='text'
-                    placeholder='Title'
-                    value={props.component.title}
-                    onChange={props.handleComponentTitleChange(props.index)}
-                />
+                <h4>Text Box</h4>
 
-                <label>Text Box Content</label>
-                <textarea
-                    rows='4'
-                    value={props.component.text_content}
-                    onChange={props.handleTextboxTextContentChange(props.index)}
-                />
-                <button type='button' onClick={props.removeComponent(props.index)}>Remove Text Box</button>
+                <div className='input-section'>
+                    <label>Title</label>
+                    <input 
+                        type='text'
+                        placeholder='Title'
+                        value={props.component.title}
+                        onChange={props.handleComponentTitleChange(props.index)}
+                    />                    
+                </div>
+
+                <div className='input-section'>
+                    <label>Content</label>
+                    <textarea
+                        rows='4'
+                        value={props.component.text_content}
+                        onChange={props.handleTextboxTextContentChange(props.index)}
+                    />                    
+                </div>
+
+                <button className='content-input-form-delete' type='button' onClick={props.removeComponent(props.index)}>Remove Text Box</button>
             </div>
         </>      
     )
