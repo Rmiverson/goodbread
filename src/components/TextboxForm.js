@@ -21,7 +21,8 @@ const TextboxForm = (props) => {
                 <div className='input-section'>
                     <label>Content</label>
                     <textarea
-                        rows='4'
+                        rows='6'
+                        cols='50'
                         value={props.component.text_content}
                         onChange={props.handleTextboxTextContentChange(props.index)}
                     />                    
