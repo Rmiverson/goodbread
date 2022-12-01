@@ -46,7 +46,18 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+        padding: 0px;
     }
+
+    label {
+        text-align: center;
+    }
+}
+
+.content-input-list-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;    
 }
 
 .input-section {
@@ -93,4 +104,8 @@
         cursor: pointer;
         box-shadow: inset 0px 0px 5px var(--blackTransparent);
     }
+}
+
+.content-input-list-add {
+    
 }
