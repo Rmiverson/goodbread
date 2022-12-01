@@ -7,7 +7,7 @@ const OlForm = (props) => {
             <div className='grab-icon'><HiMenu /></div>
             <div className='content-input-form'>
                 <h4>Numbered List</h4>
-                <label>Title</label>
+                <label>List Title</label>
                 <input 
                     type='text'
                     placeholder='List Title'
@@ -18,16 +18,17 @@ const OlForm = (props) => {
                 <ol>
                     {props.component.list_items.map((list_item, listItemIndex) => (
                         <li key={listItemIndex}>
-                            <button className='content-input-list-control-up' type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, -1)}><HiChevronUp /></button>
-                            <button className='content-input-list-control-down' type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, 1)}><HiChevronDown /></button>
-                            <input
-                                type='text'
-                                placeholder='Item'
-                                value={list_item}
-                                onChange={props.handleListItemChange(props.index, listItemIndex)}
-                            />
-
-                            <button className='content-input-list-control-delete' type='button' onClick={props.removeListItem(props.index, listItemIndex)}><HiOutlineX /></button>
+                            <div className='content-input-list-item'>
+                                <button className='content-input-list-control-up' type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, -1)}><HiChevronUp /></button>
+                                <button className='content-input-list-control-down' type='button' onClick={props.handleListItemReorder(props.index, listItemIndex, 1)}><HiChevronDown /></button>
+                                <input
+                                    type='text'
+                                    placeholder='Item'
+                                    value={list_item}
+                                    onChange={props.handleListItemChange(props.index, listItemIndex)}
+                                />
+                                <button className='content-input-list-control-delete' type='button' onClick={props.removeListItem(props.index, listItemIndex)}><HiOutlineX /></button>                                
+                            </div>
                         </li>
                     ))}
                     <button className='content-input-list-add' type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
