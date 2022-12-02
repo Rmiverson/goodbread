@@ -3,11 +3,11 @@ label {
     padding: 5px;
 }
 
-.create-recipe-page {
+.create-recipe-page, .edit-recipe-page {
     height: 100%;
 }
 
-#create-recipe-form {
+#create-recipe-form, #edit-recipe-form {
     height: 100%;
     display: flex;
     align-items: center;
@@ -113,7 +113,7 @@ label {
     gap: 15px;
 }
 
-.content-add-button, .form-submit-button {
+.content-add-button, .form-submit-button, .form-delete-button {
     background-color:  var(--white);
     border: none;
     border-radius: 5px;
@@ -127,11 +127,26 @@ label {
     }
 }
 
-.form-submit-button {
+.form-submit-button, .form-delete-button {
     padding: 10px;
     width: 30vw;
     font-weight: bold;
+}
+
+.form-submit-button {
     background-color: var(--blueGreenTransparent);
+
+    &:hover {
+        background-color: var(--blueGreenTransparent);
+    }
+}
+
+.form-delete-button {
+    background-color: var(--salmon);
+
+    &:hover {
+        background-color: var(--salmon);
+    }
 }
 
 .tag-form {
@@ -155,4 +170,11 @@ label {
             width: 100%;
         }
     }
+}
+
+.form-mortality-controls {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 10px;
+    gap: 10px;
 }
