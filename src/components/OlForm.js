@@ -10,7 +10,6 @@ const OlForm = (props) => {
                 <label>List Title</label>
                 <input 
                     type='text'
-                    placeholder='List Title'
                     value={props.component.title}
                     onChange={props.handleComponentTitleChange(props.index)}
                 />
@@ -31,7 +30,7 @@ const OlForm = (props) => {
                             </div>
                         </li>
                     ))}
-                    <button className='content-input-list-add' type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
+                    <button className='content-add-button' type='button' onClick={props.addListItem(props.index)}>Add List Item</button>
                 </ol>
                 
 

@@ -10,7 +10,6 @@ const UlForm = (props) => {
                 <label>List Title</label>
                 <input 
                     type='text'
-                    placeholder='List Title'
                     value={props.component.title}
                     onChange={props.handleComponentTitleChange(props.index)}
                 />
@@ -33,7 +32,7 @@ const UlForm = (props) => {
                         </li>
                     ))}
 
-                    <button className='content-input-list-add' type='button' onClick={props.addListItem(props.index)}>Add List Item</button>                                 
+                    <button className='content-add-button' type='button' onClick={props.addListItem(props.index)}>Add List Item</button>                                 
                 </ul>
 
                 <button className='content-input-form-delete' type='button' onClick={props.removeComponent(props.index)}>Remove Bullet List</button>
