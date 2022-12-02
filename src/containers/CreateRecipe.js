@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import '../scss/create-recipe.scss'
+import '../scss/create-edit-recipe.scss'
 import { useSelector } from 'react-redux'
 import { List, arrayMove } from 'react-movable'
 import { useMutation } from 'react-query'
