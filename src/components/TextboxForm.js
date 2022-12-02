@@ -12,7 +12,6 @@ const TextboxForm = (props) => {
                     <label>Title</label>
                     <input 
                         type='text'
-                        placeholder='Title'
                         value={props.component.title}
                         onChange={props.handleComponentTitleChange(props.index)}
                     />                    
