@@ -1,3 +1,8 @@
+label {
+    text-align: center;
+    padding: 5px;
+}
+
 .create-recipe-page {
     height: 100%;
 }
@@ -48,10 +53,6 @@
         gap: 8px;
         padding: 0px;
     }
-
-    label {
-        text-align: center;
-    }
 }
 
 .content-input-list-item {
@@ -61,7 +62,7 @@
 }
 
 .input-section {
-    margin: 16px 0px 16px 0px;
+    margin: 0px 0px 16px 0px;
     display: flex;
     flex-direction: column;
 }
@@ -106,6 +107,22 @@
     }
 }
 
-.content-input-list-add {
-    
+.add-component-ribbon {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.content-add-button {
+    background-color:  var(--white);
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px var(--blackTransparent);
+    padding: 5px;
+
+    &:hover {
+        background-color: var(--blueGreenTransparent);
+        cursor: pointer;
+        box-shadow: inset 0px 0px 5px var(--blackTransparent);
+    }
 }
