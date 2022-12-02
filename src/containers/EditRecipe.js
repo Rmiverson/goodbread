@@ -272,84 +272,88 @@ const EditRecipe = () => {
     } else {
         return (
             <div className='edit-recipe-page'>
-            <h2>Edit Recipe</h2>
-            {renderErrors()}
-            <form id='edit-recipe-form' onSubmit={submitRecipe}>
-                <label>Title</label>
-                <input required type='text' name='title' value={title} onChange={handleTitleChange} />
+                <h2>Edit Recipe</h2>
+                {renderErrors()}
+                <form id='edit-recipe-form' onSubmit={submitRecipe}>
+                    <div className='input-section'>
+                        <label>Title</label>
+                        <input className='title-input' required type='text' name='title' value={title} onChange={handleTitleChange} />                        
+                    </div>
 
-                <label>Description</label>
-                <input required type='text' name='description' value={description} onChange={handleDescChange} />
+                    <div className='input-section'>
+                        <label>Description</label>
+                        <textarea className='desc-input' required type='text' name='description' value={description} onChange={handleDescChange} rows='4' />                        
+                    </div>
 
-                <div className='add-component-ribbon'>
-                    <button type='button' onClick={addTextbox}>Add Textbox</button>
-                    <button type='button' onClick={addUl}>Add Bullet List</button>
-                    <button type='button' onClick={addOl}>Add Numbered List</button>
-                </div>
+                    <div className='add-component-ribbon'>
+                        <button className='content-add-button' type='button' onClick={addTextbox}>Add Textbox</button>
+                        <button className='content-add-button' type='button' onClick={addUl}>Add Bullet List</button>
+                        <button className='content-add-button' type='button' onClick={addOl}>Add Numbered List</button>
+                    </div>
 
-                <List 
-                    values={components.map((component, index) => {
-                        switch(component.component_type) {
-                            case 'textbox':
-                                return(
-                                    <TextboxForm
-                                        key={index}
-                                        index={index}
-                                        component={component}
-                                        handleComponentTitleChange={handleComponentTitleChange} 
-                                        handleTextboxTextContentChange={handleTextboxTextContentChange} 
-                                        removeComponent={removeComponent} 
-                                    />
-                                )
-                            case 'ul':
-                                return(
-                                    <UlForm 
-                                        key={index}
-                                        index={index}
-                                        component={component}
-                                        handleComponentTitleChange={handleComponentTitleChange}
-                                        addListItem={addListItem}
-                                        handleListItemChange={handleListItemChange}
-                                        handleListItemReorder={handleListItemReorder}
-                                        removeListItem={removeListItem}
-                                        removeComponent={removeComponent}
-                                    />
-                                )
-                            case 'ol':
-                                return(
-                                    <OlForm 
-                                        key={index}
-                                        index={index}
-                                        component={component}
-                                        handleComponentTitleChange={handleComponentTitleChange}
-                                        addListItem={addListItem}
-                                        handleListItemChange={handleListItemChange}
-                                        handleListItemReorder={handleListItemReorder}
-                                        removeListItem={removeListItem}
-                                        removeComponent={removeComponent}
-                                    />
-                                )
-                            default:
-                                return null
-                        }                    
-                    })}
-                    onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
-                    renderList={({ children, props }) => <ul {...props}>{children}</ul>}
-                    renderItem={({ value, props }) => <li {...props}>{value}</li>}
-                />
+                    <List 
+                        values={components.map((component, index) => {
+                            switch(component.component_type) {
+                                case 'textbox':
+                                    return(
+                                        <TextboxForm
+                                            key={index}
+                                            index={index}
+                                            component={component}
+                                            handleComponentTitleChange={handleComponentTitleChange} 
+                                            handleTextboxTextContentChange={handleTextboxTextContentChange} 
+                                            removeComponent={removeComponent} 
+                                        />
+                                    )
+                                case 'ul':
+                                    return(
+                                        <UlForm 
+                                            key={index}
+                                            index={index}
+                                            component={component}
+                                            handleComponentTitleChange={handleComponentTitleChange}
+                                            addListItem={addListItem}
+                                            handleListItemChange={handleListItemChange}
+                                            handleListItemReorder={handleListItemReorder}
+                                            removeListItem={removeListItem}
+                                            removeComponent={removeComponent}
+                                        />
+                                    )
+                                case 'ol':
+                                    return(
+                                        <OlForm 
+                                            key={index}
+                                            index={index}
+                                            component={component}
+                                            handleComponentTitleChange={handleComponentTitleChange}
+                                            addListItem={addListItem}
+                                            handleListItemChange={handleListItemChange}
+                                            handleListItemReorder={handleListItemReorder}
+                                            removeListItem={removeListItem}
+                                            removeComponent={removeComponent}
+                                        />
+                                    )
+                                default:
+                                    return null
+                            }                    
+                        })}
+                        onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
+                        renderList={({ children, props }) => <div className='content-list'{...props}>{children}</div>}
+                        renderItem={({ value, props }) => <div className='content-item grabbable'{...props}>{value}</div>}
+                    />
 
-                <TagForm
-                    tags={tags}
-                    addTag={addTag}
-                    handleTagChange={handleTagChange}
-                    removeTag={removeTag}
-                />
+                    <TagForm
+                        tags={tags}
+                        addTag={addTag}
+                        handleTagChange={handleTagChange}
+                        removeTag={removeTag}
+                    />
 
-                <input type='button' onClick={handleDelete} value='Delete Recipe' />
+                    <input className='form-delete-button' type='button' onClick={handleDelete} value='Delete Recipe' />
 
-                <input form='edit-recipe-form' type='submit' value='Submit Recipe' />    
-            </form>
-        </div>
+                    <input className='form-submit-button' form='edit-recipe-form' type='submit' value='Submit Recipe' />    
+                </form>
+            </div>
         )
     }
 }
