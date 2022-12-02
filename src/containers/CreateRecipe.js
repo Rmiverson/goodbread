@@ -202,16 +202,20 @@ const CreateRecipe = () => {
                 <h2>Create New Recipe</h2>
                 {renderErrors()}
                 <form id='create-recipe-form' onSubmit={submitRecipe}>
-                    <label>Title</label>
-                    <input className='title-input' required type='text' name='title' value={title} onChange={handleTitleChange} />
+                    <div className='input-section'>
+                        <label>Title</label>
+                        <input className='title-input' required type='text' name='title' value={title} onChange={handleTitleChange} />                        
+                    </div>
 
-                    <label>Description</label>
-                    <textarea className='desc-input' required name='description' value={description} onChange={handleDescChange} rows='4' />
+                    <div className='input-section'>
+                        <label>Description</label>
+                        <textarea className='desc-input' required name='description' value={description} onChange={handleDescChange} rows='4' />
+                    </div>
 
                     <div className='add-component-ribbon'>
-                        <button type='button' onClick={addTextbox}>Add Textbox</button>
-                        <button type='button' onClick={addUl}>Add Bullet List</button>
-                        <button type='button' onClick={addOl}>Add Numbered List</button>
+                        <button className='content-add-button' type='button' onClick={addTextbox}>Add Textbox</button>
+                        <button className='content-add-button' type='button' onClick={addUl}>Add Bullet List</button>
+                        <button className='content-add-button' type='button' onClick={addOl}>Add Numbered List</button>
                     </div>
 
                     <List
