@@ -113,7 +113,7 @@ label {
     gap: 15px;
 }
 
-.content-add-button {
+.content-add-button, .form-submit-button {
     background-color:  var(--white);
     border: none;
     border-radius: 5px;
@@ -124,5 +124,35 @@ label {
         background-color: var(--blueGreenTransparent);
         cursor: pointer;
         box-shadow: inset 0px 0px 5px var(--blackTransparent);
+    }
+}
+
+.form-submit-button {
+    padding: 10px;
+    width: 30vw;
+    font-weight: bold;
+    background-color: var(--blueGreenTransparent);
+}
+
+.tag-form {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    ul {
+        width: 60%;
+        padding: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        li {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+        }
     }
 }
