@@ -349,10 +349,11 @@ const EditRecipe = () => {
                         handleTagChange={handleTagChange}
                         removeTag={removeTag}
                     />
-
-                    <input className='form-delete-button' type='button' onClick={handleDelete} value='Delete Recipe' />
-
-                    <input className='form-submit-button' form='edit-recipe-form' type='submit' value='Submit Recipe' />    
+                    <div className='form-mortality-controls'>
+                        <input className='form-delete-button' type='button' onClick={handleDelete} value='Delete Recipe' />
+                        <input className='form-submit-button' form='edit-recipe-form' type='submit' value='Submit Recipe' />                          
+                    </div>
+  
                 </form>
             </div>
         )

@@ -275,7 +275,9 @@ const CreateRecipe = () => {
                         handleTagChange={handleTagChange}
                         removeTag={removeTag}
                     />
-                    <input className='form-submit-button' form='create-recipe-form' type='submit' value='Submit Recipe' />    
+                    <div className='form-mortality-controls'>
+                        <input className='form-submit-button' form='create-recipe-form' type='submit' value='Submit Recipe' />     
+                    </div>
                 </form>
             </div>
         )        
