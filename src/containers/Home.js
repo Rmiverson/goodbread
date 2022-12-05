@@ -8,7 +8,7 @@ const Home = () => {
     const currentUser = useSelector((state) => state.user)
 
     return(
-        <div className='home main-content'>
+        <div className='home'>
             <Folders currentUser={currentUser} />
             <Recipes currentUser={currentUser} />                
         </div>
