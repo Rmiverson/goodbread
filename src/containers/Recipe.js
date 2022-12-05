@@ -57,7 +57,7 @@ const Recipe = () => {
         return <span>{result.status + ': ' + result.message}</span>
     } else {
         return (
-            <div className='Recipe'>
+            <div className='recipe'>
                 <h2>{result.data.title}</h2>
                 <p>{result.data.description}</p>
                 <Link to={`/recipe/edit/${id}`} >Edit</Link>
