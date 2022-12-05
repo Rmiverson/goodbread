@@ -53,7 +53,7 @@ const Profile = () => {
         return <span>{result.status + ': ' + result.message}</span>
     } else {
         return (
-            <div className='Profile'>
+            <div className='profile-page'>
                 <h2>{`${result.data.username}'s Profile`}</h2>
                 <h4>{`Name: ${result.data.first_name} ${result.data.last_name}`}</h4>
                 <h4>User description</h4>

@@ -101,7 +101,7 @@ const Login = () => {
         return <Navigate to='/' replace/>
     } else {
         return (
-            <div className='LoginSignup'>
+            <div className='login-signup-page'>
                 <h2>Login & Signup</h2>
                 {renderErrors()}
                 <LoginForm handleChange={handleLoginChange} handleSubmit={handleLoginSubmit} username={loginUsername} password={loginPassword}/>

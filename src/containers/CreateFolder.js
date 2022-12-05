@@ -80,7 +80,7 @@ const CreateFolder = () => {
         return <Navigate to={`/folder/${result.data.id}`} replace/>
     } else {
         return(
-            <div className='create-folder-form'>
+            <div className='create-folder-page'>
                 <h2>Create Folder Form</h2>
                 {renderErrors()}
                 <form onSubmit={submitFolder}>
