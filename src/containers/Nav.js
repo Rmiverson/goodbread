@@ -12,15 +12,23 @@ const Nav = () => {
         dispatch(userLogout)
     }
 
-    if (currentUser.id) {
-        return (
-            <nav className='nav-bar'>
-                <Link className='nav-item logout' to="/login-signup" onClick={handleLogout}>Logout</Link>            
-                <Link className='nav-item' to="/profile">Profile</Link>
-                <Link className='nav-item' to="/">Home</Link>
-            </nav>
-        )
+    const renderItems = () => {
+        if (currentUser.id) {
+            return (
+                <div className='nav-items'>
+                    <Link className='nav-item' to="/">Home</Link>
+                    <Link className='nav-item' to="/profile">Profile</Link>
+                    <Link className='nav-item logout' to="/login-signup" onClick={handleLogout}>Logout</Link>                      
+                </div>
+            )
+        }
     }
+
+    return (
+        <nav className='nav-bar'>
+            {renderItems()}
+        </nav>
+    )
 }
 
 export default Nav

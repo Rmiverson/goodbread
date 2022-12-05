@@ -1,4 +1,5 @@
 nav {
+    height: 4vh;
     display: flex;
     flex-flow: row-reverse;
 }
@@ -7,12 +8,18 @@ nav {
     background-color: var(--lightBlue);
 }
 
+.nav-items {
+    height: 100%;
+    display: flex;
+}
+
 .nav-item {
     padding: 12px;
     color: var(--black);
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 600;
+    line-height: 1.75rem;
 
     &:hover {
         box-shadow: inset 0px 0px 0.5em var(--blackTransparent);
