@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import '../scss/login-signup.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import { updateUser } from '../redux/actions'
@@ -102,11 +103,13 @@ const Login = () => {
     } else {
         return (
             <div className='login-signup-page'>
-                <h2>Login & Signup</h2>
+                <h2>GoodBread</h2>
                 {renderErrors()}
-                <LoginForm handleChange={handleLoginChange} handleSubmit={handleLoginSubmit} username={loginUsername} password={loginPassword}/>
-                <SignupForm handleChange={handleSignupChange} handleSubmit={handleSignupSubmit} username={signupUsername} email={signupEmail} password={signupPassword} />
-            </div>
+                <div className='login-signup-components'>
+                    <LoginForm handleChange={handleLoginChange} handleSubmit={handleLoginSubmit} username={loginUsername} password={loginPassword}/>
+                    <SignupForm handleChange={handleSignupChange} handleSubmit={handleSignupSubmit} username={signupUsername} email={signupEmail} password={signupPassword} />
+                </div>
+           </div>
         )
     }
 
