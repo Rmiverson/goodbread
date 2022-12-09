@@ -1,0 +1,28 @@
+.login-signup-components {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.login, .signup {
+    form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.submit-button {
+    background-color:  var(--white);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px var(--blackTransparent);
+    padding: 10px;
+
+    &:hover {
+        background-color: var(--blueGreenTransparent);
+        cursor: pointer;
+        box-shadow: inset 0px 0px 5px var(--blackTransparent);
+    }
+}
