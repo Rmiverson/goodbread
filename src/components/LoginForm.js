@@ -14,7 +14,7 @@ const LoginForm = (props) => {
                         onChange={props.handleChange}
                         required
                     />
-                </div>
+                </div>  
 
                 <div className='input-section'>
                     <label>Password</label>
@@ -27,7 +27,7 @@ const LoginForm = (props) => {
                         minLength='6'
                         required
                     />
-                </div>    
+                </div> 
             </form>
 
             <input form='login-form' type='submit' className='submit-button' value='Login'/>
