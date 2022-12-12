@@ -59,50 +59,53 @@ const Recipe = () => {
     } else {
         return (
             <div className='recipe'>
-                <h2>{result.data.title}</h2>
-                <p>{result.data.description}</p>
-                <Link to={`/recipe/edit/${id}`} >Edit</Link>
-                {dataComponents.map((dataComponent, index) => {
-                    switch(dataComponent.component_type) {
-                        case 'textbox':
-                            return (
-                                <div key={index}>
-                                    <h4>{dataComponent.title}</h4>
-                                    <p>{dataComponent.text_content}</p>
-                                </div>
-                            )
-                        case 'ul':
-                            return (
-                                <div key={index}>
-                                    <h4>{dataComponent.title}</h4>
-                                    <ul>
-                                        {dataComponent.list_items.map((list_item, list_item_index) => {
-                                            return <li key={list_item_index}>{list_item}</li>
-                                        })}
-                                    </ul>
-                                </div>
-                            )
-                        case 'ol':
-                            return (
-                                <div key={index}>
-                                    <h4>{dataComponent.title}</h4>
-                                    <ol>
-                                        {dataComponent.list_items.map((list_item, list_item_index) => {
-                                            return <li key={list_item_index}>{list_item}</li>
-                                        })}
-                                    </ol>
-                                </div>
-                            )
-                        default:
-                            return (<>{console.error('Error: Unknown component type')}</>)
-                            
-                    }
-                })}
-                <ul className='tag-list'>
+                <h2 className='recipe-title'>{result.data.title}</h2>
+                <Link className='button' to={`/recipe/edit/${id}`} >Edit</Link>
+                <p className='recipe-desc'>{result.data.description}</p>
+                <div className='recipe-content'>
+                    {dataComponents.map((dataComponent, index) => {
+                        switch(dataComponent.component_type) {
+                            case 'textbox':
+                                return (
+                                    <div className='recipe-content-item' key={index}>
+                                        <h4>{dataComponent.title}</h4>
+                                        <p>{dataComponent.text_content}</p>
+                                    </div>
+                                )
+                            case 'ul':
+                                return (
+                                    <div className='recipe-content-item' key={index}>
+                                        <h4>{dataComponent.title}</h4>
+                                        <ul>
+                                            {dataComponent.list_items.map((list_item, list_item_index) => {
+                                                return <li key={list_item_index}>{list_item}</li>
+                                            })}
+                                        </ul>
+                                    </div>
+                                )
+                            case 'ol':
+                                return (
+                                    <div className='recipe-content-item' key={index}>
+                                        <h4>{dataComponent.title}</h4>
+                                        <ol>
+                                            {dataComponent.list_items.map((list_item, list_item_index) => {
+                                                return <li key={list_item_index}>{list_item}</li>
+                                            })}
+                                        </ol>
+                                    </div>
+                                )
+                            default:
+                                return (<>{console.error('Error: Unknown component type')}</>)                     
+                        }
+                    })}
+                </div>
+
+                <div className='recipe-tag-list'>
+                    <h4>Tags:</h4>
                     {result.data.tags.map((tag, index) => (
-                        <li key={index}>{tag.label}</li>
+                        <p key={index}>{tag.label}</p>
                     ))}
-                </ul>
+                </div>
             </div>
         )        
     }
