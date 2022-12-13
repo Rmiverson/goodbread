@@ -1,0 +1,24 @@
+.create-folder-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    h2, form {
+        width: 75vw;
+    }
+}
+
+form {
+    .recipes {
+        width: 100%;
+    }
+}
+
+.folder-input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
