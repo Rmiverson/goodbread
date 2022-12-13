@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 const RecipeCards = (props) => {
     const renderFormbutton = (currentRecipe) => {
         if (props.checkedRecipes.includes(currentRecipe.id)) {
-            return <button type='button' onClick={props.handleRemoveRecipe(currentRecipe)}>Remove Recipe</button>
+            return <button className='content-input-form-delete' type='button' onClick={props.handleRemoveRecipe(currentRecipe)}>Remove Recipe</button>
         } else {
-            return <button type='button' onClick={props.handleAddRecipe(currentRecipe)}>Add Recipe</button>
+            return <button className='content-add-button' type='button' onClick={props.handleAddRecipe(currentRecipe)}>Add Recipe</button>
         }
     }
 
