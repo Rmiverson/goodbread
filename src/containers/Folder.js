@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import '../scss/folder.scss'
 import { Link, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
@@ -56,10 +57,14 @@ const Folder = () => {
     } else {
         return (
             <div className='folder'>
-                <h2>{result.data.title}</h2>
-                <p>{result.data.description}</p>
-                <Link to='/recipe/create'>Create Recipe</Link>
-                <Link to={`/folder/edit/${id}`}>Edit Folder</Link>
+                <div className='head-content'>
+                    <h2>{result.data.title}</h2>
+                    <p>{result.data.description}</p>
+                    <div className='link-ribbon'>
+                        <Link className='link-buttons' to='/recipe/create'>Create Recipe</Link>
+                        <Link className='link-buttons' to={`/folder/edit/${id}`}>Edit Folder</Link>
+                    </div>
+                </div>
                 <FolderRecipes folderId={id} currentUser={currentUser} />
             </div>
         )        
