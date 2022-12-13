@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import '../scss/create-edit-folder.scss'
 import { useSelector } from 'react-redux'
 import { useParams, Navigate } from 'react-router-dom'
 import { useQuery, useMutation } from 'react-query'
