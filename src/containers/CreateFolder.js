@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
+import '../scss/create-edit-folder.scss'
 import { useMutation } from 'react-query'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
-
 import apiClient from '../http-common'
-
 import Recipes from './Recipes'
 
 const CreateFolder = () => {
@@ -84,22 +83,28 @@ const CreateFolder = () => {
                 <h2>Create Folder Form</h2>
                 {renderErrors()}
                 <form onSubmit={submitFolder}>
-                    <label>Title</label>
-                    <input required type='text' name='title' value={title} onChange={handleTitleChange} />
+                    <div className='folder-input-section'>
+                        <label>Title</label>
+                        <input required type='text' name='title' value={title} onChange={handleTitleChange} />                        
+                    </div>
 
-                    <label>Description</label>
-                    <input type='text' name='description' value={description} onChange={handleDescriptionChange}/>
+                    <div className='folder-input-section'>
+                        <label>Description</label>
+                        <textarea name='description' value={description} onChange={handleDescriptionChange} rows='4' cols='50' />                        
+                    </div>
 
-                    {checkedRecipes.map((recipe, recipeIndex) => (
-                        <div key={recipeIndex}>
-                            <h4>{recipe.title}</h4>
-                            <button type='button' onClick={handleRemoveRecipe(recipe)}>Remove Recipe</button>
-                        </div>
-                    ))}
+                    <div className='card-grid'>
+                        {checkedRecipes.map((recipe, recipeIndex) => (
+                            <div className='grid-item' key={recipeIndex}>
+                                <h4>{recipe.title}</h4>
+                                <button className='content-input-form-delete' type='button' onClick={handleRemoveRecipe(recipe)}>Remove Recipe</button>
+                            </div>
+                        ))}                        
+                    </div>
 
                     <Recipes formList={true} currentUser={currentUser} handleAddRecipe={handleAddRecipe} handleRemoveRecipe={handleRemoveRecipe} checkedRecipes={checkedRecipes.map(recipe => recipe.id)}/>
 
-                    <input type='submit' value='Submit Folder' />
+                    <input className='form-submit-button' type='submit' value='Submit Folder' />
                 </form>
             </div>
         )        
