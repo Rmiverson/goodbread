@@ -62,7 +62,8 @@ const FolderRecipes = (props) => {
             <div className='folder-recipes'>
                 <h2>Recipes</h2>
                 <RecipeCards items={result.data} formList={props.formList} handleAddRecipe={props.handleAddRecipe}/>
-                <ReactPaginate 
+                <ReactPaginate
+                    className='page-controls'
                     breakLabel='...'
                     nextLabel={<HiOutlineChevronRight />}
                     onPageChange={handlePageClick}
