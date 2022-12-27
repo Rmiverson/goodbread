@@ -55,14 +55,29 @@ const Profile = () => {
         return (
             <div className='profile-page'>
                 <h2>{`${result.data.username}'s Profile`}</h2>
-                <h4>{`Name: ${result.data.first_name} ${result.data.last_name}`}</h4>
-                <h4>User description</h4>
-                <p>{result.data.description}</p>
-                <h4>Email</h4>
-                <p>{result.data.email}</p>
-                <h4>{`Number of Recipes: ${result.data.recipes.length}`}</h4>
-                <h4>{`Number of Folders: ${result.data.folders.length}`}</h4>
-                <Link to='/profile/edit'>Edit Profile</Link>
+
+                <div className='content-section'>
+                    <h4>Name</h4>
+                    <p>{`${result.data.first_name} ${result.data.last_name}`}</p>
+                </div>
+                
+                <div className='content-section'>
+                    <h4>User About</h4>
+                    <p>{result.data.description}</p>                    
+                </div>
+
+                <div className='content-section'>
+                    <h4>Email</h4>
+                    <p>{result.data.email}</p>                    
+                </div>
+                
+                <div className='content-section'>
+                    <h4>Statistics</h4>
+                    <p>{`Number of Recipes: ${result.data.recipes.length}`}</p>
+                    <p>{`Number of Folders: ${result.data.folders.length}`}</p>                    
+                </div>
+
+                <Link className='button' to='/profile/edit'>Edit Profile</Link>
             </div>
         )        
     }
