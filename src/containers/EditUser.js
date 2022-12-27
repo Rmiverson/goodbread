@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import '../scss/edit-profile.scss'
 import { useMutation } from 'react-query'
 import { Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -104,18 +105,25 @@ const EditUser = () => {
                 <h2>Edit Profile</h2>
                 {renderErrors()}
                 <form id='edit-user-form' onSubmit={submitUser}>
-                    <label>First Name</label>
-                    <input type='text' name='first_name' value={first_name} onChange={handleFirstNameChange} />
+                    <div className='input-section'>
+                        <label>First Name</label>
+                        <input type='text' name='first_name' value={first_name} onChange={handleFirstNameChange} />
+                    </div>
 
-                    <label>Last Name</label>
-                    <input type='text' name='last_name' value={last_name} onChange={handleLastNameChange} />
+                    <div className='input-section'>
+                        <label>Last Name</label>
+                        <input type='text' name='last_name' value={last_name} onChange={handleLastNameChange} />                    
+                    </div>
 
-                    <label>Description</label>
-                    <textarea name='description' value={description} onChange={handleDescriptionChange} />
+                    <div className='input-section'>
+                        <label>Description</label>
+                        <textarea name='description' value={description} onChange={handleDescriptionChange} rows='4' cols='45'/>                        
+                    </div>
 
-                    <input type='button' onClick={handleDelete} value='Delete User Profile' />
-
-                    <input type='submit' value='Submit Profile' />
+                    <div className='form-mortality-controls'>
+                        <input className='form-delete-button' type='button' onClick={handleDelete} value='Delete User Profile' />
+                        <input className='form-submit-button' type='submit' value='Update Profile' />
+                    </div>
                 </form>
             </div>
         )
