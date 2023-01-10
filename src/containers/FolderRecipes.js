@@ -3,7 +3,7 @@ import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
 import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
-
+import Error from '../components/Error'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
 
 const FolderRecipes = (props) => {
@@ -33,7 +33,7 @@ const FolderRecipes = (props) => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: [], status: 'Error', message: err.response?.data || err})
+                setResult({data: [], status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -56,7 +56,7 @@ const FolderRecipes = (props) => {
     if (isLoadingFolderRecipes || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message}</span>
+        return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {
         return (
             <div className='folder-recipes'>

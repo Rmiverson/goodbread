@@ -1,5 +1,6 @@
 import '../scss/folders.scss'
 import React, { useEffect, useState } from 'react'
+import Error from '../components/Error'
 import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
 import FolderCards from '../components/FolderCards'
@@ -33,7 +34,7 @@ const Folders = (props) => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: [], status: 'Error', message: err.response?.data || err})
+                setResult({data: [], status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -63,7 +64,7 @@ const Folders = (props) => {
     if (isLoadingFolders || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message.errors}</span>
+        return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {
         return (
             <div className='folders'>

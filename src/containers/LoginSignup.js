@@ -7,6 +7,7 @@ import { useMutation } from 'react-query'
 import apiClient from '../http-common'
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
+import Error from '../components/Error'
 
 const Login = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -36,7 +37,7 @@ const Login = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -92,7 +93,7 @@ const Login = () => {
 
     const renderErrors = () => {
         if (result.status === 'Error') {
-            return <span>{result.status + ': ' + result.message}</span>
+            return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText}/>
         }
     }
 

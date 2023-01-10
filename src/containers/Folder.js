@@ -5,6 +5,7 @@ import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 import FolderRecipes from './FolderRecipes'
+import Error from '../components/Error'
 
 const Folder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -30,7 +31,7 @@ const Folder = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -53,7 +54,7 @@ const Folder = () => {
     if (isLoadingFolder || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message}</span>
+        return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {
         return (
             <div className='folder'>
