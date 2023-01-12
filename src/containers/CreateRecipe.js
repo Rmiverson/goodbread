@@ -123,7 +123,7 @@ const CreateRecipe = () => {
         const newComponents = components.map((component, componentIndex) => {
             if (targetComponentIndex !== componentIndex) return component
             if (component.list_items.length <= 1) {
-                console.error('Lists must have at least one item.')
+                window.alert('Lists must have at least one item.')
                 return component
             } else {
                 return {...component, list_items: component.list_items.filter((list_item, listItemIndex) => targetListItemIndex !== listItemIndex)}
@@ -158,7 +158,7 @@ const CreateRecipe = () => {
     // tag remove
     const removeTag = (targetIndex) => () => {
         if (tags.length <= 1) {
-            console.error('Must have at least one tag.')
+            window.alert('Must have at least one tag.')
         } else {
             setTags(tags.filter((tag, tagIndex) => targetIndex !== tagIndex))
         }
