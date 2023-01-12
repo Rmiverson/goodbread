@@ -5,6 +5,7 @@ import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
 import Error from '../components/Error'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
+import Loading from '../components/Loading'
 
 const FolderRecipes = (props) => {
     const currentUser = props.currentUser
@@ -54,7 +55,7 @@ const FolderRecipes = (props) => {
     const handlePageClick = (e) => setCurrentPage(e.selected)
 
     if (isLoadingFolderRecipes || !result.status) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.status === 'Error') {
         return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {

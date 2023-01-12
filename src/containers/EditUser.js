@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { userLogout } from '../redux/actions'
 import apiClient from '../http-common'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const EditUser = () => {
     const currentUser = useSelector((state) => state.user)
@@ -95,7 +96,7 @@ const EditUser = () => {
     }
 
     if (isPuttingUser || isDeletingUser) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.submitted) {
         return <Navigate to='/profile' replace />
     } else if (result.deleted) {

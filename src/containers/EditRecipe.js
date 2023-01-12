@@ -10,6 +10,7 @@ import UlForm from '../components/UlForm'
 import TextboxForm from '../components/TextboxForm'
 import TagForm from '../components/TagForm'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const EditRecipe = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false, deleted: false})
@@ -265,7 +266,7 @@ const EditRecipe = () => {
     }
 
     if (isPuttingRecipe || isLoadingRecipe || isDeletingRecipe || !result.status) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.submitted) {
         return <Navigate to={`/recipe/${result.data.id}`} replace />
     } else if (result.deleted) {

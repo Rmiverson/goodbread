@@ -6,6 +6,7 @@ import { Navigate } from 'react-router-dom'
 import apiClient from '../http-common'
 import Recipes from './Recipes'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const CreateFolder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false})
@@ -75,7 +76,7 @@ const CreateFolder = () => {
     }
     
     if (isPostingFolder) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.submitted) {
         return <Navigate to={`/folder/${result.data.id}`} replace/>
     } else {

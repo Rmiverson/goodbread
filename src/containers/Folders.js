@@ -7,6 +7,7 @@ import FolderCards from '../components/FolderCards'
 import apiClient from '../http-common'
 import { Link } from 'react-router-dom'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
+import Loading from '../components/Loading'
 
 const Folders = (props) => {
     const currentUser = props.currentUser
@@ -62,7 +63,7 @@ const Folders = (props) => {
     const handlePageClick = (e) => setCurrentPage(e.selected)
 
     if (isLoadingFolders || !result.status) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.status === 'Error') {
         return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {

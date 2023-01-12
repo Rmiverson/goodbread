@@ -5,6 +5,7 @@ import { useQuery } from 'react-query'
 import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const Recipe = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -52,9 +53,7 @@ const Recipe = () => {
     }, [getRecipeById, setResult, id])
 
     if (isLoadingRecipe || !result.status) {
-        return (
-            <span>Loading...</span>
-        )
+        return <Loading />
     } else if (result.status === 'Error') {
         return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {

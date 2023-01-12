@@ -6,6 +6,7 @@ import { useQuery, useMutation } from 'react-query'
 import apiClient from '../http-common'
 import Recipes from './Recipes'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const EditFolder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -139,7 +140,7 @@ const EditFolder = () => {
     }
 
     if (isLoadingFolder || isPostingFolder || isDeletingFolder) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.submitted) {
         return <Navigate to={`/folder/${result.data.id}`} replace/>
     } else if (result.deleted){

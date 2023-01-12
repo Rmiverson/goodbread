@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import apiClient from '../http-common'
 import FolderRecipes from './FolderRecipes'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const Folder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -52,7 +53,7 @@ const Folder = () => {
     }, [getFolderById, setResult, id])
 
     if (isLoadingFolder || !result.status) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.status === 'Error') {
         return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {

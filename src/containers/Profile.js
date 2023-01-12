@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import apiClient from '../http-common'
 import { updateUser } from '../redux/actions'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const Profile = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -49,7 +50,7 @@ const Profile = () => {
     }, [getUserById, setResult])
 
     if (isLoadingUser || !result.status) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (result.status === 'Error') {
         return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {

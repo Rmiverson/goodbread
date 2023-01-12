@@ -10,6 +10,7 @@ import TagForm from '../components/TagForm'
 import apiClient from '../http-common'
 import { Navigate } from 'react-router-dom'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const CreateRecipe = () => {
     const [title, setTitle] = useState('')
@@ -192,7 +193,7 @@ const CreateRecipe = () => {
     }
 
     if (isPostingRecipe) {
-        return <span>loading...</span>
+        return <Loading />
     } else if (result.submitted) {
         return <Navigate to={`/recipe/${result.data.id}`} replace />
     } else {

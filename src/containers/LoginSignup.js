@@ -8,6 +8,7 @@ import apiClient from '../http-common'
 import LoginForm from '../components/LoginForm'
 import SignupForm from '../components/SignupForm'
 import Error from '../components/Error'
+import Loading from '../components/Loading'
 
 const Login = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -98,7 +99,7 @@ const Login = () => {
     }
 
     if (isPostingUserLogin || isPostingUserSignup) {
-        return <span>Loading...</span>
+        return <Loading />
     } else if (!!user.id) {
         return <Navigate to='/' replace/>
     } else {
