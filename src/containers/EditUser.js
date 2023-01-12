@@ -5,6 +5,7 @@ import { Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogout } from '../redux/actions'
 import apiClient from '../http-common'
+import Error from '../components/Error'
 
 const EditUser = () => {
     const currentUser = useSelector((state) => state.user)
@@ -31,7 +32,7 @@ const EditUser = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}, submitted: false})
             }
         }
     )
@@ -51,7 +52,7 @@ const EditUser = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}, submitted: false})
             }
         }
     )
@@ -89,7 +90,7 @@ const EditUser = () => {
 
     const renderErrors = () => {
         if (result.status === 'Error') {
-            return <span>{result.status + ': ' + result.message}</span>
+            return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
         }
     }
 

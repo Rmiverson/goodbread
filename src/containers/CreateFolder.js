@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import apiClient from '../http-common'
 import Recipes from './Recipes'
+import Error from '../components/Error'
 
 const CreateFolder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false})
@@ -31,7 +32,7 @@ const CreateFolder = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}, submitted: false})
             }
         }
     )
@@ -69,7 +70,7 @@ const CreateFolder = () => {
 
     const renderErrors = () => {
         if (result.status === 'Error') {
-            return <span>{result.status + ': ' + result.message}</span>
+            return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
         }
     }
     

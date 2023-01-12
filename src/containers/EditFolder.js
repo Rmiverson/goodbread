@@ -5,6 +5,7 @@ import { useParams, Navigate } from 'react-router-dom'
 import { useQuery, useMutation } from 'react-query'
 import apiClient from '../http-common'
 import Recipes from './Recipes'
+import Error from '../components/Error'
 
 const EditFolder = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -38,7 +39,7 @@ const EditFolder = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -59,7 +60,7 @@ const EditFolder = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false, deleted: false})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}, submitted: false, deleted: false})
             }
         }
     )
@@ -133,7 +134,7 @@ const EditFolder = () => {
 
     const renderErrors = () => {
         if (result.status === 'Error') {
-            return <span>{result.status + ': ' + result.message}</span>
+            return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
         }
     }
 

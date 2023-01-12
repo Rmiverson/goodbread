@@ -3,14 +3,13 @@ import '../scss/create-edit-recipe.scss'
 import { useSelector } from 'react-redux'
 import { List, arrayMove } from 'react-movable'
 import { useMutation } from 'react-query'
-
 import OlForm from '../components/OlForm'
 import UlForm from '../components/UlForm'
 import TextboxForm from '../components/TextboxForm'
 import TagForm from '../components/TagForm'
-
 import apiClient from '../http-common'
 import { Navigate } from 'react-router-dom'
+import Error from '../components/Error'
 
 const CreateRecipe = () => {
     const [title, setTitle] = useState('')
@@ -39,7 +38,7 @@ const CreateRecipe = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err, submitted: false})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}, submitted: false})
             }
         }
     )  
@@ -188,7 +187,7 @@ const CreateRecipe = () => {
 
     const renderErrors = () => {
         if (result.status === 'Error') {
-            return <span>{result.status + ': ' + result.message}</span>
+            return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
         }
     }
 

@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import RecipeCards from '../components/RecipeCards'
 import apiClient from '../http-common'
 import { Link } from 'react-router-dom'
+import Error from '../components/Error'
 
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
 
@@ -33,7 +34,7 @@ const Recipes = (props) => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: [], status: 'Error', message: err.response?.data || err})
+                setResult({data: [], status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -66,7 +67,7 @@ const Recipes = (props) => {
     if (isLoadingRecipes || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message.errors}</span>
+        return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {
         return (
             <div className='recipes'>

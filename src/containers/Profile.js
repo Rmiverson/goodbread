@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import apiClient from '../http-common'
 import { updateUser } from '../redux/actions'
+import Error from '../components/Error'
 
 const Profile = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
@@ -29,7 +30,7 @@ const Profile = () => {
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: err.response?.data || err})
+                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
             }
         }
     )
@@ -50,7 +51,7 @@ const Profile = () => {
     if (isLoadingUser || !result.status) {
         return <span>Loading...</span>
     } else if (result.status === 'Error') {
-        return <span>{result.status + ': ' + result.message}</span>
+        return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
     } else {
         return (
             <div className='profile-page'>
