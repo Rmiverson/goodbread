@@ -9,7 +9,7 @@ import Loading from '../components/Loading'
 
 const Recipe = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
-    const [dataComponents, setDataComponents] = useState([])
+    // const [dataComponents, setDataComponents] = useState([])
     const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
 
@@ -29,7 +29,7 @@ const Recipe = () => {
                     meta: res.data.meta
                 }
                 setResult({data: apiResp.data, status: apiResp.status, message: null})
-                setDataComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
+                // setDataComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
@@ -62,42 +62,9 @@ const Recipe = () => {
                 <h2 className='recipe-title'>{result.data.title}</h2>
                 <Link className='button' to={`/recipe/edit/${id}`} >Edit</Link>
                 <p className='recipe-desc'>{result.data.description}</p>
-                <div className='recipe-content'>
-                    {dataComponents.map((dataComponent, index) => {
-                        switch(dataComponent.component_type) {
-                            case 'textbox':
-                                return (
-                                    <div className='recipe-content-item' key={index}>
-                                        <h4>{dataComponent.title}</h4>
-                                        <p>{dataComponent.text_content}</p>
-                                    </div>
-                                )
-                            case 'ul':
-                                return (
-                                    <div className='recipe-content-item' key={index}>
-                                        <h4>{dataComponent.title}</h4>
-                                        <ul>
-                                            {dataComponent.list_items.map((list_item, list_item_index) => {
-                                                return <li key={list_item_index}>{list_item}</li>
-                                            })}
-                                        </ul>
-                                    </div>
-                                )
-                            case 'ol':
-                                return (
-                                    <div className='recipe-content-item' key={index}>
-                                        <h4>{dataComponent.title}</h4>
-                                        <ol>
-                                            {dataComponent.list_items.map((list_item, list_item_index) => {
-                                                return <li key={list_item_index}>{list_item}</li>
-                                            })}
-                                        </ol>
-                                    </div>
-                                )
-                            default:
-                                return (<>{console.error('Error: Unknown component type')}</>)                     
-                        }
-                    })}
+
+                <div className='recipe-content'> 
+                {/* figure out a way to parse json lexical stuff and display it properly here */}
                 </div>
 
                 <div className='recipe-tag-list'>

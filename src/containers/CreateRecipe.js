@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import '../scss/create-edit-recipe.scss'
 import { useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
@@ -8,6 +8,8 @@ import { Navigate } from 'react-router-dom'
 import Error from '../components/Error'
 import Loading from '../components/Loading'
 import RichTextEditor from '../components/RichTextEditor'
+
+import {$generateHtmlFromNodes} from '@lexical/html'
 
 const CreateRecipe = () => {
     const [title, setTitle] = useState('')
@@ -47,9 +49,10 @@ const CreateRecipe = () => {
     // description handler
     const handleDescChange = (e) => setDescription(e.target.value)
 
-    const handleBodyTextChange = (editorState) => {
-        const stringifiedEditorState = JSON.stringify(editorState.toJSON())
-        setBodyText(stringifiedEditorState)
+    const handleBodyTextChange = (editorState, editor) => {
+        const json = editorState.toJSON()
+
+        setBodyText(json)
     }
 
     // tag change handler
@@ -82,7 +85,7 @@ const CreateRecipe = () => {
             user_id: currentUser.id,
             title: title,
             description: description,
-            bodyText: bodyText,
+            json: bodyText,
             tag_list: tags
         }
 
