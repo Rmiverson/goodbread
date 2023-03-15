@@ -13,6 +13,7 @@ const TagForm = (props) => {
                             placeholder='Tag Name'
                             value={tag.label}
                             onChange={props.handleTagChange(index)}
+                            required
                         />
                         <button className='content-input-list-control-delete' type='button' onClick={props.removeTag(index)}><HiOutlineX /></button>
                     </li>

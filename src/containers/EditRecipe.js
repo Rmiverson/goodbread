@@ -3,20 +3,19 @@ import '../scss/create-edit-recipe.scss'
 import { useMutation, useQuery } from 'react-query'
 import { useParams, Navigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { List, arrayMove } from 'react-movable'
 import apiClient from '../http-common'
-import OlForm from '../components/OlForm'
-import UlForm from '../components/UlForm'
-import TextboxForm from '../components/TextboxForm'
 import TagForm from '../components/TagForm'
 import Error from '../components/Error'
 import Loading from '../components/Loading'
+import RichTextEditor from '../components/RichTextEditor'
+
+import { $generateHtmlFromNodes } from '@lexical/html'
 
 const EditRecipe = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false, deleted: false})
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [components, setComponents] = useState([])
+    const [bodyText, setBodyText] = useState('')
     const [tags, setTags] = useState([{id: null, label: null}])
     const { id } = useParams()
     const currentUser = useSelector((state) => state.user)
@@ -41,7 +40,7 @@ const EditRecipe = () => {
                 setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: false, deleted: false})
                 setTitle(apiResp.data.title)
                 setDescription(apiResp.data.description)
-                setComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
+                setBodyText(apiResp.data.bodyText)
                 setTags(apiResp.data.tags)
             },
             onError: (err) => {
@@ -93,22 +92,6 @@ const EditRecipe = () => {
         }
     )
 
-    const reorderArr = (arr, currentIndex, direction) => {
-        let targetIndex = currentIndex + direction
-
-        if (targetIndex >= arr.length || targetIndex < 0) {
-            return arr
-        }
-
-        let grabbed = arr[currentIndex]
-        let swapped = arr[targetIndex]
-
-        arr[targetIndex] = grabbed
-        arr[currentIndex] = swapped
-
-        return arr
-    }
-
     useEffect(() => {
         function ferretRecipeById() {       
             if (id) {
@@ -129,81 +112,13 @@ const EditRecipe = () => {
     // description handler
     const handleDescChange = (e) => setDescription(e.target.value)
 
-    // component remove
-    const removeComponent = (targetIndex) => () => setComponents(components.filter((component, componentIndex) => targetIndex !== componentIndex))    
-
-    // component title change
-    const handleComponentTitleChange = (targetIndex) => (e) => {
-        const newComponents = components.map((component, componentIndex) => {
-            if (targetIndex !== componentIndex) return component
-            return {...component, title: e.target.value}
+    // lexical editor handler
+    const handleBodyTextChange = (editorState, editor) => {
+        const htmlStr = editorState.read(() => {
+            return $generateHtmlFromNodes(editor, null)
         })
-        setComponents(newComponents)
-    }
 
-    // textbox add
-    const addTextbox = () => setComponents([...components, {id: null, component_type: 'textbox', title: '', text_content: ''}])
-
-    // unordered_list add
-    const addUl = () => setComponents([...components, {id: null, component_type: 'ul', title:'', list_items: ['']}])
-
-    // ordered_list add
-    const addOl = () => setComponents([...components, {id: null, component_type: 'ol', title:'', list_items: ['']}])
-    
-    // textbox text content change
-    const handleTextboxTextContentChange = (targetIndex) => (e) => {
-        const newComponents = components.map((component, compoentnIndex) => {
-            if (targetIndex !== compoentnIndex) return component
-            return {...component, text_content: e.target.value}
-        })
-        setComponents(newComponents)
-    }
-
-    // list_item change handler
-    const handleListItemChange = (targetComponentIndex, TargetListIndex) => (e) => {
-        const newComponents = components.map((component, componentIndex) => {
-            if (targetComponentIndex !== componentIndex) return component
-                const newComponentListItems = component.list_items.map((list_item, listItemIndex) => {
-                if (TargetListIndex !== listItemIndex) return list_item
-                    return e.target.value
-            })
-            return {...component, list_items: newComponentListItems}
-        })
-        setComponents(newComponents)
-    }
-
-    // list_item add
-    const addListItem = (targetIndex) => () => {
-        const newComponents = components.map((component, componentIndex) => {
-            if (targetIndex !== componentIndex) return component
-            return {...component, list_items: [...component.list_items, '']}
-        })
-        setComponents(newComponents)
-    }
-
-    // list_item remove
-    const removeListItem = (targetComponentIndex, targetListItemIndex) => () => {
-        const newComponents = components.map((component, componentIndex) => {
-            if (targetComponentIndex !== componentIndex) return component
-            if (component.list_items.length <= 1) {
-                window.alert('Lists must have at least one item.')
-                return component
-            } else {
-                return {...component, list_items: component.list_items.filter((list_item, listItemIndex) => targetListItemIndex !== listItemIndex)}
-            }
-        })
-        setComponents(newComponents)
-    }
-
-    // list_item reorder
-    const handleListItemReorder = (targetComponentIndex, targetListItemIndex, direction) => () => {
-        const newComponents = components.map((component, componentIndex) => {
-            if (targetComponentIndex !== componentIndex) return component
-
-            let newListItems = reorderArr(component.list_items, targetListItemIndex, direction)
-            return {...component, list_items: newListItems}
-        })
-        setComponents(newComponents)
+        setBodyText(htmlStr)
     }
 
     // tag change handler
@@ -238,17 +153,14 @@ const EditRecipe = () => {
 
     const submitRecipe = (e) => {
         e.preventDefault()
-
-        let componentCollection = components.map((component, componentIndex) => {
-            return {...component, index_order: componentIndex}
-        })
+        e.stopPropagation()
 
         dataPackage = {
             id: id,
             user_id: currentUser.id,
             title: title,
             description: description,
-            components: componentCollection,
+            bodyText: bodyText,
             tag_list: tags
         }
 
@@ -287,62 +199,9 @@ const EditRecipe = () => {
                         <textarea className='desc-input' required type='text' name='description' value={description} onChange={handleDescChange} rows='4' />                        
                     </div>
 
-                    <div className='add-component-ribbon'>
-                        <button className='content-add-button' type='button' onClick={addTextbox}>Add Textbox</button>
-                        <button className='content-add-button' type='button' onClick={addUl}>Add Bullet List</button>
-                        <button className='content-add-button' type='button' onClick={addOl}>Add Numbered List</button>
+                    <div className='input-section'>
+                        <RichTextEditor handleBodyTextChange={handleBodyTextChange} bodyText={bodyText}/>    
                     </div>
-
-                    <List 
-                        values={components.map((component, index) => {
-                            switch(component.component_type) {
-                                case 'textbox':
-                                    return(
-                                        <TextboxForm
-                                            key={index}
-                                            index={index}
-                                            component={component}
-                                            handleComponentTitleChange={handleComponentTitleChange} 
-                                            handleTextboxTextContentChange={handleTextboxTextContentChange} 
-                                            removeComponent={removeComponent} 
-                                        />
-                                    )
-                                case 'ul':
-                                    return(
-                                        <UlForm 
-                                            key={index}
-                                            index={index}
-                                            component={component}
-                                            handleComponentTitleChange={handleComponentTitleChange}
-                                            addListItem={addListItem}
-                                            handleListItemChange={handleListItemChange}
-                                            handleListItemReorder={handleListItemReorder}
-                                            removeListItem={removeListItem}
-                                            removeComponent={removeComponent}
-                                        />
-                                    )
-                                case 'ol':
-                                    return(
-                                        <OlForm 
-                                            key={index}
-                                            index={index}
-                                            component={component}
-                                            handleComponentTitleChange={handleComponentTitleChange}
-                                            addListItem={addListItem}
-                                            handleListItemChange={handleListItemChange}
-                                            handleListItemReorder={handleListItemReorder}
-                                            removeListItem={removeListItem}
-                                            removeComponent={removeComponent}
-                                        />
-                                    )
-                                default:
-                                    return null
-                            }                    
-                        })}
-                        onChange={({ oldIndex, newIndex }) => setComponents(arrayMove(components, oldIndex, newIndex))}
-                        renderList={({ children, props }) => <div className='content-list'{...props}>{children}</div>}
-                        renderItem={({ value, props }) => <div className='content-item grabbable'{...props}>{value}</div>}
-                    />
 
                     <TagForm
                         tags={tags}
