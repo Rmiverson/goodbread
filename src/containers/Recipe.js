@@ -9,7 +9,6 @@ import Loading from '../components/Loading'
 
 const Recipe = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null})
-    // const [dataComponents, setDataComponents] = useState([])
     const currentUser = useSelector((state) => state.user)
     const { id } = useParams()
 
@@ -29,7 +28,6 @@ const Recipe = () => {
                     meta: res.data.meta
                 }
                 setResult({data: apiResp.data, status: apiResp.status, message: null})
-                // setDataComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
             },
             onError: (err) => {
                 console.error(err.response?.data || err)
@@ -52,6 +50,8 @@ const Recipe = () => {
         ferretRecipeById()
     }, [getRecipeById, setResult, id])
 
+    console.log(result.data)
+
     if (isLoadingRecipe || !result.status) {
         return <Loading />
     } else if (result.status === 'Error') {
@@ -64,7 +64,7 @@ const Recipe = () => {
                 <p className='recipe-desc'>{result.data.description}</p>
 
                 <div className='recipe-content'> 
-                {/* figure out a way to parse json lexical stuff and display it properly here */}
+                    <div dangerouslySetInnerHTML={{__html: result.data.bodyText}}/>
                 </div>
 
                 <div className='recipe-tag-list'>

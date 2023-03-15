@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import '../scss/create-edit-recipe.scss'
 import { useSelector } from 'react-redux'
 import { useMutation } from 'react-query'
@@ -50,9 +50,11 @@ const CreateRecipe = () => {
     const handleDescChange = (e) => setDescription(e.target.value)
 
     const handleBodyTextChange = (editorState, editor) => {
-        const json = editorState.toJSON()
+        const htmlStr = editorState.read(() => {
+            return $generateHtmlFromNodes(editor, null)
+        })
 
-        setBodyText(json)
+        setBodyText(htmlStr)
     }
 
     // tag change handler
@@ -85,7 +87,7 @@ const CreateRecipe = () => {
             user_id: currentUser.id,
             title: title,
             description: description,
-            json: bodyText,
+            bodyText: bodyText,
             tag_list: tags
         }
 
