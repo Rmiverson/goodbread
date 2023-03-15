@@ -49,6 +49,7 @@ const CreateRecipe = () => {
     // description handler
     const handleDescChange = (e) => setDescription(e.target.value)
 
+    // lexical editor handler
     const handleBodyTextChange = (editorState, editor) => {
         const htmlStr = editorState.read(() => {
             return $generateHtmlFromNodes(editor, null)

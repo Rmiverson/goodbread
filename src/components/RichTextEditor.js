@@ -22,60 +22,69 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin'
 import ListMaxIndentLevelPlugin from "../plugins/ListMaxIndentLevelPlugin";
 import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
 import AutoLinkPlugin from "../plugins/AutoLinkPlugin";
-import React from 'react'
+import SetDataPlugin from "../plugins/SetDataPlugin";
+import React, { useRef } from 'react'
 
 import '../scss/editor.scss'
 
 const RichTextEditor = (props) => {
-    function Placeholder() {
-        return <div className="editor-placeholder">Write your recipe here...</div>;
-    }
+  const editorStateRef = useRef()
 
-    const editorConfig = {
-        theme: ExampleTheme,
-        // Handling of errors during update
-        onError(error) {
-            throw error;
-        },
-        // custom nodes go here
-        nodes: [
-            HeadingNode,
-            ListNode,
-            ListItemNode,
-            QuoteNode,
-            CodeNode,
-            CodeHighlightNode,
-            TableNode,
-            TableCellNode,
-            TableRowNode,
-            AutoLinkNode,
-            LinkNode
-        ]
-    };
+  const handleChange = (editorState, editor) => {
+    props.handleBodyTextChange(editorState, editor)
+    editorStateRef.current = editorState
+  }
 
-    return (
-        <LexicalComposer initialConfig={editorConfig}>
-          <div className="editor-container">
-            <ToolbarPlugin />
-            <div className="editor-inner">
-              <RichTextPlugin
-                contentEditable={<ContentEditable className="editor-input" />}
-                placeholder={<Placeholder />}
-                ErrorBoundary={LexicalErrorBoundary}
-              />
-              <OnChangePlugin onChange={props.handleBodyTextChange} />
-              <HistoryPlugin />
-              <AutoFocusPlugin />
-              <CodeHighlightPlugin />
-              <ListPlugin />
-              <LinkPlugin />
-              <AutoLinkPlugin />
-              <ListMaxIndentLevelPlugin maxDepth={7} />
-              <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
-            </div>
-          </div>
-        </LexicalComposer>
-    );
+  function Placeholder() {
+    return <div className="editor-placeholder">Write your recipe here...</div>;
+  }
+
+  const editorConfig = {
+    theme: ExampleTheme,
+    // Handling of errors during update
+    onError(error) {
+        throw error;
+    },
+    // custom nodes go here
+    nodes: [
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      TableNode,
+      TableCellNode,
+      TableRowNode,
+      AutoLinkNode,
+      LinkNode
+    ]
+  };
+
+  return (
+    <LexicalComposer initialConfig={editorConfig}>
+      <div className="editor-container">
+        <ToolbarPlugin />
+        <div className="editor-inner">
+          <RichTextPlugin
+            contentEditable={<ContentEditable className="editor-input" />}
+            placeholder={<Placeholder />}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <OnChangePlugin onChange={handleChange} />
+          <SetDataPlugin model={props.bodyText}/>
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <CodeHighlightPlugin />
+          <ListPlugin />
+          <LinkPlugin />
+          <AutoLinkPlugin />
+          <ListMaxIndentLevelPlugin maxDepth={7} />
+          <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+        </div>
+      </div>
+    </LexicalComposer>
+  );
 }
 
 export default RichTextEditor

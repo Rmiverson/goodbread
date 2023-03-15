@@ -50,8 +50,6 @@ const Recipe = () => {
         ferretRecipeById()
     }, [getRecipeById, setResult, id])
 
-    console.log(result.data)
-
     if (isLoadingRecipe || !result.status) {
         return <Loading />
     } else if (result.status === 'Error') {
