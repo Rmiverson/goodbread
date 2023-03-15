@@ -9,7 +9,7 @@ import Error from '../components/Error'
 import Loading from '../components/Loading'
 import RichTextEditor from '../components/RichTextEditor'
 
-import {$generateHtmlFromNodes} from '@lexical/html'
+import { $generateHtmlFromNodes } from '@lexical/html'
 
 const CreateRecipe = () => {
     const [title, setTitle] = useState('')

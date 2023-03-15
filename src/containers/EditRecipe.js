@@ -15,7 +15,6 @@ const EditRecipe = () => {
     const [result, setResult] = useState({data: {}, status: null, message: null, submitted: false, deleted: false})
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    // const [components, setComponents] = useState([])
     const [bodyText, setBodyText] = useState('')
     const [tags, setTags] = useState([{id: null, label: null}])
     const { id } = useParams()
@@ -41,7 +40,6 @@ const EditRecipe = () => {
                 setResult({data: apiResp.data, status: apiResp.status, message: null, submitted: false, deleted: false})
                 setTitle(apiResp.data.title)
                 setDescription(apiResp.data.description)
-                // setComponents([apiResp.data.unordered_lists, apiResp.data.ordered_lists, apiResp.data.textboxes].flat().sort((a, b) => (a.index_order - b.index_order)))
                 setBodyText(apiResp.data.bodyText)
                 setTags(apiResp.data.tags)
             },
@@ -156,10 +154,6 @@ const EditRecipe = () => {
     const submitRecipe = (e) => {
         e.preventDefault()
         e.stopPropagation()
-
-        // let componentCollection = components.map((component, componentIndex) => {
-        //     return {...component, index_order: componentIndex}
-        // })
 
         dataPackage = {
             id: id,
