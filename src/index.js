@@ -13,7 +13,6 @@ const queryClient = new QueryClient()
 const root = ReactDOM.createRoot(document.getElementById('root'))
 
 root.render(
-  <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={<span>Loading...</span>} persistor={persistor}>
         <QueryClientProvider client={queryClient}>
@@ -23,7 +22,6 @@ root.render(
         </QueryClientProvider>        
       </PersistGate>
     </Provider>
-  </React.StrictMode>
 )
 
 // If you want to start measuring performance in your app, pass a function
