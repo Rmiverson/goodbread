@@ -19,7 +19,7 @@ const CreateFolder = () => {
 
     const { isLoading: isPostingFolder, mutate: postFolder } = useMutation(
         async () => {
-            return await apiClient.post('/folders', {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.post('/folders', {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {

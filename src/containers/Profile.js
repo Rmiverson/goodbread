@@ -15,7 +15,7 @@ const Profile = () => {
     const { isLoading: isLoadingUser, refetch: getUserById } = useQuery(
         'query-user-by-id',
         async () => {
-            return await apiClient.get(`/users/${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/users/${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             enabled: false,

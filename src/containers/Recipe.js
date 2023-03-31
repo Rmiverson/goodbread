@@ -15,7 +15,7 @@ const Recipe = () => {
     const { isLoading: isLoadingRecipe, refetch: getRecipeById } = useQuery(
         'query-recipe-by-id',
         async () => {
-            return await apiClient.get(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             enabled: false,

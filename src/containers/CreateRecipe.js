@@ -24,7 +24,7 @@ const CreateRecipe = () => {
 
     const { isLoading: isPostingRecipe, mutate: postRecipe } = useMutation(
         async () => {
-            return await apiClient.post('/recipes', {recipe: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.post('/recipes', {recipe: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {

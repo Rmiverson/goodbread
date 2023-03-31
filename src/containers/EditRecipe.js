@@ -25,7 +25,7 @@ const EditRecipe = () => {
     const { isLoading: isLoadingRecipe, refetch: getRecipeById } = useQuery(
         'query-recipe-by-id',
         async () => {
-            return await apiClient.get(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             enabled: false,
@@ -52,7 +52,7 @@ const EditRecipe = () => {
 
     const { isLoading: isPuttingRecipe, mutate: putRecipe } = useMutation(
         async () => {
-            return await apiClient.put(`/recipes/${id}`, {recipe: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.put(`/recipes/${id}`, {recipe: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {
@@ -73,7 +73,7 @@ const EditRecipe = () => {
 
     const { isLoading: isDeletingRecipe, mutate: deleteRecipe } = useMutation(
         async () => {
-            return await apiClient.delete(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.delete(`/recipes/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {

@@ -18,7 +18,7 @@ const Folders = (props) => {
     const { isLoading: isLoadingFolders, refetch: getAllUserFolders } = useQuery(
         'query-all-user-folders',
         async () => {
-            return await apiClient.get(`/users/${currentUser.id}/folders/?page=${currentPage + 1}`, { headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/users/${currentUser.id}/folders/?page=${currentPage + 1}`, { headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             enabled: false,

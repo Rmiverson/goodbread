@@ -16,7 +16,7 @@ const Folder = () => {
     const { isLoading: isLoadingFolder, refetch: getFolderById } = useQuery(
         'query-folder-by-id',
         async () => {
-            return await apiClient.get(`/folders/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/folders/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             enabled: false,

@@ -21,7 +21,7 @@ const EditFolder = () => {
     const { isLoading: isLoadingFolder, refetch: getFolderById } = useQuery(
         'query-folder-by-id',
         async () => {
-            return await apiClient.get(`/folders/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.get(`/folders/${id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             enabled: false,
@@ -47,7 +47,7 @@ const EditFolder = () => {
 
     const { isLoading: isPostingFolder, mutate: postFolder } = useMutation(
         async () => {
-            return await apiClient.put(`/folders/${ id }`, {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.put(`/folders/${ id }`, {folder: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {
@@ -68,7 +68,7 @@ const EditFolder = () => {
 
     const { isLoading: isDeletingFolder, mutate: deleteFolder } = useMutation(
         async () => {
-            return await apiClient.delete(`/folders/${ id }`, { headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.delete(`/folders/${ id }`, { headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {

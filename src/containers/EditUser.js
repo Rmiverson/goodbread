@@ -20,7 +20,7 @@ const EditUser = () => {
 
     const { isLoading: isPuttingUser, mutate: putUser } = useMutation(
         async () => {
-            return await apiClient.put(`/users/${currentUser.id}`, {user: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.put(`/users/${currentUser.id}`, {user: dataPackage}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {
@@ -40,7 +40,7 @@ const EditUser = () => {
 
     const { isLoading: isDeletingUser, mutate: deleteUser } = useMutation(
         async () => {
-            return await apiClient.delete(`/users/${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
+            return await apiClient.delete(`/users/${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
         },
         {
             onSuccess: (res) => {
