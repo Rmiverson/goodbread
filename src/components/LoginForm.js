@@ -24,7 +24,7 @@ const LoginForm = (props) => {
                         type='password'
                         value={props.password}
                         onChange={props.handleChange}
-                        minLength='6'
+                        minLength='8'
                         required
                     />
                 </div> 
