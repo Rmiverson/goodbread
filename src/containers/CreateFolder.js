@@ -4,7 +4,7 @@ import { useMutation } from 'react-query'
 import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 import apiClient from '../http-common'
-import Recipes from './Recipes'
+import Recipes from './Recipes/Recipes'
 import Error from '../components/Error'
 import Loading from '../components/Loading'
 

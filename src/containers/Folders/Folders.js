@@ -1,16 +1,17 @@
-import '../scss/folders.scss'
+import './folders.scss'
 import React, { useEffect, useState } from 'react'
-import Error from '../components/Error'
+import Error from '../../components/Error'
 import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
-import FolderCards from '../components/FolderCards'
-import apiClient from '../http-common'
+import FolderCards from '../../components/FolderCards'
+import apiClient from '../../http-common'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
-import Loading from '../components/Loading'
+import Loading from '../../components/Loading'
 
-const Folders = (props) => {
-    const currentUser = props.currentUser
+const Folders = () => {
+    const currentUser = useSelector((state) => state.user)
     const [result, setResult] = useState({data: [], status: null, message: null})
     const [pageCount, setPageCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)

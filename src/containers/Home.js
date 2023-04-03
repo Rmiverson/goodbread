@@ -1,8 +1,8 @@
 import '../scss/home.scss'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import Recipes from './Recipes'
-import Folders from './Folders'
+import Recipes from './Recipes/Recipes'
+import Folders from './Folders/Folders'
 
 const Home = () => {
     const currentUser = useSelector((state) => state.user)

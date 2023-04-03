@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useQuery } from 'react-query'
-import RecipeCards from '../components/RecipeCards'
-import apiClient from '../http-common'
+import RecipeCards from '../../components/RecipeCards'
+import apiClient from '../../http-common'
 import { Link } from 'react-router-dom'
-import Error from '../components/Error'
+import { useSelector } from 'react-redux'
+import Error from '../../components/Error'
 import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
-import Loading from '../components/Loading'
+import Loading from '../../components/Loading'
 
 const Recipes = (props) => {
-    const currentUser = props.currentUser
+    const currentUser = useSelector((state) => state.user)
     const [result, setResult] = useState({data: [], status: null, message: null})
     const [pageCount, setPageCount] = useState(0)
     const [currentPage, setCurrentPage] = useState(0)

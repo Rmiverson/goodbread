@@ -17,8 +17,10 @@ const Nav = () => {
             return (
                 <div className='nav-items'>
                     <Link className='nav-item' to="/">Home</Link>
+                    <Link className='nav-item' to="/recipes">Recipes</Link>
+                    <Link className='nav-item' to="/folders">Folders</Link>
                     <Link className='nav-item' to="/profile">Profile</Link>
-                    <Link className='nav-item logout' to="/login-signup" onClick={handleLogout}>Logout</Link>                      
+                    <Link className='nav-item logout' to="/login-signup" onClick={handleLogout}>Logout</Link>
                 </div>
             )
         }

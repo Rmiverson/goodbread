@@ -11,6 +11,8 @@ import CreateFolder from './containers/CreateFolder'
 import EditRecipe from './containers/EditRecipe'
 import EditFolder from './containers/EditFolder'
 import EditUser from './containers/EditUser'
+import Folders from './containers/Folders/Folders'
+import Recipes from './containers/Recipes/Recipes'
 
 const RouteBoard = () => {
     return(
@@ -19,6 +21,16 @@ const RouteBoard = () => {
             <Route index element={
                 <ProtectedRoute>
                     <Home />
+                </ProtectedRoute>
+            }/>
+            <Route path='/folders' element={
+                <ProtectedRoute>
+                    <Folders />
+                </ProtectedRoute>
+            }/>
+            <Route path='/recipes' element={
+                <ProtectedRoute>
+                    <Recipes />
                 </ProtectedRoute>
             }/>
             <Route path='/profile' element={
