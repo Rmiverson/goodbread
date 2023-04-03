@@ -1,18 +1,25 @@
 import '../scss/home.scss'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import Recipes from './Recipes/Recipes'
-import Folders from './Folders/Folders'
 
 const Home = () => {
-    const currentUser = useSelector((state) => state.user)
+  return(
+    <div className='home'>
+      <div className='landing-welcome'>
+        <h1>GoodBread</h1>
+        <p>Welcome to GoodBread. A place for all your digital recipes.</p>        
+      </div>
 
-    return(
-        <div className='home'>
-            <Folders currentUser={currentUser} />
-            <Recipes currentUser={currentUser} />                
-        </div>
-    )        
+      <div className='home-favorites'>
+        <h3>Favorites</h3>
+        <p>Coming soon.</p>
+      </div>
+
+      <div className='app-news'>
+        <h3>Announcments</h3>
+        <p>Coming soon.</p>
+      </div>
+    </div>
+  )        
 }
 
 export default Home
