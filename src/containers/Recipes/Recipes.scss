@@ -1,0 +1,10 @@
+.recipes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .recipes-grid {
+    display: flex;
+    flex-direction: column;
+  }
+}

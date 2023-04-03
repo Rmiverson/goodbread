@@ -72,7 +72,7 @@ const Folders = () => {
       <div className='folders'>
         <h2>Folders</h2>
         <Link className='button' to='/folder/create'>Create Folder</Link>
-        <div className='folders-list'>
+        <div className='folders-grid'>
           {renderCards(result.data)}
           <ReactPaginate 
             className='page-controls'
