@@ -18,31 +18,6 @@ const Recipes = (props) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [searchInput, setSearchInput] = useState('')
 
-  // const { isLoading: isLoadingRecipes, refetch: getAllUserRecipes } = useQuery(
-  //   'query-all-user-recipes',
-  //   async () => {
-  //     return await apiClient.get(`/users/${currentUser.id}/recipes/?page=${currentPage + 1}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
-  //   },
-  //   {
-  //     enabled: false,
-  //     retry: 1,
-  //     onSuccess: (res) => {
-  //       const apiResp = {
-  //         status: res.status + '-' + res.statusText,
-  //         headers: res.headers,
-  //         data: res.data.data,
-  //         meta: res.data.meta
-  //       }
-  //       setResult({data: apiResp.data, status: apiResp.status, message: res.statusText})
-  //       setPageCount(apiResp.meta.total_pages)
-  //     },
-  //     onError: (err) => {
-  //       console.error(err.response?.data || err)
-  //       setResult({data: [], status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
-  //     }
-  //   }
-  // )
-
   const {isLoading: isLoadingSearchRecipes, mutate: postSearchRecipes } = useMutation(
     async () => {
       return await apiClient.post(`/recipes/search/?page=${currentPage + 1}`, {recipe: {user_id: currentUser.id, query: searchInput}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
@@ -92,7 +67,7 @@ const Recipes = (props) => {
     }
   }
 
-  const handlePageClick = (e) => setCurrentPage(e.selected)
+  const handlePageChange = (e) => setCurrentPage(e.selected)
 
   const handleSearchChange = (e) => setSearchInput(e.target.value)
 
@@ -101,7 +76,7 @@ const Recipes = (props) => {
     e.stopPropagation()
 
     try {
-      setPageCount(1)
+      setPageCount(0)
       postSearchRecipes()
     } catch (err) {
       setResult({data: {}, status: 'Error', message: err})
@@ -126,7 +101,8 @@ const Recipes = (props) => {
             className='page-controls'
             breakLabel='...'
             nextLabel={<HiOutlineChevronRight />}
-            onPageChange={handlePageClick}
+            onPageChange={handlePageChange}
+            forcePage={currentPage}
             pageRangeDisplayed={5}
             pageCount={pageCount}
             previousLabel={<HiOutlineChevronLeft />}
