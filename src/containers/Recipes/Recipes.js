@@ -18,30 +18,30 @@ const Recipes = (props) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [searchInput, setSearchInput] = useState('')
 
-  const { isLoading: isLoadingRecipes, refetch: getAllUserRecipes } = useQuery(
-    'query-all-user-recipes',
-    async () => {
-      return await apiClient.get(`/users/${currentUser.id}/recipes/?page=${currentPage + 1}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
-    },
-    {
-      enabled: false,
-      retry: 1,
-      onSuccess: (res) => {
-        const apiResp = {
-          status: res.status + '-' + res.statusText,
-          headers: res.headers,
-          data: res.data.data,
-          meta: res.data.meta
-        }
-        setResult({data: apiResp.data, status: apiResp.status, message: res.statusText})
-        setPageCount(apiResp.meta.total_pages)
-      },
-      onError: (err) => {
-        console.error(err.response?.data || err)
-        setResult({data: [], status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
-      }
-    }
-  )
+  // const { isLoading: isLoadingRecipes, refetch: getAllUserRecipes } = useQuery(
+  //   'query-all-user-recipes',
+  //   async () => {
+  //     return await apiClient.get(`/users/${currentUser.id}/recipes/?page=${currentPage + 1}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
+  //   },
+  //   {
+  //     enabled: false,
+  //     retry: 1,
+  //     onSuccess: (res) => {
+  //       const apiResp = {
+  //         status: res.status + '-' + res.statusText,
+  //         headers: res.headers,
+  //         data: res.data.data,
+  //         meta: res.data.meta
+  //       }
+  //       setResult({data: apiResp.data, status: apiResp.status, message: res.statusText})
+  //       setPageCount(apiResp.meta.total_pages)
+  //     },
+  //     onError: (err) => {
+  //       console.error(err.response?.data || err)
+  //       setResult({data: [], status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
+  //     }
+  //   }
+  // )
 
   const {isLoading: isLoadingSearchRecipes, mutate: postSearchRecipes } = useMutation(
     async () => {
@@ -68,7 +68,7 @@ const Recipes = (props) => {
   useEffect(() => {
     function ferretRecipes() {
       try {
-        getAllUserRecipes()
+        postSearchRecipes()
       } catch (err) {
         console.error(err)
         setResult({data: [], status: 'Error', message: err})  
@@ -76,7 +76,7 @@ const Recipes = (props) => {
     }
 
     ferretRecipes()
-  }, [getAllUserRecipes, currentPage])
+  }, [postSearchRecipes, currentPage])
 
   const renderCards = (data) => {
     if (data.length >= 1) {
@@ -108,7 +108,7 @@ const Recipes = (props) => {
     }
   }
 
-  if (isLoadingRecipes || isLoadingSearchRecipes || !result.status) {
+  if (isLoadingSearchRecipes || !result.status) {
       return <Loading />
   } else if (result.status === 'Error') {
       return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
