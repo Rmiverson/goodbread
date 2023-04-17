@@ -1,15 +1,16 @@
 import './Recipes.scss'
 import React, { useEffect, useState } from 'react'
-import ReactPaginate from 'react-paginate'
-import { useMutation, useQuery } from 'react-query'
-import RecipeCards from '../../components/RecipeCards'
 import apiClient from '../../http-common'
+import ReactPaginate from 'react-paginate'
+import { useMutation } from 'react-query'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import Error from '../../components/Error'
-import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
-import Loading from '../../components/Loading'
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
+
 import SearchForm from '../../components/SearchForm'
+import RecipeCards from '../../components/RecipeCards'
+import Loading from '../../components/Loading'
+import Error from '../../components/Error'
 
 const Recipes = (props) => {
   const currentUser = useSelector((state) => state.user)
@@ -25,7 +26,7 @@ const Recipes = (props) => {
     {
       onSuccess: (res) => {
         const apiResp = {
-          status: res.status + "-" + res.statusText,
+          status: res.status + '-' + res.statusText,
           headers: res.headers,
           data: res.data.data,
           meta: res.data.meta

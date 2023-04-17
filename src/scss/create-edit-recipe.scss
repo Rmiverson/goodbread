@@ -1,181 +1,181 @@
 label {
-    text-align: center;
-    padding: 5px;
+  text-align: center;
+  padding: 5px;
 }
 
 .create-recipe-page, .edit-recipe-page {
-    height: 100%;
+  height: 100%;
 }
 
 #create-recipe-form, #edit-recipe-form {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .title-input, .desc-input {
-    width: 500px;
+  width: 500px;
 }
 
 .content-list, .content-item {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content-list {
-    width: 60vw;
-    justify-content: space-around;
-    margin-top: 1rem;
+  width: 60vw;
+  justify-content: space-around;
+  margin-top: 1rem;
 }
 
 .content-item {
-    background-color: var(--white);
-    margin-bottom: 1rem;
-    padding: 1rem;
-    flex-direction: row;
-    width: 100%;
-    box-shadow: 0px 0px 5px var(--blackTransparent);
+  background-color: var(--white);
+  margin-bottom: 1rem;
+  padding: 1rem;
+  flex-direction: row;
+  width: 100%;
+  box-shadow: 0px 0px 5px var(--blackTransparent);
 }
 
 .content-input-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  ul, ol {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-
-    ul, ol {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 0px;
-    }
+    gap: 8px;
+    padding: 0px;
+  }
 }
 
 .content-input-list-item {
-    display: flex;
-    flex-direction: row;
-    align-items: center;    
+  display: flex;
+  flex-direction: row;
+  align-items: center;    
 }
 
 .input-section {
-    margin: 0px 0px 16px 0px;
-    display: flex;
-    flex-direction: column;
+  margin: 0px 0px 16px 0px;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-input-list-control-up, .content-input-list-control-down, .content-input-list-control-delete {
-    padding: 4px;
-    margin: 0;
-    border: none;
-    background-color: transparent;
-    box-shadow: 0px 0px 5px var(--blackTransparent);
-    border-radius: 5px;
-    margin: 0 5px 0 5px;
+  padding: 4px;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+  box-shadow: 0px 0px 5px var(--blackTransparent);
+  border-radius: 5px;
+  margin: 0 5px 0 5px;
 
-    svg {
-        height: 100%;
-        display: flex;
-    }
+  svg {
+    height: 100%;
+    display: flex;
+  }
 
-    &:hover {
-        cursor: pointer;
-        box-shadow: inset 0px 0px 5px var(--blackTransparent);
-    }
+  &:hover {
+    cursor: pointer;
+    box-shadow: inset 0px 0px 5px var(--blackTransparent);
+  }
 }
 
 .content-input-list-control-delete {
-    &:hover {
-        background-color: var(--salmon);
-    }
+  &:hover {
+    background-color: var(--salmon);
+  }
 }
 
 .content-input-form-delete {
-    background-color: var(--white);
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px var(--blackTransparent);
-    padding: 5px;
+  background-color: var(--white);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px var(--blackTransparent);
+  padding: 5px;
 
-    &:hover {
-        background-color: var(--salmon);
-        cursor: pointer;
-        box-shadow: inset 0px 0px 5px var(--blackTransparent);
-    }
+  &:hover {
+    background-color: var(--salmon);
+    cursor: pointer;
+    box-shadow: inset 0px 0px 5px var(--blackTransparent);
+  }
 }
 
 .add-component-ribbon {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .content-add-button, .form-submit-button, .form-delete-button {
-    background-color:  var(--white);
-    border: none;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px var(--blackTransparent);
-    padding: 5px;
+  background-color:  var(--white);
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px var(--blackTransparent);
+  padding: 5px;
 
-    &:hover {
-        background-color: var(--blueGreenTransparent);
-        cursor: pointer;
-        box-shadow: inset 0px 0px 5px var(--blackTransparent);
-    }
+  &:hover {
+    background-color: var(--blueGreenTransparent);
+    cursor: pointer;
+    box-shadow: inset 0px 0px 5px var(--blackTransparent);
+  }
 }
 
 .form-submit-button, .form-delete-button {
-    padding: 10px;
-    width: 30vw;
-    font-weight: bold;
+  padding: 10px;
+  width: 30vw;
+  font-weight: bold;
 }
 
 .form-submit-button {
-    background-color: var(--blueGreenTransparent);
+  background-color: var(--blueGreenTransparent);
 
-    &:hover {
-        background-color: var(--blueGreenTransparent);
-    }
+  &:hover {
+    background-color: var(--blueGreenTransparent);
+  }
 }
 
 .form-delete-button {
-    background-color: var(--salmon);
+  background-color: var(--salmon);
 
-    &:hover {
-        background-color: var(--salmon);
-    }
+  &:hover {
+    background-color: var(--salmon);
+  }
 }
 
 .tag-form {
-    width: 60vw;
+  width: 60vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  ul {
+    width: 60%;
+    padding: 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 10px;
 
-    ul {
-        width: 60%;
-        padding: 0px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-
-        li {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            width: 100%;
-        }
+    li {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
     }
+  }
 }
 
 .form-mortality-controls {
-    display: flex;
-    justify-content: center;
-    flex-direction: row-reverse;
-    padding: 10px;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+  padding: 10px;
+  gap: 10px;
 }
