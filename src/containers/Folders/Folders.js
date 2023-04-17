@@ -1,32 +1,32 @@
 import './folders.scss'
 import React, { useEffect, useState } from 'react'
-import Error from '../../components/Error'
 import ReactPaginate from 'react-paginate'
-import { useQuery } from 'react-query'
-import FolderCards from '../../components/FolderCards'
 import apiClient from '../../http-common'
+import { useMutation } from 'react-query'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {HiOutlineChevronLeft, HiOutlineChevronRight} from "react-icons/hi"
+import { HiOutlineChevronLeft, HiOutlineChevronRight } from "react-icons/hi"
+
+import FolderCards from '../../components/FolderCards'
+import SearchForm from '../../components/SearchForm'
 import Loading from '../../components/Loading'
+import Error from '../../components/Error'
 
 const Folders = () => {
   const currentUser = useSelector((state) => state.user)
   const [result, setResult] = useState({data: [], status: null, message: null})
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
+  const [searchInput, setSearchInput] = useState('')
 
-  const { isLoading: isLoadingFolders, refetch: getAllUserFolders } = useQuery(
-    'query-all-user-folders',
+  const {isLoading: isLoadingSearchFolders, mutate: postSearchFolders} = useMutation(
     async () => {
-      return await apiClient.get(`/users/${currentUser.id}/folders/?page=${currentPage + 1}`, { headers: {'Authorization': `Bearer ${currentUser.token}`}})
+      return await apiClient.post(`/folders/search/?page=${currentPage + 1}`, {folder: {user_id: currentUser.id, query: searchInput}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
     },
     {
-      enabled: false,
-      retry: 1,
       onSuccess: (res) => {
         const apiResp = {
-          status: res.status + '-' + res.statusText,
+          status: res.status + "-" + res.statusText,
           headers: res.headers,
           data: res.data.data,
           meta: res.data.meta
@@ -44,14 +44,14 @@ const Folders = () => {
   useEffect(() => {
     function ferretUserFolders() {
       try {
-        getAllUserFolders()
+        postSearchFolders()
       } catch (err) {
         console.error(err)
         setResult({data: [], status: 'Error', message: err})                    
       }
     }
     ferretUserFolders()
-  }, [getAllUserFolders, currentPage])
+  }, [postSearchFolders, currentPage])
 
   const renderCards = (data) => {
     if (data.length >= 1) {
@@ -63,7 +63,21 @@ const Folders = () => {
 
   const handlePageClick = (e) => setCurrentPage(e.selected)
 
-  if (isLoadingFolders || !result.status) {
+  const handleSearchChange = (e) => setSearchInput(e.target.value)
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    try {
+      setPageCount(0)
+      postSearchFolders()
+    } catch (err) {
+      setResult({data: {}, status: 'Error', message: err})
+    }
+  }
+
+  if (isLoadingSearchFolders || !result.status) {
     return <Loading />
   } else if (result.status === 'Error') {
     return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
@@ -71,6 +85,9 @@ const Folders = () => {
     return (
       <div className='folders'>
         <h2>Folders</h2>
+
+        <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} />
+
         <Link className='button' to='/folder/create'>Create Folder</Link>
         <div className='folders-grid'>
           {renderCards(result.data)}
