@@ -92,7 +92,8 @@ const Recipes = (props) => {
       <div className='recipes'>
         <h2>Recipes</h2>
 
-        <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} />
+        {/* only renders the search form if it is not a part of the create folder component. */}
+        {props.formList ? <></> : <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} />}
 
         <Link className='button' to='/recipe/create'>Create Recipe</Link>
         <div className='recipes-grid'>
