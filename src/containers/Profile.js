@@ -1,88 +1,89 @@
 import React, { useEffect, useState } from 'react'
+import apiClient from '../http-common'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import apiClient from '../http-common'
 import { updateUser } from '../redux/actions'
+
 import Error from '../components/Error'
 import Loading from '../components/Loading'
 
 const Profile = () => {
-    const [result, setResult] = useState({data: {}, status: null, message: null})
-    const currentUser = useSelector((state) => state.user)
-    const dispatch = useDispatch()
+  const currentUser = useSelector((state) => state.user)
+  const [result, setResult] = useState({data: {}, status: null, message: null})
+  const dispatch = useDispatch()
 
-    const { isLoading: isLoadingUser, refetch: getUserById } = useQuery(
-        'query-user-by-id',
-        async () => {
-            return await apiClient.get(`/users/${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token.token}`}})
-        },
-        {
-            enabled: false,
-            retry: 1,
-            onSuccess: (res) => {
-                const apiResp = {
-                    status: res.status + '-' + res.statusText,
-                    headers: res.headers,
-                    data: res.data
-                }
-                setResult({data: apiResp.data, status: apiResp.status, message: null})
-                dispatch(updateUser(apiResp.data))
-            },
-            onError: (err) => {
-                console.error(err.response?.data || err)
-                setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
-            }
+  const { isLoading: isLoadingUser, refetch: getUserById } = useQuery(
+    'query-user-by-id',
+    async () => {
+      return await apiClient.get(`/users/${currentUser.id}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
+    },
+    {
+      enabled: false,
+      retry: 1,
+      onSuccess: (res) => {
+        const apiResp = {
+          status: res.status + '-' + res.statusText,
+          headers: res.headers,
+          data: res.data
         }
-    )
-
-    useEffect(() => {
-        function ferretUserById() {
-            try {
-                getUserById()
-            } catch (err) {
-                console.error(err)
-                setResult({data: {}, status: 'Error', message: err})
-            }
-        }
-
-        ferretUserById()
-    }, [getUserById, setResult])
-
-    if (isLoadingUser || !result.status) {
-        return <Loading />
-    } else if (result.status === 'Error') {
-        return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
-    } else {
-        return (
-            <div className='profile-page'>
-                <h2>{`${result.data.username}'s Profile`}</h2>
-
-                <div className='content-section'>
-                    <h4>Name</h4>
-                    <p>{`${result.data.first_name} ${result.data.last_name}`}</p>
-                </div>
-                
-                <div className='content-section'>
-                    <h4>User About</h4>
-                    <p>{result.data.description}</p>                    
-                </div>
-
-                <div className='content-section'>
-                    <h4>Email</h4>
-                    <p>{result.data.email}</p>                    
-                </div>
-                
-                <div className='content-section'>
-                    <h4>Statistics</h4>
-                    <p>{`Number of Recipes: ${result.data.recipes.length}`}</p>
-                    <p>{`Number of Folders: ${result.data.folders.length}`}</p>                    
-                </div>
-
-                <Link className='button' to='/profile/edit'>Edit Profile</Link>
-            </div>
-        )        
+        setResult({data: apiResp.data, status: apiResp.status, message: null})
+        dispatch(updateUser(apiResp.data))
+      },
+      onError: (err) => {
+        console.error(err.response?.data || err)
+        setResult({data: {}, status: 'Error', message: {error: err.response.data.error, status: err.response.status, statusText: err.response.statusText}})
+      }
     }
+  )
+
+  useEffect(() => {
+    function ferretUserById() {
+      try {
+        getUserById()
+      } catch (err) {
+        console.error(err)
+        setResult({data: {}, status: 'Error', message: err})
+      }
+    }
+
+    ferretUserById()
+  }, [getUserById, setResult])
+
+  if (isLoadingUser || !result.status) {
+    return <Loading />
+  } else if (result.status === 'Error') {
+    return <Error error={result.message.error} status={result.message.status} statusText={result.message.statusText} currentUser={currentUser}/>
+  } else {
+    return (
+      <div className='profile-page'>
+        <h2>{`${result.data.username}'s Profile`}</h2>
+
+        <div className='content-section'>
+          <h4>Name</h4>
+          <p>{`${result.data.first_name} ${result.data.last_name}`}</p>
+        </div>
+        
+        <div className='content-section'>
+          <h4>User About</h4>
+          <p>{result.data.description}</p>
+        </div>
+
+        <div className='content-section'>
+          <h4>Email</h4>
+          <p>{result.data.email}</p>
+        </div>
+        
+        <div className='content-section'>
+          <h4>Statistics</h4>
+          <p>{`Number of Recipes: ${result.data.recipes.length}`}</p>
+          <p>{`Number of Folders: ${result.data.folders.length}`}</p>
+        </div>
+
+        <Link className='button' to='/profile/edit'>Edit Profile</Link>
+      </div>
+    )
+  }
 }
 
 export default Profile
