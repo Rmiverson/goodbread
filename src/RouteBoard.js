@@ -14,6 +14,7 @@ import EditFolder from './containers/EditFolder'
 import EditUser from './containers/EditUser'
 import Folders from './containers/Folders/Folders'
 import Recipes from './containers/Recipes/Recipes'
+import Tag from './containers/Tag/Tag'
 
 const RouteBoard = () => {
   return(
@@ -73,7 +74,12 @@ const RouteBoard = () => {
           <ProtectedRoute>
             <EditRecipe />
           </ProtectedRoute>
-        }/>                
+        }/>
+        <Route path='/tag/:id' element={
+          <ProtectedRoute>
+            <Tag />
+          </ProtectedRoute>
+        }/>
         
         <Route path='*' element={<div>404 not found</div>} />
     </Routes>
