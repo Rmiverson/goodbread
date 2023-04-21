@@ -69,7 +69,7 @@ const Recipe = () => {
         <div className='recipe-tag-list'>
           <h4>Tags:</h4>
           {result.data.tags.map((tag, index) => (
-            <p key={index}>{tag.label}</p>
+            <Link key={index} to={`/tag/${tag.id}`} state={{ label: tag.label }}>{tag.label}</Link>
           ))}
         </div>
       </div>
