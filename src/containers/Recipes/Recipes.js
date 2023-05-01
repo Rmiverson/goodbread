@@ -18,10 +18,11 @@ const Recipes = (props) => {
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const [searchInput, setSearchInput] = useState('')
+  const [sort, setSort] = useState('date_asc')
 
   const {isLoading: isLoadingSearchRecipes, mutate: postSearchRecipes } = useMutation(
     async () => {
-      return await apiClient.post(`/recipes/search/?page=${currentPage + 1}`, {recipe: {user_id: currentUser.id, query: searchInput}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
+      return await apiClient.post(`/recipes/search/?page=${currentPage + 1}`, {recipe: {user_id: currentUser.id, query: searchInput, sort: sort}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
     },
     {
       onSuccess: (res) => {
@@ -75,6 +76,8 @@ const Recipes = (props) => {
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     e.stopPropagation()
+
+    setSort(e.target.sort.value)
 
     try {
       setPageCount(0)

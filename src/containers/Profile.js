@@ -72,9 +72,8 @@ const Profile = () => {
         </div>
         
         <div className='content-section'>
-          <h4>Statistics</h4>
-          <p>{`Number of Recipes: ${result.data.recipes.length}`}</p>
-          <p>{`Number of Folders: ${result.data.folders.length}`}</p>
+          <h4>User Since</h4>
+          <p>{Date(result.data.created_at)}</p>
         </div>
 
         <Link className='button' to='/profile/edit'>Edit Profile</Link>
