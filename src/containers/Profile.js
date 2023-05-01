@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import apiClient from '../http-common'
 import { useQuery } from 'react-query'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { updateUser } from '../redux/actions'
 
 import Error from '../components/Error'
 import Loading from '../components/Loading'
@@ -11,7 +10,6 @@ import Loading from '../components/Loading'
 const Profile = () => {
   const currentUser = useSelector((state) => state.user)
   const [result, setResult] = useState({data: {}, status: null, message: null})
-  const dispatch = useDispatch()
 
   const { isLoading: isLoadingUser, refetch: getUserById } = useQuery(
     'query-user-by-id',
@@ -28,7 +26,6 @@ const Profile = () => {
           data: res.data
         }
         setResult({data: apiResp.data, status: apiResp.status, message: null})
-        dispatch(updateUser(apiResp.data))
       },
       onError: (err) => {
         console.error(err.response?.data || err)
