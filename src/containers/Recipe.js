@@ -59,6 +59,7 @@ const Recipe = () => {
     return (
       <div className='recipe'>
         <h2 className='recipe-title'>{result.data.title}</h2>
+        <p>Updated at: {Date(result.data.updated_at)}</p>
         <Link className='button' to={`/recipe/edit/${id}`} >Edit</Link>
         <p className='recipe-desc'>{result.data.description}</p>
 

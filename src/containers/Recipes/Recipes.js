@@ -18,10 +18,11 @@ const Recipes = (props) => {
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const [searchInput, setSearchInput] = useState('')
+  const [sort, setSort] = useState('date_asc')
 
   const {isLoading: isLoadingSearchRecipes, mutate: postSearchRecipes } = useMutation(
     async () => {
-      return await apiClient.post(`/recipes/search/?page=${currentPage + 1}`, {recipe: {user_id: currentUser.id, query: searchInput}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
+      return await apiClient.post(`/recipes/search/?page=${currentPage + 1}`, {recipe: {user_id: currentUser.id, query: searchInput, sort: sort}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
     },
     {
       onSuccess: (res) => {
@@ -33,6 +34,7 @@ const Recipes = (props) => {
         }
         setResult({data: apiResp.data, status: apiResp.status, message: res.statusText})
         setPageCount(apiResp.meta.total_pages)
+        setSort('date_asc')
       },
       onError: (err) => {
         console.error(err.response?.data || err)
@@ -72,12 +74,15 @@ const Recipes = (props) => {
 
   const handleSearchChange = (e) => setSearchInput(e.target.value)
 
+  const handleSortChange = (e) => setSort(e.target.value)
+
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     e.stopPropagation()
 
     try {
       setPageCount(0)
+
       postSearchRecipes()
     } catch (err) {
       setResult({data: {}, status: 'Error', message: err})
@@ -94,7 +99,7 @@ const Recipes = (props) => {
         <h2>Recipes</h2>
 
         {/* only renders the search form if it is not a part of the create folder component. */}
-        {props.formList ? <></> : <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} />}
+        {props.formList ? <></> : <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} handleSortChange={handleSortChange} />}
 
         <Link className='button' to='/recipe/create'>Create Recipe</Link>
         <div className='recipes-grid'>
