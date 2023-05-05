@@ -18,10 +18,11 @@ const Folders = () => {
   const [pageCount, setPageCount] = useState(0)
   const [currentPage, setCurrentPage] = useState(0)
   const [searchInput, setSearchInput] = useState('')
+  const [sort, setSort] = useState('date_asc')
 
   const {isLoading: isLoadingSearchFolders, mutate: postSearchFolders} = useMutation(
     async () => {
-      return await apiClient.post(`/folders/search/?page=${currentPage + 1}`, {folder: {user_id: currentUser.id, query: searchInput}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
+      return await apiClient.post(`/folders/search/?page=${currentPage + 1}`, {folder: {user_id: currentUser.id, query: searchInput, sort: sort}}, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
     },
     {
       onSuccess: (res) => {
@@ -33,6 +34,7 @@ const Folders = () => {
         }
         setResult({data: apiResp.data, status: apiResp.status, message: res.statusText})
         setPageCount(apiResp.meta.total_pages)
+        setSort('date_asc')
       },
       onError: (err) => {
         console.error(err.response?.data || err)
@@ -65,6 +67,8 @@ const Folders = () => {
 
   const handleSearchChange = (e) => setSearchInput(e.target.value)
 
+  const handleSortChange = (e) => setSort(e.target.value)
+
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -86,7 +90,7 @@ const Folders = () => {
       <div className='folders'>
         <h2>Folders</h2>
 
-        <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} />
+        <SearchForm searchInput={searchInput} handleSearchChange={handleSearchChange} handleSearchSubmit={handleSearchSubmit} handleSortChange={handleSortChange} />
 
         <Link className='button' to='/folder/create'>Create Folder</Link>
         <div className='folders-grid'>

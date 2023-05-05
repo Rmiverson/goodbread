@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import apiClient from '../http-common'
 import ReactPaginate from 'react-paginate'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'
 
 import RecipeCards from '../components/RecipeCards'
@@ -14,11 +14,12 @@ const FolderRecipes = (props) => {
 	const [result, setResult] = useState({data: [], status: null, message: null}) 
 	const [pageCount, setPageCount] = useState(0)
 	const [currentPage, setCurrentPage] = useState(0)
+  const [sort, setSort] = useState('date_asc')
 
 	const { isLoading: isLoadingFolderRecipes, refetch: getFolderRecipes } = useQuery(
     'query-all-folder-recipes',
     async () => {
-      return await apiClient.get(`/folders/${id}/recipes?page=${currentPage + 1}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
+      return await apiClient.get(`/folders/${id}/recipes?page=${currentPage + 1}?sort=${sort}`, {headers: {'Authorization': `Bearer ${currentUser.token}`}})
     },
     {
       enabled: false,

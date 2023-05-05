@@ -74,10 +74,7 @@ const Recipes = (props) => {
 
   const handleSearchChange = (e) => setSearchInput(e.target.value)
 
-  const handleSortChange = (e) => {
-    setSort(e.target.value)
-    console.log(e.target.value)
-  }
+  const handleSortChange = (e) => setSort(e.target.value)
 
   const handleSearchSubmit = (e) => {
     e.preventDefault()
