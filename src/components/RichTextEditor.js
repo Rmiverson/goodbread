@@ -1,4 +1,4 @@
-// Taken from the lexical-rich-text-example by @trueadm
+// !!Taken from the lexical-rich-text-example by @trueadm
 
 import ExampleTheme from "../themes/ExampleTheme";
 import { LexicalComposer } from "@lexical/react/LexicalComposer";

@@ -1,4 +1,4 @@
-.home, .create-recipe-page, .create-folder-page, .edit-folder-page, .edit-recipe-page, .profile-page, .folder, .recipe, .login-signup-page, .edit-user-page, .loading  {
+.home, .create-recipe-page, .create-folder-page, .edit-folder-page, .edit-recipe-page, .profile-page, .folder, .folders, .recipe, .recipes, .login-signup-page, .edit-user-page, .loading  {
   min-height: 100vh;
 }
 
@@ -73,23 +73,29 @@ footer {
   padding: 0px;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 10px;
 
-  li {
-    padding: 5px;
-    margin: 0 5px 0 5px;
+  li a {
+    display: flex;
+    padding: 5px 10px 5px 10px;
     box-shadow: 0px 0px 5px var(--blackTransparent);
     border-radius: 5px;
-    width: 16px;
+    height: 25px;
 
-    a {
-      svg {
-        height: 100%;
-      }
+    svg {
+      height: 100%;
     }
 
     &:hover {
       cursor: pointer;
       box-shadow: inset 0px 0px 5px var(--blackTransparent);
+    }
+  }
+
+  .selected {
+    a {
+      text-decoration: underline;
     }
   }
 }
