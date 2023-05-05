@@ -12,7 +12,7 @@ const SearchForm = (props) => {
       />
 
       <label htmlFor='sort'>Sort:</label>
-      <select name='sort' id='sort'>
+      <select name='sort' id='sort' onChange={props.handleSortChange}>
         <option value='date_asc'>By date ascending</option>
         <option value='date_des'>By date descending</option>
         <option value='a_z'>By title A - Z</option>
